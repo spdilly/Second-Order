@@ -83,11 +83,14 @@ http://127.0.0.1:8000/
 
 Leave the PowerShell window open while using the app. Press `Ctrl+C` to stop it.
 
-## 6. Analyze A Deal In The Web App
+## 6. Analyze A Deal In The Web App (Project-Centric Workflow)
 
-Use the home page to create a deal.
+Each address you create becomes a **project**. You can edit any input,
+re-run the analysis, and the old result stays around for comparison.
 
-Recommended first test:
+### First test
+
+From the home page, fill in the New Deal form with:
 
 ```text
 Address: 1417 S Canal St, Pittsburgh, PA 15215
@@ -97,11 +100,70 @@ Rehab: 55000
 Bedrooms: 3
 ```
 
-After the run, the app links to the deal packet:
+Click Create. The deal page opens.
 
-- Excel proforma
-- Markdown investment memo
-- `sources.json` source audit
+### Edit assumptions in place
+
+Every input the engine uses is on the deal page in a single edit form
+(price, ARV, rehab, interest rate, down payment, refi terms, exit cap,
+hold period, beds, baths, taxes, insurance, utilities, HOA, Section 8
+status, notes). Change anything and click **Save inputs**. The deal page
+shows a Saved banner.
+
+### Run analysis
+
+Once required inputs are populated, the **Run analysis** button enables.
+Each press writes a fresh timestamped packet folder. Older runs are never
+overwritten.
+
+### Per-deal threshold overrides
+
+The deal page has a "Threshold overrides (this deal only)" section. Leave
+each field blank to use the global buy thresholds (Section 10 + the
+[Thresholds](http://127.0.0.1:8000/thresholds) page). Fill one in when a
+specific lender or partner has a tighter floor that only applies to this
+deal — for example, override DSCR to 1.30 if your lender requires more
+headroom than your default 1.25.
+
+### Run history
+
+The deal page has a **Run history** link. The history page lists every
+past analysis for that address with verdict, cap rate, cash-on-cash,
+DSCR, and IRR. Click Open on any row to view that historical run — the
+proforma, memo, and source audit are preserved with the inputs that were
+in place at the time.
+
+### Packet artifacts
+
+Every analysis produces the same three artifacts in the run folder:
+
+- Excel proforma (`*_proforma.xlsx`)
+- Markdown investment memo (`*_report.md`)
+- `sources.json` audit
+- **PDF memo** — rendered on demand via the "Download PDF memo" button
+  on the result page
+
+### Batch entry
+
+The home page has a **Batch entry** panel. Paste one address per line and
+click Create batch. Each address becomes a draft deal — open each one in
+turn to fill in ARV / rehab / Section 8 status before running an analysis.
+
+### Search + filter + lifecycle status
+
+The deals list at the bottom of the home page has a search box (substring
+of the address) and a status filter. The deal lifecycle has these states:
+
+- `new` / `needs_inputs` — created, not yet ready to analyze
+- `ready` — required inputs present, can run analysis
+- `analyzed` — at least one packet exists (engine-set)
+- `offer_made` — you've submitted an offer (manual)
+- `under_contract` — offer accepted, in diligence (manual)
+- `passed` — you walked from the deal (manual)
+- `closed` — property acquired (manual)
+- `archived` — hide from default list
+
+Change a deal's status on its deal page in the **Lifecycle** panel.
 
 ## 7. Use It With Claude Code Or Claude CoWork
 
@@ -293,32 +355,52 @@ and trace any input back to its origin.
 
 ## 12. What You Maintain Yourself
 
-There are four kinds of inputs the tool cannot get on its own. They live in
-your reference workbook at:
+Two kinds of data live alongside your deals: per-property overrides and
+global buy thresholds. Both are now editable directly in the web app — no
+more opening Excel.
 
-```text
-output/projects/Joe Berlin/reference_data.xlsx
-```
+### Property overrides (the Overrides page)
 
-You should fill these in as you go so the tool gets smarter over time.
+Click **Overrides** in the topbar. The page lists every override and has
+an "Add or update" form at the top. Use it when you know specific
+information about an address that beats every public source. Fields:
 
-- **Property-specific overrides.** When you know the actual rent, taxes, or
-  beds for a specific address (because you own it, you have the voucher, or
-  you've just done diligence), put them in `Property_Overrides`. An entry
-  there beats every public source.
-- **Tax for non-Allegheny counties.** If you start looking at deals outside
-  Allegheny County, add the prior year's tax (from the county assessor's
-  website or Realtor.com) and the engine will scale it +10% the way you
-  already do mentally.
-- **Rent overrides for confirmed Section 8 voucher amounts.** HUD FMR is a
-  ceiling, not a guarantee. When a tenant's actual voucher pays less or
-  more, override it.
-- **Your buy thresholds.** The `Thresholds` tab carries your defaults for
-  minimum cap rate, cash-on-cash, DSCR, IRR, and max price/ARV. Edit them
-  any time. The engine reads them on every run.
+- **Address** — the natural key. The engine matches case-insensitive.
+- **Beds / Baths** — overrides the WPRDC / RentCast detection.
+- **Annual tax** — overrides the WPRDC-computed tax for this property.
+- **Prior-year tax** — used as `prior_year_tax * 1.10` if no annual tax
+  is set. Matches your "last year + 10%" rule for non-Allegheny deals.
+- **Monthly rent** — overrides HUD FMR. Use when you know the actual
+  Section 8 voucher amount.
 
-Every run still writes a source audit so the report shows where each number
-came from.
+An override row always beats every public source for that address.
+
+### Buy thresholds (the Thresholds page)
+
+Click **Thresholds** in the topbar. Edit the floors:
+
+- **Cap rate min** (default 8%)
+- **Cash-on-cash min** (default 10%)
+- **DSCR min** (default 1.25x)
+- **Levered IRR min** (default 15%)
+- **Price / ARV ceiling** (default 75%)
+- **Vacancy / rent growth / expense growth** — underwriting defaults
+  used when a deal doesn't specify its own value.
+
+Changes take effect on the next analysis. For one-off lender or partner
+floors that should NOT change your global defaults, use the per-deal
+threshold overrides on the deal page instead.
+
+### Backward compatibility
+
+The original `reference_data.xlsx` at `output/projects/Joe Berlin/`
+is still readable. On first launch, the web app imports any
+Property_Overrides and Thresholds rows from the xlsx into the database.
+After that, the database is the source of truth and edits go through
+the web UI.
+
+Every run still writes a source audit (`sources.json`) so the report
+shows where each number came from.
 
 ## 13. Updating The Bundled Data
 

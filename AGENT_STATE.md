@@ -1,20 +1,42 @@
 # Agent State — Property Analysis Product
 
-**Last updated**: 2026-05-18 (Phase 6 scoped, ready to open)
-**Status**: V1 SHIPPED · V1.1 (Phase 6) READY TO OPEN
-**Current phase**: 6 of N (Project-Centric Workflow)
-**Loop owner**: autonomous (resumable via `/property-autonomous`)
+**Last updated**: 2026-05-18 (Phase 6 / V1.1 SHIPPED)
+**Status**: V1.1 RELEASED — published to github.com/spdilly/Second-Order
+**Current phase**: 6 of N — **done**
+**Loop owner**: autonomous (resumable via `/property-autonomous` — no
+open phase)
 
 ## Next action
 
-`T-601` — per-deal editable inputs on the deal-detail page. All three
-architecture decisions resolved 2026-05-18 (override storage → DB,
-PDF lib → Playwright, threshold overrides → nullable columns on deal
-table). Loop opens with no remaining blockers.
+None for Phase 6. The deferred backlog in `AGENT_BACKLOG.md` is the
+inventory of next-phase candidates. Likely Phase 7 leads:
+- RentCast live wiring (waits on Joe's API key)
+- Side-by-side deal comparison view
+- Mobile-responsive layout
 
-Sub-phase order: 6.1 (project model foundation) → 6.2 (data-maintenance
-UI + PDF) → 6.3 (batch + search + status) → 6.4 (productization +
-final gate).
+## What V1.1 shipped
+
+- **Project-centric workflow.** Edit any input on the deal page → click
+  Run analysis → fresh packet folder, prior runs preserved. History
+  page lists every run with verdict + headline metrics; any historical
+  run is openable through `/deals/{id}/runs/{run_id}`.
+- **Verdict block in sources.json.** Every non-diagnostic run records
+  recommendation, max-bid, and headline metrics so the history viewer
+  reads it directly (no math re-run).
+- **DB-backed Property_Overrides.** Migrated from `reference_data.xlsx`
+  into `deal_intake.property_overrides` (one-time import). CRUD via the
+  `/overrides` web UI.
+- **DB-backed Thresholds.** Same pattern, key/value schema. Editable
+  via `/thresholds`.
+- **Per-deal threshold overrides.** Five nullable columns on the deal
+  table; when set, override beats global at analyze time. UI on the
+  deal-edit form.
+- **PDF export.** `/deals/{id}/runs/{run_id}/pdf` via Playwright/Chromium.
+- **Batch intake.** Paste newline-separated addresses into the home
+  textarea; each line becomes a draft deal.
+- **Search + status filter** on home page.
+- **Extended lifecycle states** — offer_made, under_contract, passed,
+  closed, preserved through update_deal calls.
 
 ## Phase 6 direction (captured from Sean 2026-05-18)
 

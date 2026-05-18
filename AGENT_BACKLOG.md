@@ -262,7 +262,7 @@ shows DIAGNOSTIC_ONLY banner; never shows BUY/CONSIDER/PASS.
 ## PHASE 5 — Productization
 
 ### T-501 — Regression expansion + case map
-**Status**: todo
+**Status**: done (2026-05-17 / V1 ship)
 **Spec**: Document the case map (1-21) in this file. Add any missing
 coverage — minimum bar: Arkansas / ambiguous-ZIP / deal-intake roundtrip /
 sensitivity / UI smoke / per-packet integrity / install-check. Phase 4
@@ -271,14 +271,14 @@ DIAGNOSTIC mode (case 6c), JSON suppression (case 11), and the no-fixture
 default check (case 7). Target: 22-25 cases.
 
 ### T-502 — Install polish (`requirements.txt`)
-**Status**: todo
+**Status**: done (2026-05-17 / V1 ship)
 **Spec**: Pin runtime deps used by V1: `fastapi`, `uvicorn[standard]`,
 `jinja2`, `python-multipart`, `markdown`, `openpyxl`, `requests`,
 `usaddress`. Include `xlsx2html` / `pandas` only if a tab actually needs
 them. Lock to versions that match the dev environment.
 
 ### T-503 — README + INSTALL + Monday test script
-**Status**: todo
+**Status**: done (2026-05-17 / V1 ship)
 **Spec**: Update `README.md` to describe the four entry points (CLI single,
 CLI from-intake, CLI batch, webapp). Write `INSTALL.md` covering Python
 version, OneDrive checkout, `pip install -r requirements.txt`,
@@ -286,11 +286,11 @@ version, OneDrive checkout, `pip install -r requirements.txt`,
 test script so Joe can run it without Sean walking him through.
 
 ### T-504 — Clean-venv install verification
-**Status**: todo
+**Status**: done (2026-05-17 / V1 ship)
 **Acceptance**: `python -m venv .venv-test && .venv-test/Scripts/pip install -r requirements.txt` succeeds with no missing-package warnings; `python -m scripts.property_analysis.agent_check` passes inside the new venv.
 
 ### T-505 — Final Phase 5 gate
-**Status**: todo
+**Status**: done (2026-05-17 / V1 ship)
 **Acceptance**: all phases done; all 22+ regression cases pass; webapp
 boots via uvicorn; no artifact pollution; README and INSTALL match the
 shipped behavior; `agent_check.py` clean.
@@ -336,6 +336,11 @@ surface, on par with Excel rather than a viewer. Math is unchanged.
 > edited, assumptions changed. A 'project' for each address. Each file
 > could live in a web interface as well, and not have to rely so much on
 > excel. Same math."
+
+**Status: DONE (2026-05-18).** All sub-phases shipped and pushed to
+`origin/main` (spdilly/Second-Order). Final gate: 27/27 regression cases
+pass, agent_check 7/7, clean-venv install with `playwright install
+chromium` passes inside a fresh venv, v1.1 zip built (61 files, 8.5 MB).
 
 **Trust bar:** Same as V1 — full regression + agent_check. Every new
 feature ships with at least one regression case. Math engine is not
