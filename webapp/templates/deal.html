@@ -170,6 +170,43 @@
            placeholder="0.08 = 8.0%"/>
   </div>
 
+  <h3>Threshold overrides (this deal only)</h3>
+  <p style="color: #6b6b6b; font-size: 12px;">
+    Leave blank to use the global buy thresholds from
+    <a href="/thresholds">Thresholds</a>. Set a value here when a specific
+    lender or partner has a tighter floor that only applies to this deal.
+  </p>
+  <div class="row">
+    <label for="override_cap_rate_min">Cap rate min</label>
+    <input type="number" step="any" id="override_cap_rate_min" name="override_cap_rate_min"
+           value="{{ deal.override_cap_rate_min if deal.override_cap_rate_min is not none else '' }}"
+           placeholder="decimal, e.g. 0.08"/>
+  </div>
+  <div class="row">
+    <label for="override_cash_on_cash_min">Cash-on-cash min</label>
+    <input type="number" step="any" id="override_cash_on_cash_min" name="override_cash_on_cash_min"
+           value="{{ deal.override_cash_on_cash_min if deal.override_cash_on_cash_min is not none else '' }}"
+           placeholder="decimal, e.g. 0.10"/>
+  </div>
+  <div class="row">
+    <label for="override_dscr_min">DSCR min</label>
+    <input type="number" step="any" id="override_dscr_min" name="override_dscr_min"
+           value="{{ deal.override_dscr_min if deal.override_dscr_min is not none else '' }}"
+           placeholder="x, e.g. 1.25"/>
+  </div>
+  <div class="row">
+    <label for="override_irr_min">Levered IRR min</label>
+    <input type="number" step="any" id="override_irr_min" name="override_irr_min"
+           value="{{ deal.override_irr_min if deal.override_irr_min is not none else '' }}"
+           placeholder="decimal, e.g. 0.15"/>
+  </div>
+  <div class="row">
+    <label for="override_max_price_to_arv">Price / ARV ceiling</label>
+    <input type="number" step="any" id="override_max_price_to_arv" name="override_max_price_to_arv"
+           value="{{ deal.override_max_price_to_arv if deal.override_max_price_to_arv is not none else '' }}"
+           placeholder="decimal, e.g. 0.75"/>
+  </div>
+
   <h3>Notes</h3>
   <div class="row">
     <label for="notes">Free-text notes</label>

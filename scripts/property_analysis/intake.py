@@ -175,7 +175,38 @@ CREATE TABLE IF NOT EXISTS property_overrides (
     notes                   TEXT DEFAULT '',
     updated_at              TEXT NOT NULL
 );
+
+-- T-612: Global buy thresholds migrated from reference_data.xlsx Thresholds
+-- tab. Key/value so adding a new threshold does not require a schema
+-- migration. Per-deal overrides live as nullable columns on deal_intake.
+CREATE TABLE IF NOT EXISTS thresholds (
+    name        TEXT PRIMARY KEY,
+    value       REAL NOT NULL,
+    updated_at  TEXT NOT NULL
+);
 """
+
+THRESHOLD_NAMES = (
+    "cap_rate_min",
+    "cash_on_cash_min",
+    "dscr_min",
+    "irr_min",
+    "max_price_to_arv",
+    "vacancy_default",
+    "rent_growth_default",
+    "expense_growth_default",
+)
+
+THRESHOLD_DEFAULTS = {
+    "cap_rate_min": 0.08,
+    "cash_on_cash_min": 0.10,
+    "dscr_min": 1.25,
+    "irr_min": 0.15,
+    "max_price_to_arv": 0.75,
+    "vacancy_default": 0.04,
+    "rent_growth_default": 0.03,
+    "expense_growth_default": 0.03,
+}
 
 
 # T-613: nullable per-deal threshold override columns. ALTER TABLE in a
@@ -525,6 +556,83 @@ def migrate_overrides_from_xlsx(xlsx_path: Optional[Path] = None,
         )
         imported += 1
     return imported
+
+
+# ──────────────────────────────────────────────
+# THRESHOLDS (T-612, DB-backed)
+# ──────────────────────────────────────────────
+
+def get_thresholds(db_path: Optional[Path] = None) -> dict[str, float]:
+    """Return every threshold as {name: value}. Missing keys fall through
+    to THRESHOLD_DEFAULTS so the caller always gets a complete dict."""
+    with _open(db_path) as conn:
+        rows = conn.execute("SELECT name, value FROM thresholds").fetchall()
+    out = dict(THRESHOLD_DEFAULTS)
+    for r in rows:
+        if r["name"] in THRESHOLD_NAMES:
+            out[r["name"]] = float(r["value"])
+    return out
+
+
+def set_thresholds(updates: dict[str, float],
+                   db_path: Optional[Path] = None) -> dict[str, float]:
+    """Upsert one or more threshold values. Returns the full set after write."""
+    now = datetime.now().isoformat(timespec="seconds")
+    with _open(db_path) as conn:
+        for name, value in updates.items():
+            if name not in THRESHOLD_NAMES:
+                continue
+            if value is None:
+                continue
+            conn.execute("""
+                INSERT INTO thresholds (name, value, updated_at)
+                VALUES (?, ?, ?)
+                ON CONFLICT(name) DO UPDATE SET
+                  value=excluded.value, updated_at=excluded.updated_at
+            """, (name, float(value), now))
+    return get_thresholds(db_path)
+
+
+def migrate_thresholds_from_xlsx(xlsx_path: Optional[Path] = None,
+                                  db_path: Optional[Path] = None) -> int:
+    """One-time import of the Thresholds tab from reference_data.xlsx. Runs
+    only when the DB table is empty. Idempotent."""
+    with _open(db_path) as conn:
+        existing = conn.execute("SELECT COUNT(*) FROM thresholds").fetchone()[0]
+    if existing > 0:
+        return 0
+    try:
+        from openpyxl import load_workbook
+    except Exception:
+        return 0
+    if xlsx_path is None:
+        candidates = [
+            PROJECT_ROOT / "output" / "projects" / "Joe Berlin" / "reference_data.xlsx",
+            PROJECT_ROOT / "templates" / "property_analysis" / "reference_data_template.xlsx",
+        ]
+        xlsx_path = next((c for c in candidates if c.exists()), None)
+    if not xlsx_path or not Path(xlsx_path).exists():
+        return 0
+    try:
+        wb = load_workbook(xlsx_path, data_only=True)
+    except Exception:
+        return 0
+    if "Thresholds" not in wb.sheetnames:
+        return 0
+    ws = wb["Thresholds"]
+    updates: dict[str, float] = {}
+    for row in ws.iter_rows(min_row=2, values_only=True):
+        if not row or len(row) < 3:
+            continue
+        name, val = row[1], row[2]
+        if isinstance(name, str) and val is not None and name.strip() in THRESHOLD_NAMES:
+            try:
+                updates[name.strip()] = float(val)
+            except (TypeError, ValueError):
+                continue
+    if updates:
+        set_thresholds(updates, db_path=db_path)
+    return len(updates)
 
 
 # ──────────────────────────────────────────────

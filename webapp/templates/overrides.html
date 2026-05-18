@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}Property Overrides{% endblock %}
+{% block content %}
+
+<h1>Property Overrides</h1>
+<p style="color: #6b6b6b;">
+  Per-property values that beat every other source in the lookup chain. Use
+  this when you already know the actual tax, rent, or beds for an address.
+  An entry here wins over HUD FMR, WPRDC, and RentCast.
+</p>
+
+{% if saved %}
+<div class="banner info"><strong>Saved.</strong> Override applied. The next
+analysis on this address will pick it up.</div>
+{% endif %}
+{% if deleted %}
+<div class="banner warn"><strong>Deleted.</strong> Override removed.</div>
+{% endif %}
+
+<div class="panel">
+  <h2>Add or update an override</h2>
+  <form method="post" action="/overrides">
+    <div class="row">
+      <label for="address_normalized">Address *</label>
+      <input type="text" id="address_normalized" name="address_normalized" required
+             placeholder="1417 s canal st, pittsburgh, pa 15215"/>
+    </div>
+    <div class="row">
+      <label for="beds">Beds</label>
+      <input type="number" id="beds" name="beds" placeholder="3"/>
+    </div>
+    <div class="row">
+      <label for="baths">Baths</label>
+      <input type="number" step="any" id="baths" name="baths" placeholder="1.5"/>
+    </div>
+    <div class="row">
+      <label for="annual_tax">Annual tax ($)</label>
+      <input type="number" step="any" id="annual_tax" name="annual_tax"
+             placeholder="3249"/>
+    </div>
+    <div class="row">
+      <label for="prior_year_tax">Prior-year tax ($)</label>
+      <input type="number" step="any" id="prior_year_tax" name="prior_year_tax"
+             placeholder="Scaled +10% by the engine"/>
+    </div>
+    <div class="row">
+      <label for="market_rent">Monthly rent ($)</label>
+      <input type="number" step="any" id="market_rent" name="market_rent"
+             placeholder="2500 (overrides HUD FMR)"/>
+    </div>
+    <div class="row">
+      <label for="notes">Notes</label>
+      <textarea id="notes" name="notes" rows="2" placeholder="Free text..."></textarea>
+    </div>
+    <div class="row">
+      <span></span>
+      <button class="btn" type="submit">Save override</button>
+    </div>
+  </form>
+  <p style="color: #6b6b6b; font-size: 12px; margin-top: 6px;">
+    Tip — the address is matched case-insensitively after trimming. Use the
+    full address you'd type into the intake form.
+  </p>
+</div>
+
+<div class="panel">
+  <h2>Existing overrides ({{ rows|length }})</h2>
+  {% if rows %}
+  <table>
+    <thead>
+      <tr>
+        <th>Address</th>
+        <th class="right">Beds</th>
+        <th class="right">Baths</th>
+        <th class="right">Annual tax</th>
+        <th class="right">Prior-year tax</th>
+        <th class="right">Rent</th>
+        <th>Updated</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for r in rows %}
+      <tr>
+        <td>{{ r.address_normalized }}</td>
+        <td class="right">{{ r.beds if r.beds is not none else '—' }}</td>
+        <td class="right">{{ r.baths if r.baths is not none else '—' }}</td>
+        <td class="right">{{ r.annual_tax|money if r.annual_tax is not none else '—' }}</td>
+        <td class="right">{{ r.prior_year_tax|money if r.prior_year_tax is not none else '—' }}</td>
+        <td class="right">{{ r.market_rent|money if r.market_rent is not none else '—' }}</td>
+        <td class="label-mono">{{ r.updated_at }}</td>
+        <td>
+          <form method="post" action="/overrides/delete" style="display: inline;"
+                onsubmit="return confirm('Delete override for {{ r.address_normalized }}?');">
+            <input type="hidden" name="address_normalized" value="{{ r.address_normalized }}"/>
+            <button class="btn secondary" type="submit" style="padding: 4px 10px; font-size: 12px;">Delete</button>
+          </form>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p class="empty-state">No overrides yet. Add one above to start.</p>
+  {% endif %}
+</div>
+
+<a class="btn secondary" href="/">Home</a>
+
+{% endblock %}

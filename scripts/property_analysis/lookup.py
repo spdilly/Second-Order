@@ -162,9 +162,39 @@ def load_property_overrides() -> list[PropertyOverride]:
 
 
 def load_thresholds() -> ThresholdSet:
-    """Read Joe's threshold values from the Thresholds tab."""
-    path = _reference_path()
+    """Thresholds authority chain (T-612):
+
+      DB (deal_intake.thresholds)  -- writable, primary
+        -> on first call with empty DB, migrate Thresholds tab from
+           reference_data.xlsx
+        -> fall back to direct xlsx read if DB layer unavailable
+        -> return ThresholdSet() defaults if nothing else works
+    """
     t = ThresholdSet()
+    try:
+        from scripts.property_analysis import intake as _intake
+    except Exception:
+        _intake = None  # type: ignore
+
+    if _intake is not None:
+        try:
+            _intake.schema_init()
+            with _intake._open() as conn:
+                row_count = conn.execute(
+                    "SELECT COUNT(*) FROM thresholds"
+                ).fetchone()[0]
+            if row_count == 0:
+                _intake.migrate_thresholds_from_xlsx()
+            db_thresholds = _intake.get_thresholds()
+            for name, value in db_thresholds.items():
+                if hasattr(t, name):
+                    setattr(t, name, float(value))
+            return t
+        except Exception:
+            pass
+
+    # Fallback: V1 behavior reading the xlsx directly.
+    path = _reference_path()
     if not path.exists():
         return t
     wb = load_workbook(path, data_only=True)

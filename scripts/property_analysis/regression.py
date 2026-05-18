@@ -1199,6 +1199,216 @@ def case_22_project_edit_rerun_history() -> list[Check]:
     return checks
 
 
+def case_23_overrides_thresholds_web_crud() -> list[Check]:
+    """Phase 6.2 (T-611, T-612, T-615): Property_Overrides and Thresholds
+    CRUD through the web UI. The DB is authoritative; xlsx is fallback.
+    """
+    from fastapi.testclient import TestClient
+    from scripts.property_analysis import intake as _intake
+    import os as _os, importlib
+
+    db_path = TEMP_OUT / "phase6_2_overrides" / "intake.db"
+    db_path.parent.mkdir(parents=True, exist_ok=True)
+    _os.environ["PROPERTY_ANALYSIS_DB"] = str(db_path)
+    importlib.reload(_intake)
+    _intake.schema_init()
+
+    from webapp.main import app as _app
+    checks: list[Check] = []
+    with TestClient(_app) as client:
+        r = client.get("/overrides")
+        checks.append(Check("GET /overrides returns 200",
+                            r.status_code == 200, r.status_code, 200))
+        checks.append(Check("GET /overrides shows empty-state",
+                            "No overrides yet" in r.text, "found", "found"))
+
+        r = client.post(
+            "/overrides",
+            data={
+                "address_normalized": "9876 Test Way, Pittsburgh, PA 15215",
+                "beds": "3", "annual_tax": "3500",
+                "market_rent": "2450", "notes": "Phase 6.2 regression",
+            },
+            follow_redirects=False,
+        )
+        checks.append(Check("POST /overrides returns 303 redirect",
+                            r.status_code == 303, r.status_code, 303))
+
+        ov = _intake.get_override("9876 Test Way, Pittsburgh, PA 15215")
+        checks.append(Check("Override persisted to DB",
+                            ov is not None and ov.beds == 3
+                            and abs(ov.annual_tax - 3500) < 1,
+                            ov, "row with beds=3 tax=3500"))
+
+        r = client.get("/overrides")
+        checks.append(Check("GET /overrides shows the new row",
+                            "9876 test way" in r.text.lower(),
+                            "found", "found"))
+
+        r = client.post(
+            "/overrides/delete",
+            data={"address_normalized": "9876 Test Way, Pittsburgh, PA 15215"},
+            follow_redirects=False,
+        )
+        checks.append(Check("Delete returns 303",
+                            r.status_code == 303, r.status_code, 303))
+        checks.append(Check(
+            "Override gone from DB after delete",
+            _intake.get_override("9876 Test Way, Pittsburgh, PA 15215") is None,
+            "absent", "absent"))
+
+        r = client.get("/thresholds")
+        checks.append(Check("GET /thresholds returns 200",
+                            r.status_code == 200, r.status_code, 200))
+        before = _intake.get_thresholds()
+        checks.append(Check(
+            "Default cap_rate_min == 0.08",
+            abs(before["cap_rate_min"] - 0.08) < 1e-9,
+            before["cap_rate_min"], 0.08))
+
+        r = client.post(
+            "/thresholds",
+            data={
+                "cap_rate_min": "0.09",
+                "cash_on_cash_min": str(before["cash_on_cash_min"]),
+                "dscr_min": str(before["dscr_min"]),
+                "irr_min": str(before["irr_min"]),
+                "max_price_to_arv": str(before["max_price_to_arv"]),
+                "vacancy_default": str(before["vacancy_default"]),
+                "rent_growth_default": str(before["rent_growth_default"]),
+                "expense_growth_default": str(before["expense_growth_default"]),
+            },
+            follow_redirects=False,
+        )
+        checks.append(Check("POST /thresholds returns 303",
+                            r.status_code == 303, r.status_code, 303))
+        after = _intake.get_thresholds()
+        checks.append(Check(
+            "cap_rate_min updated to 0.09 in DB",
+            abs(after["cap_rate_min"] - 0.09) < 1e-9,
+            after["cap_rate_min"], 0.09))
+
+    return checks
+
+
+def case_24_per_deal_threshold_override() -> list[Check]:
+    """Phase 6.2 (T-613, T-616): a per-deal threshold override changes the
+    verdict for THAT deal without affecting others."""
+    from scripts.property_analysis import intake as _intake
+    from scripts.property_analysis.analyze import _run_intake_deal
+    import os as _os, importlib
+
+    db_path = TEMP_OUT / "phase6_2_thresholds" / "intake.db"
+    db_path.parent.mkdir(parents=True, exist_ok=True)
+    _os.environ["PROPERTY_ANALYSIS_DB"] = str(db_path)
+    importlib.reload(_intake)
+    _intake.schema_init()
+
+    packet_root = TEMP_OUT / "phase6_2_thresholds" / "packets"
+
+    deal_a = _intake.create_deal(
+        address="1417 S Canal St, Pittsburgh, PA 15215",
+        section8_status="confirmed",
+        arv_base=255000, rehab_budget=55000,
+        purchase_price=130000, beds_override=3,
+        interest_rate=0.095, down_payment_pct=1.0,
+        override_cap_rate_min=0.12,
+    )
+    deal_b = _intake.create_deal(
+        address="1417 S Canal St, Pittsburgh, PA 15215",
+        section8_status="confirmed",
+        arv_base=255000, rehab_budget=55000,
+        purchase_price=130000, beds_override=3,
+        interest_rate=0.095, down_payment_pct=1.0,
+    )
+
+    out_a = _run_intake_deal(deal_a, output_dir=packet_root, rentcast_mode="off")
+    out_b = _run_intake_deal(deal_b, output_dir=packet_root, rentcast_mode="off")
+
+    checks: list[Check] = []
+    checks.append(Check(
+        "Deal A (cap-rate=12% override) ran without blockers",
+        not out_a.get("blockers"), out_a.get("blockers"), []))
+    checks.append(Check(
+        "Deal B (no override) ran without blockers",
+        not out_b.get("blockers"), out_b.get("blockers"), []))
+
+    report_a = next(Path(out_a["packet_dir"])
+                    .glob("*_report.md")).read_text(encoding="utf-8")
+    report_b = next(Path(out_b["packet_dir"])
+                    .glob("*_report.md")).read_text(encoding="utf-8")
+
+    checks.append(Check(
+        "Deal A report shows cap-rate threshold 12.0%",
+        ">= 12.0%" in report_a,
+        "found" if ">= 12.0%" in report_a else "missing", "found"))
+    checks.append(Check(
+        "Deal A Cap Rate row reads FAIL (9.6% < 12%)",
+        "Cap Rate (Y1) | 9.62% | >= 12.0% | **FAIL**" in report_a,
+        "found" if "Cap Rate (Y1) | 9.62% | >= 12.0% | **FAIL**" in report_a else "missing",
+        "found"))
+    checks.append(Check(
+        "Deal B report shows cap-rate threshold 8.0% (unchanged)",
+        ">= 8.0%" in report_b,
+        "found" if ">= 8.0%" in report_b else "missing", "found"))
+    checks.append(Check(
+        "Deal B Cap Rate row reads PASS (9.6% > 8%)",
+        "Cap Rate (Y1) | 9.62% | >= 8.0% | **PASS**" in report_b,
+        "found" if "Cap Rate (Y1) | 9.62% | >= 8.0% | **PASS**" in report_b else "missing",
+        "found"))
+
+    return checks
+
+
+def case_25_pdf_export() -> list[Check]:
+    """Phase 6.2 (T-614, T-617): PDF export endpoint returns a non-empty
+    application/pdf response with a valid PDF magic header."""
+    from fastapi.testclient import TestClient
+    from scripts.property_analysis import intake as _intake
+    from scripts.property_analysis.analyze import _run_intake_deal
+    import os as _os, importlib
+
+    db_path = TEMP_OUT / "phase6_2_pdf" / "intake.db"
+    db_path.parent.mkdir(parents=True, exist_ok=True)
+    _os.environ["PROPERTY_ANALYSIS_DB"] = str(db_path)
+    importlib.reload(_intake)
+    _intake.schema_init()
+
+    deal = _intake.create_deal(
+        address="1417 S Canal St, Pittsburgh, PA 15215",
+        section8_status="confirmed",
+        arv_base=255000, rehab_budget=55000,
+        purchase_price=130000, beds_override=3,
+        interest_rate=0.095, down_payment_pct=1.0,
+    )
+    out = _run_intake_deal(
+        deal, output_dir=TEMP_OUT / "phase6_2_pdf" / "packets",
+        rentcast_mode="off",
+    )
+    run_id = out["run_id"]
+
+    from webapp.main import app as _app
+    checks: list[Check] = []
+    with TestClient(_app) as client:
+        r = client.get(f"/deals/{deal.deal_id}/runs/{run_id}/pdf")
+        checks.append(Check(
+            "GET /deals/{id}/runs/{run}/pdf returns 200",
+            r.status_code == 200, r.status_code, 200))
+        checks.append(Check(
+            "PDF response carries application/pdf content type",
+            r.headers.get("content-type", "").startswith("application/pdf"),
+            r.headers.get("content-type"), "application/pdf"))
+        checks.append(Check(
+            "PDF body is non-empty (> 10 KB)",
+            len(r.content) > 10_000, len(r.content), "> 10000"))
+        checks.append(Check(
+            "PDF body starts with PDF magic header (%PDF)",
+            r.content[:4] == b"%PDF",
+            r.content[:4], b"%PDF"))
+
+    return checks
+
+
 def case_12_safmr_ambiguity_surfaced() -> list[Check]:
     """When a ZIP maps to multiple HUD areas, surface alternates as a warning.
 
@@ -1264,6 +1474,9 @@ CASES = [
     ("20. Binding-constraint magnitude in Decision Breakdown (T-302)", case_20_magnitude_column),
     ("21. Webapp routes smoke test + diagnostic-only UI suppression (T-405/406)", case_21_webapp_routes_smoke),
     ("22. Phase 6.1: edit -> re-run -> history shows both, older openable (T-601..T-605)", case_22_project_edit_rerun_history),
+    ("23. Phase 6.2: /overrides + /thresholds CRUD round-trip (T-611/T-612/T-615)", case_23_overrides_thresholds_web_crud),
+    ("24. Phase 6.2: per-deal threshold override flips one verdict, not the other (T-613/T-616)", case_24_per_deal_threshold_override),
+    ("25. Phase 6.2: PDF export endpoint returns valid application/pdf (T-614/T-617)", case_25_pdf_export),
 ]
 
 

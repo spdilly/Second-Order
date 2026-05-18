@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Buy Thresholds{% endblock %}
+{% block content %}
+
+<h1>Buy Thresholds</h1>
+<p style="color: #6b6b6b;">
+  Defaults the engine uses to score every deal. Cap rate, cash-on-cash, DSCR,
+  and IRR floors are pass/fail criteria. Vacancy and growth rates are
+  underwriting assumptions when no per-deal value is supplied. Per-deal
+  overrides can be set on the deal page.
+</p>
+
+{% if saved %}
+<div class="banner info"><strong>Saved.</strong> New thresholds take effect on the next analysis.</div>
+{% endif %}
+
+<form method="post" action="/thresholds">
+<div class="panel">
+  <h2>Pass / fail thresholds</h2>
+  <div class="row">
+    <label for="cap_rate_min">Cap rate min (decimal)</label>
+    <input type="number" step="any" id="cap_rate_min" name="cap_rate_min"
+           value="{{ thresholds.cap_rate_min }}" required/>
+  </div>
+  <div class="row">
+    <label for="cash_on_cash_min">Cash-on-cash min (decimal)</label>
+    <input type="number" step="any" id="cash_on_cash_min" name="cash_on_cash_min"
+           value="{{ thresholds.cash_on_cash_min }}" required/>
+  </div>
+  <div class="row">
+    <label for="dscr_min">DSCR min (x)</label>
+    <input type="number" step="any" id="dscr_min" name="dscr_min"
+           value="{{ thresholds.dscr_min }}" required/>
+  </div>
+  <div class="row">
+    <label for="irr_min">Levered IRR min (decimal)</label>
+    <input type="number" step="any" id="irr_min" name="irr_min"
+           value="{{ thresholds.irr_min }}" required/>
+  </div>
+  <div class="row">
+    <label for="max_price_to_arv">Price / ARV ceiling (decimal)</label>
+    <input type="number" step="any" id="max_price_to_arv" name="max_price_to_arv"
+           value="{{ thresholds.max_price_to_arv }}" required/>
+  </div>
+
+  <h3 style="margin-top: 16px;">Underwriting defaults</h3>
+  <p style="color: #6b6b6b; font-size: 12px;">Used when a deal does not specify its own value.</p>
+  <div class="row">
+    <label for="vacancy_default">Vacancy (decimal)</label>
+    <input type="number" step="any" id="vacancy_default" name="vacancy_default"
+           value="{{ thresholds.vacancy_default }}" required/>
+  </div>
+  <div class="row">
+    <label for="rent_growth_default">Rent growth (decimal/yr)</label>
+    <input type="number" step="any" id="rent_growth_default" name="rent_growth_default"
+           value="{{ thresholds.rent_growth_default }}" required/>
+  </div>
+  <div class="row">
+    <label for="expense_growth_default">Expense growth (decimal/yr)</label>
+    <input type="number" step="any" id="expense_growth_default" name="expense_growth_default"
+           value="{{ thresholds.expense_growth_default }}" required/>
+  </div>
+
+  <div class="row">
+    <span></span>
+    <button class="btn" type="submit">Save thresholds</button>
+  </div>
+</div>
+</form>
+
+<a class="btn secondary" href="/">Home</a>
+
+{% endblock %}

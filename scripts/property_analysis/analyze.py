@@ -512,6 +512,21 @@ def _run_intake_deal(deal, output_dir, rentcast_mode=None) -> dict:
         overrides_dict["utilities_annual"] = deal.owner_utilities_annual
     if deal.hoa_annual is not None:
         overrides_dict["hoa_annual"] = deal.hoa_annual
+
+    # T-613: per-deal threshold overrides beat the global Thresholds table.
+    # Each is nullable on deal_intake; when non-NULL, push it into the Inputs
+    # dataclass so the verdict scorer evaluates against this deal's bar.
+    if deal.override_cap_rate_min is not None:
+        overrides_dict["cap_rate_min"] = deal.override_cap_rate_min
+    if deal.override_cash_on_cash_min is not None:
+        overrides_dict["cash_on_cash_min"] = deal.override_cash_on_cash_min
+    if deal.override_dscr_min is not None:
+        overrides_dict["dscr_min"] = deal.override_dscr_min
+    if deal.override_irr_min is not None:
+        overrides_dict["irr_min"] = deal.override_irr_min
+    if deal.override_max_price_to_arv is not None:
+        overrides_dict["max_price_to_arv"] = deal.override_max_price_to_arv
+
     return analyze(
         address=deal.address,
         purchase_price=deal.purchase_price,

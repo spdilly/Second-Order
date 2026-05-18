@@ -84,6 +84,7 @@
   {% if excel_name %}
     <a class="btn secondary" href="/deals/{{ deal.deal_id }}/runs/{{ run_id }}/files/{{ excel_name }}">Download proforma (xlsx)</a>
   {% endif %}
+  <a class="btn" href="/deals/{{ deal.deal_id }}/runs/{{ run_id }}/pdf" target="_blank">Download PDF memo</a>
   {% if report_name %}
     <a class="btn secondary" href="/deals/{{ deal.deal_id }}/runs/{{ run_id }}/files/{{ report_name }}">Download report (md)</a>
   {% endif %}

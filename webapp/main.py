@@ -195,6 +195,13 @@ def deal_edit(
     refi_year: Optional[str] = Form(None),
     refi_ltv: Optional[str] = Form(None),
     notes: str = Form(""),
+    # T-613: per-deal threshold overrides. Empty -> NULL -> fall through to
+    # the global Thresholds tab.
+    override_cap_rate_min: Optional[str] = Form(None),
+    override_cash_on_cash_min: Optional[str] = Form(None),
+    override_dscr_min: Optional[str] = Form(None),
+    override_irr_min: Optional[str] = Form(None),
+    override_max_price_to_arv: Optional[str] = Form(None),
 ):
     if intake.get_deal(deal_id) is None:
         raise HTTPException(404, f"Deal {deal_id} not found")
@@ -223,6 +230,11 @@ def deal_edit(
         "interest_rate":           _form_float(interest_rate),
         "refi_year":               _form_int(refi_year),
         "refi_ltv":                _form_float(refi_ltv),
+        "override_cap_rate_min":         _form_float(override_cap_rate_min),
+        "override_cash_on_cash_min":     _form_float(override_cash_on_cash_min),
+        "override_dscr_min":             _form_float(override_dscr_min),
+        "override_irr_min":              _form_float(override_irr_min),
+        "override_max_price_to_arv":     _form_float(override_max_price_to_arv),
     }
     intake.update_deal(deal_id, **fields)
     return RedirectResponse(
@@ -369,6 +381,46 @@ def overrides_delete(address_normalized: str = Form(...)):
     return RedirectResponse(url="/overrides?deleted=1", status_code=303)
 
 
+# ── T-612: Thresholds web CRUD ─────────────────────────────────
+
+@app.get("/thresholds", response_class=HTMLResponse)
+def thresholds_view(request: Request, saved: int = 0):
+    return templates.TemplateResponse(
+        request,
+        "thresholds.html",
+        {"thresholds": intake.get_thresholds(),
+         "names": intake.THRESHOLD_NAMES,
+         "saved": bool(saved)},
+    )
+
+
+@app.post("/thresholds")
+def thresholds_update(
+    cap_rate_min: Optional[str] = Form(None),
+    cash_on_cash_min: Optional[str] = Form(None),
+    dscr_min: Optional[str] = Form(None),
+    irr_min: Optional[str] = Form(None),
+    max_price_to_arv: Optional[str] = Form(None),
+    vacancy_default: Optional[str] = Form(None),
+    rent_growth_default: Optional[str] = Form(None),
+    expense_growth_default: Optional[str] = Form(None),
+):
+    updates = {
+        "cap_rate_min": _form_float(cap_rate_min),
+        "cash_on_cash_min": _form_float(cash_on_cash_min),
+        "dscr_min": _form_float(dscr_min),
+        "irr_min": _form_float(irr_min),
+        "max_price_to_arv": _form_float(max_price_to_arv),
+        "vacancy_default": _form_float(vacancy_default),
+        "rent_growth_default": _form_float(rent_growth_default),
+        "expense_growth_default": _form_float(expense_growth_default),
+    }
+    # Drop None values so we don't accidentally clear a field
+    updates = {k: v for k, v in updates.items() if v is not None}
+    intake.set_thresholds(updates)
+    return RedirectResponse(url="/thresholds?saved=1", status_code=303)
+
+
 @app.get("/deals/{deal_id}/history", response_class=HTMLResponse)
 def deal_history(request: Request, deal_id: str):
     """T-603: every timestamped run under <slug>/, newest first.
@@ -440,6 +492,37 @@ def packet_view(request: Request, deal_id: str):
         {"deal": deal, "files": files,
          "packet_dir": str(packet),
          "diagnostic_only": diagnostic},
+    )
+
+
+@app.get("/deals/{deal_id}/runs/{run_id}/pdf")
+def packet_run_pdf(deal_id: str, run_id: str):
+    """T-614: render the deal memo as a print-ready PDF via Chromium.
+
+    The PDF is cached next to the markdown report so a re-download does not
+    re-render. Returns FileResponse with application/pdf content type.
+    """
+    deal = intake.get_deal(deal_id)
+    if deal is None:
+        raise HTTPException(404, f"Deal {deal_id} not found")
+    packet = _resolve_packet_dir(deal, run_id)
+    report_files = list(packet.glob("*_report.md"))
+    if not report_files:
+        raise HTTPException(404, "No report.md in this packet")
+    try:
+        from scripts.property_analysis.pdf_export import render_report_to_pdf
+        pdf_path = render_report_to_pdf(
+            report_files[0],
+            title=f"{deal.address} — {run_id}",
+        )
+    except RuntimeError as e:
+        raise HTTPException(500, str(e))
+    if not pdf_path.exists():
+        raise HTTPException(500, "PDF render produced no file")
+    return FileResponse(
+        str(pdf_path),
+        media_type="application/pdf",
+        filename=pdf_path.name,
     )
 
 

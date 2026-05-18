@@ -94,6 +94,33 @@ class Inputs:
     irr_min: float = 0.15
     max_price_to_arv: float = 0.75         # Don't pay more than X% of ARV
 
+    # ── V2 additions: Joe-shape inputs (defaults keep V1 callers working) ──
+
+    # Market context (informational only — drives no math, surfaces on Summary)
+    market_rent: float = 0.0               # RentCast / open-market comparable
+
+    # Appreciation drives property-value tracking year-by-year on Summary
+    appreciation_rate: float = 0.05        # Joe's historical 5%
+
+    # Acquisition line items Joe tracks explicitly
+    wholesaler_fee: float = 0.0
+    inspection_fee: float = 350.0
+    appraisal_fee: float = 750.0
+    holding_utilities_monthly: float = 0.0  # Tax/ins/util carry during rehab
+
+    # GP/LP split — LP gets X% after capital returned, GP gets 1-X%
+    gp_lp_split_lp: float = 0.50
+
+    # Provenance / source strings (populated by analyze.py, shown on Inputs +
+    # Sources tabs). Pure metadata — does NOT affect math.
+    monthly_rent_source: str = ""
+    market_rent_source: str = ""
+    property_tax_source: str = ""
+    insurance_source: str = ""
+    arv_source: str = ""
+    purchase_price_source: str = ""
+    beds_source: str = ""
+
 
 # ──────────────────────────────────────────────
 # OUTPUTS
