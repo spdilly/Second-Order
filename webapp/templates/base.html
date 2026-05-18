@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>{% block title %}Property Analysis{% endblock %}</title>
+<style>
+  :root {
+    --bg: #fafaf8; --paper: #ffffff; --rule: #d6d4cf;
+    --t1: #141414; --t2: #3d3d3d; --t3: #6b6b6b;
+    --teal: #2a7c7c; --teal-soft: #e8f1f1;
+    --warn: #b8741f; --warn-soft: #fdf3e0;
+    --fail: #b91c1c; --fail-soft: #fde8e8;
+    --pass: #1f7a4a; --pass-soft: #e6f4ec;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", "Inter", Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--t1); line-height: 1.5;
+    font-size: 14px;
+  }
+  .topbar {
+    background: var(--t1); color: #fff; padding: 12px 24px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .topbar a { color: #fff; text-decoration: none; font-weight: 600; }
+  .topbar .nav a { margin-left: 20px; font-weight: 500; opacity: 0.85; }
+  .topbar .nav a:hover { opacity: 1; }
+  .container { max-width: 1100px; margin: 24px auto; padding: 0 24px; }
+  h1 { font-size: 22px; margin-bottom: 16px; }
+  h2 { font-size: 17px; margin: 24px 0 8px; color: var(--t1); border-bottom: 1px solid var(--rule); padding-bottom: 4px; }
+  h3 { font-size: 14px; margin: 16px 0 6px; color: var(--t2); text-transform: uppercase; letter-spacing: 0.4px; }
+  .panel {
+    background: var(--paper); border: 1px solid var(--rule);
+    padding: 20px; margin-bottom: 18px; border-radius: 4px;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 8px 0; }
+  th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--rule); font-size: 13px; }
+  th { background: #f0efeb; font-weight: 600; }
+  td.right, th.right { text-align: right; }
+  .label-mono { font-family: "Source Code Pro", "SF Mono", Consolas, monospace; font-size: 12px; }
+  .badge {
+    display: inline-block; padding: 2px 8px; border-radius: 3px;
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+  }
+  .badge.pass { background: var(--pass-soft); color: var(--pass); }
+  .badge.fail { background: var(--fail-soft); color: var(--fail); }
+  .badge.warn { background: var(--warn-soft); color: var(--warn); }
+  .badge.diag { background: #fff1d0; color: #7a5a00; }
+  .banner {
+    border-left: 4px solid var(--fail); background: var(--fail-soft);
+    padding: 14px 18px; margin-bottom: 18px;
+  }
+  .banner.warn { border-color: var(--warn); background: var(--warn-soft); }
+  .banner.info { border-color: var(--teal); background: var(--teal-soft); }
+  .btn {
+    display: inline-block; padding: 8px 16px; background: var(--teal);
+    color: #fff; text-decoration: none; border-radius: 3px; font-weight: 600;
+    border: none; cursor: pointer; font-size: 13px;
+  }
+  .btn:hover { background: #226363; }
+  .btn.secondary { background: #fff; color: var(--t1); border: 1px solid var(--rule); }
+  .btn.secondary:hover { background: var(--bg); }
+  form .row { display: grid; grid-template-columns: 200px 1fr; gap: 10px; margin-bottom: 10px; align-items: center; }
+  input[type="text"], input[type="number"], select, textarea {
+    width: 100%; padding: 6px 10px; border: 1px solid var(--rule);
+    border-radius: 3px; font-size: 13px; font-family: inherit;
+  }
+  textarea { resize: vertical; min-height: 60px; }
+  pre.report {
+    background: #fafaf6; padding: 16px; border: 1px solid var(--rule);
+    border-radius: 4px; overflow-x: auto; font-size: 12px;
+    font-family: "Source Code Pro", "SF Mono", Consolas, monospace;
+    white-space: pre-wrap;
+  }
+  .source-grid {
+    display: grid; grid-template-columns: 200px 1fr 130px 130px; gap: 8px 16px;
+    font-size: 13px;
+  }
+  .source-grid .label { color: var(--t3); font-weight: 500; }
+  .source-grid .value { font-weight: 600; }
+  .source-grid .source { color: var(--teal); font-family: monospace; font-size: 12px; }
+  .source-grid .conf { font-size: 11px; text-transform: uppercase; letter-spacing: 0.3px; color: var(--t3); }
+  .empty-state { color: var(--t3); font-style: italic; padding: 12px 0; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="/">Property Analysis</a>
+  <div class="nav">
+    <a href="/">Intake</a>
+    <a href="/healthz">Health</a>
+  </div>
+</div>
+<div class="container">
+{% block content %}{% endblock %}
+</div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+# ──────────────────────────────────────────────
+# Consulting/Code — runtime requirements
+#
+# Pinned for Joe Berlin's Property Analysis V1 and Sean's shared
+# financial-model and webapp scripts. Python 3.11+ recommended.
+#
+# Install:
+#     python -m venv .venv
+#     .venv/Scripts/activate    (Windows)  /  source .venv/bin/activate  (POSIX)
+#     pip install -r requirements.txt
+# ──────────────────────────────────────────────
+
+# Property Analysis — core
+requests>=2.31.0
+openpyxl>=3.1.5
+usaddress>=0.5.16
+
+# Property Analysis — webapp (FastAPI + Jinja)
+fastapi>=0.115,<1.0
+uvicorn[standard]>=0.30,<1.0
+jinja2>=3.1.4
+python-multipart>=0.0.20
+markdown>=3.6
+
+# Property Analysis — test client (used by regression case 21)
+httpx>=0.27
+
+# Optional, used by financial_model_framework + other scripts
+# (kept commented; install on demand)
+# pandas>=2.2
+# matplotlib>=3.8
+# pywin32>=306         # COM (Windows only — Excel recalc)
+# playwright>=1.45     # PDF/screenshot scripts
+# python-docx>=1.1     # docx generation
+# docx2pdf>=0.1.8      # docx -> pdf (Windows + Word)

@@ -1,0 +1,6 @@
+Static assets directory.
+
+Currently empty — the V1 UI inlines all CSS into base.html and ships no
+external JS or images. This file exists only so the directory is preserved
+when the project is packaged as a zip (empty directories are dropped by
+default).

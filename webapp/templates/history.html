@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}{{ deal.deal_id }} — Run history{% endblock %}
+{% block content %}
+
+<h1>Run history</h1>
+<p class="label-mono" style="color: #6b6b6b;">
+  {{ deal.address }} · {{ deal.deal_id }}
+</p>
+
+<div class="panel">
+  <h2>Past analyses ({{ runs|length }})</h2>
+  <p style="color: #6b6b6b; font-size: 12px; margin-bottom: 12px;">
+    Every run writes a fresh packet folder. Older runs are never overwritten,
+    so the assumptions for each historical analysis remain reproducible.
+  </p>
+
+  {% if runs %}
+  <table>
+    <thead>
+      <tr>
+        <th>Run</th>
+        <th>Verdict</th>
+        <th class="right">Cap rate</th>
+        <th class="right">CoC (Y1)</th>
+        <th class="right">DSCR (min)</th>
+        <th class="right">Levered IRR</th>
+        <th>RentCast</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for r in runs %}
+      <tr>
+        <td class="label-mono">
+          {{ r.run_id }}
+          {% if r.is_latest %}<span class="badge pass" style="margin-left: 6px;">latest</span>{% endif %}
+        </td>
+        <td>
+          {% if r.diagnostic_only %}
+            <span class="badge fail">DIAGNOSTIC ONLY</span>
+          {% elif r.recommendation %}
+            <span class="badge {% if r.recommendation == 'BUY' %}pass{% elif r.recommendation == 'CONSIDER' %}warn{% else %}fail{% endif %}">{{ r.recommendation }}</span>
+          {% else %}
+            <span class="badge diag">—</span>
+          {% endif %}
+        </td>
+        <td class="right">{{ r.metrics.get('cap_rate')|pct(1) if not r.diagnostic_only else '—' }}</td>
+        <td class="right">{{ r.metrics.get('cash_on_cash_y1')|pct(1) if not r.diagnostic_only else '—' }}</td>
+        <td class="right">{{ r.metrics.get('dscr_min')|ratio if not r.diagnostic_only else '—' }}</td>
+        <td class="right">{{ r.metrics.get('levered_irr')|pct(1) if not r.diagnostic_only else '—' }}</td>
+        <td>
+          <span class="badge {% if r.rentcast_mode == 'off' %}pass{% elif r.rentcast_mode == 'live' %}warn{% else %}diag{% endif %}">{{ r.rentcast_mode or 'off' }}</span>
+        </td>
+        <td><a class="btn secondary" href="/deals/{{ deal.deal_id }}/runs/{{ r.run_id }}">Open</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p class="empty-state">
+      No runs yet. Open the deal page, fill the inputs, and click
+      <em>Run analysis</em>.
+    </p>
+  {% endif %}
+</div>
+
+<a class="btn secondary" href="/deals/{{ deal.deal_id }}">Back to deal</a>
+<a class="btn secondary" href="/">Home</a>
+
+{% endblock %}

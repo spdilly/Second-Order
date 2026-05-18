@@ -1,0 +1,53 @@
+{
+  "displayFieldName": "ST_NAME",
+  "fieldAliases": {
+    "PARCELID": "PARCELID",
+    "FULL_ADDRESS": "Full Address",
+    "ZIP_CODE": "ZIP_CODE",
+    "MUNICIPALITY": "MUNICIPALITY",
+    "ST_TYPE": "ST_TYPE"
+  },
+  "fields": [
+    {
+      "name": "PARCELID",
+      "type": "esriFieldTypeString",
+      "alias": "PARCELID",
+      "length": 255
+    },
+    {
+      "name": "FULL_ADDRESS",
+      "type": "esriFieldTypeString",
+      "alias": "Full Address",
+      "length": 128
+    },
+    {
+      "name": "ZIP_CODE",
+      "type": "esriFieldTypeString",
+      "alias": "ZIP_CODE",
+      "length": 10
+    },
+    {
+      "name": "MUNICIPALITY",
+      "type": "esriFieldTypeString",
+      "alias": "MUNICIPALITY",
+      "length": 50
+    },
+    {
+      "name": "ST_TYPE",
+      "type": "esriFieldTypeString",
+      "alias": "ST_TYPE",
+      "length": 8
+    }
+  ],
+  "features": [
+    {
+      "attributes": {
+        "PARCELID": "0168K00317000000",
+        "FULL_ADDRESS": "1417 S CANAL ST",
+        "ZIP_CODE": "15215",
+        "MUNICIPALITY": "SHARPSBURG BOROUGH",
+        "ST_TYPE": "ST"
+      }
+    }
+  ]
+}

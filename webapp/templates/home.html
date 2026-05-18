@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block title %}Deal Intake{% endblock %}
+{% block content %}
+
+<h1>Deal Intake</h1>
+
+<div class="panel">
+  <h2>New deal</h2>
+  <form method="post" action="/deals">
+    <div class="row">
+      <label for="address">Address *</label>
+      <input type="text" id="address" name="address" required
+             placeholder="1417 S Canal St, Pittsburgh, PA 15215"/>
+    </div>
+    <div class="row">
+      <label for="arv_base">ARV ($) *</label>
+      <input type="number" step="any" id="arv_base" name="arv_base"
+             placeholder="255000"/>
+    </div>
+    <div class="row">
+      <label for="rehab_budget">Rehab budget ($) *</label>
+      <input type="number" step="any" id="rehab_budget" name="rehab_budget"
+             placeholder="55000 (or 0 for turnkey)"/>
+    </div>
+    <div class="row">
+      <label for="section8_status">Section 8 status *</label>
+      <select id="section8_status" name="section8_status">
+        <option value="assumed">assumed</option>
+        <option value="confirmed">confirmed</option>
+        <option value="not_section8">not Section 8</option>
+        <option value="unknown">unknown</option>
+      </select>
+    </div>
+    <div class="row">
+      <label for="purchase_price">Purchase price ($)</label>
+      <input type="number" step="any" id="purchase_price" name="purchase_price"
+             placeholder="Blank = max-bid mode"/>
+    </div>
+    <div class="row">
+      <label for="beds_override">Beds (override)</label>
+      <input type="number" id="beds_override" name="beds_override"
+             placeholder="Blank = let pipeline resolve"/>
+    </div>
+    <div class="row">
+      <label for="prior_year_tax">Prior-year tax ($)</label>
+      <input type="number" step="any" id="prior_year_tax" name="prior_year_tax"
+             placeholder="Will be grossed up +10% in model"/>
+    </div>
+    <div class="row">
+      <label for="interest_rate">Interest rate</label>
+      <input type="number" step="any" id="interest_rate" name="interest_rate"
+             placeholder="0.085"/>
+    </div>
+    <div class="row">
+      <label for="down_payment_pct">Down payment fraction</label>
+      <input type="number" step="any" id="down_payment_pct" name="down_payment_pct"
+             placeholder="1.0 = all cash; 0.25 = 25% down"/>
+    </div>
+    <div class="row">
+      <label for="notes">Notes</label>
+      <textarea id="notes" name="notes" placeholder="Free text..."></textarea>
+    </div>
+    <div class="row">
+      <span></span>
+      <button class="btn" type="submit">Create deal</button>
+    </div>
+  </form>
+</div>
+
+<div class="panel">
+  <h2>Deals ({{ deals|length }})</h2>
+  {% if deals %}
+    <table>
+      <thead>
+        <tr>
+          <th>Deal ID</th>
+          <th>Status</th>
+          <th>Address</th>
+          <th class="right">Price</th>
+          <th class="right">ARV</th>
+          <th>Section 8</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for d in deals %}
+        <tr>
+          <td class="label-mono">{{ d.deal_id }}</td>
+          <td>
+            <span class="badge {% if d.status == 'analyzed' %}pass{% elif d.status == 'ready' %}warn{% else %}diag{% endif %}">
+              {{ d.status }}
+            </span>
+          </td>
+          <td>{{ d.address }}</td>
+          <td class="right">{{ d.purchase_price|money }}</td>
+          <td class="right">{{ d.arv_base|money }}</td>
+          <td>{{ d.section8_status }}</td>
+          <td><a class="btn secondary" href="/deals/{{ d.deal_id }}">Open</a></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="empty-state">No deals yet. Create one above.</p>
+  {% endif %}
+</div>
+
+{% endblock %}

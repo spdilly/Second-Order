@@ -1,0 +1,18 @@
+# Property Analysis Skill — runtime dependencies
+# Install: pip install -r requirements.txt
+# Tested with Python 3.10, 3.11, 3.12, 3.14.
+
+# Excel read/write — required for proforma template + populate + reference data
+openpyxl>=3.1.0
+
+# US address parser — converts raw address strings into structured components
+usaddress>=0.5.10
+
+# HTTP client — used by the RentCast adapter; HUD CSV download script
+requests>=2.31.0
+
+# Optional: Windows Excel automation via COM. Required only for the regression
+# suite's Excel-recalculation validation and for any builder script that needs
+# Excel to materialize formulas. The runtime pipeline does NOT depend on this.
+# Skip on macOS/Linux; the analyze pipeline still works without it.
+pywin32>=306; platform_system == "Windows"

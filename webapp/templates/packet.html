@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}{{ deal.deal_id }} — Packet{% endblock %}
+{% block content %}
+
+<h1>Packet for {{ deal.address }}</h1>
+<p class="label-mono" style="color: #6b6b6b;">{{ deal.deal_id }}</p>
+
+{% if diagnostic_only %}
+<div class="banner">
+  <strong>DIAGNOSTIC ONLY.</strong>
+  The most recent run produced no actionable verdict. Files below are diagnostic
+  output, not investment guidance.
+</div>
+{% endif %}
+
+<div class="panel">
+  <h2>Files</h2>
+  <p style="color: #6b6b6b; font-size: 12px; margin-bottom: 12px;">
+    Packet folder: <span class="label-mono">{{ packet_dir }}</span>
+  </p>
+  {% if files %}
+  <table>
+    <thead>
+      <tr>
+        <th>Filename</th>
+        <th>Type</th>
+        <th class="right">Size</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for f in files %}
+      <tr>
+        <td class="label-mono">{{ f.name }}</td>
+        <td>
+          {% if f.name.endswith('.xlsx') %}Excel proforma
+          {% elif f.name.endswith('_report.md') %}Markdown report
+          {% elif f.name.endswith('_sources.json') %}Sources JSON
+          {% elif f.name.endswith('.md') %}Markdown
+          {% elif f.name.endswith('.json') %}JSON
+          {% else %}File{% endif %}
+        </td>
+        <td class="right label-mono">{{ '{:,}'.format(f.stat().st_size) }} B</td>
+        <td><a class="btn secondary" href="/files/{{ deal.deal_id }}/{{ f.name }}">Download</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p class="empty-state">No files in this packet.</p>
+  {% endif %}
+</div>
+
+<a class="btn secondary" href="/deals/{{ deal.deal_id }}">Back to deal</a>
+<a class="btn secondary" href="/">Home</a>
+
+{% endblock %}

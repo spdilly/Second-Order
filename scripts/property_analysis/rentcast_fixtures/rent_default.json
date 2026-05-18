@@ -1,0 +1,29 @@
+{
+  "rent": 1525,
+  "rentRangeLow": 1380,
+  "rentRangeHigh": 1650,
+  "confidence": "medium",
+  "comparables": [
+    {
+      "address": "1400 Block Canal",
+      "rent": 1500,
+      "beds": 3,
+      "sqft": 1200,
+      "distance_mi": 0.1
+    },
+    {
+      "address": "Aspinwall Area",
+      "rent": 1450,
+      "beds": 3,
+      "sqft": 1100,
+      "distance_mi": 0.5
+    },
+    {
+      "address": "Sharpsburg",
+      "rent": 1625,
+      "beds": 3,
+      "sqft": 1350,
+      "distance_mi": 0.7
+    }
+  ]
+}

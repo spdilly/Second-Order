@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}{{ deal.deal_id }} — Result{% endblock %}
+{% block content %}
+
+<h1>{{ deal.address }}</h1>
+<p class="label-mono" style="color: #6b6b6b;">
+  {{ deal.deal_id }} · run {{ run_id }}
+  · RentCast mode: <span class="badge {% if sources.rentcast_mode == 'off' %}pass{% elif sources.rentcast_mode == 'live' %}warn{% else %}diag{% endif %}">{{ sources.rentcast_mode or 'off' }}</span>
+</p>
+
+{# ============================================================== #}
+{#  DIAGNOSTIC SUPPRESSION                                         #}
+{#  If ANY blocker is present, this UI MUST NOT show an            #}
+{#  actionable verdict, recommendation, or max-bid.                #}
+{# ============================================================== #}
+{% if diagnostic_only %}
+<div class="banner">
+  <strong>DIAGNOSTIC ONLY — NOT ACTIONABLE.</strong>
+  Blockers were detected during analysis. No buy/no-buy verdict and no max-bid
+  guidance is produced. Resolve the blockers below before treating any number
+  on this page as a recommendation.
+  <ul style="margin: 10px 0 0 20px;">
+    {% for b in sources.blockers %}
+    <li>{{ b }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% else %}
+<div class="banner info">
+  <strong>Verdict computed.</strong>
+  All required inputs were resolved. Recommendation and max-bid (if shown) below
+  reflect deterministic math against thresholds; no LLM in the decision path.
+</div>
+{% endif %}
+
+{# Inputs source-grid: provenance of every load-bearing input. #}
+<div class="panel">
+  <h2>Inputs and provenance</h2>
+  <div class="source-grid">
+    <div class="label" style="font-weight: 600; color: #141414;">Field</div>
+    <div class="value" style="font-weight: 600;">Value</div>
+    <div class="source" style="font-weight: 600;">Source</div>
+    <div class="conf" style="font-weight: 600;">Confidence</div>
+    {% for key, p in sources.provenance.items() %}
+    <div class="label">{{ key }}</div>
+    <div class="value">
+      {% if p.value is none %}—
+      {% elif key in ('purchase_price', 'arv', 'rehab_cost', 'monthly_rent', 'market_rent', 'property_tax_annual') %}
+        ${{ '{:,.0f}'.format(p.value) }}
+      {% else %}{{ p.value }}{% endif %}
+    </div>
+    <div class="source">{{ p.source }}</div>
+    <div class="conf">{{ p.confidence }}</div>
+    {% if p.reconciliation %}
+    <div class="label"></div>
+    <div class="value" style="grid-column: 2 / -1; color: #6b6b6b; font-weight: 400; font-size: 12px;">
+      ↳ {{ p.reconciliation }}
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+{% if sources.rent_variance and sources.rent_variance.flag and sources.rent_variance.flag != 'none' %}
+<div class="banner {% if sources.rent_variance.flag == 'high' %}warn{% else %}info{% endif %}">
+  <strong>Rent variance check.</strong> {{ sources.rent_variance.message }}
+</div>
+{% endif %}
+
+{# Rendered markdown report. Already suppresses verdict in diagnostic mode #}
+{# upstream in scripts/property_analysis/report.py — we render as-is.       #}
+<div class="panel">
+  <h2>Underwriting report</h2>
+  <div class="report-body" style="font-size: 13px;">
+    {{ report_html|safe }}
+  </div>
+</div>
+
+<div class="panel">
+  <h2>Packet files</h2>
+  <p style="color: #6b6b6b; font-size: 12px; margin-bottom: 12px;">
+    Saved to <span class="label-mono">{{ packet_dir }}</span>
+  </p>
+  {% if excel_name %}
+    <a class="btn secondary" href="/deals/{{ deal.deal_id }}/runs/{{ run_id }}/files/{{ excel_name }}">Download proforma (xlsx)</a>
+  {% endif %}
+  {% if report_name %}
+    <a class="btn secondary" href="/deals/{{ deal.deal_id }}/runs/{{ run_id }}/files/{{ report_name }}">Download report (md)</a>
+  {% endif %}
+  {% if sources_name %}
+    <a class="btn secondary" href="/deals/{{ deal.deal_id }}/runs/{{ run_id }}/files/{{ sources_name }}">Download sources (json)</a>
+  {% endif %}
+  <a class="btn secondary" href="/packets/{{ deal.deal_id }}">Latest packet files</a>
+</div>
+
+<a class="btn secondary" href="/deals/{{ deal.deal_id }}">Back to deal</a>
+<a class="btn secondary" href="/deals/{{ deal.deal_id }}/history">Run history</a>
+<a class="btn secondary" href="/">Home</a>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{
+  "formattedAddress": "1417 S Canal St, Pittsburgh, PA 15215",
+  "addressLine1": "1417 S Canal St",
+  "bedrooms": 3,
+  "bathrooms": 1.5,
+  "squareFootage": 1280,
+  "yearBuilt": 1925,
+  "propertyType": "Single Family",
+  "lastSalePrice": 85000,
+  "lastSaleDate": "2018-06-15",
+  "taxAssessments": {
+    "2024": {
+      "total": 2954,
+      "land": 600,
+      "building": 2354
+    },
+    "2023": {
+      "total": 2820,
+      "land": 580,
+      "building": 2240
+    }
+  }
+}

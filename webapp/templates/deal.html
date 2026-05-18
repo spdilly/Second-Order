@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+{% block title %}{{ deal.deal_id }}{% endblock %}
+{% block content %}
+
+<h1>{{ deal.address }}</h1>
+<p class="label-mono" style="color: #6b6b6b;">
+  {{ deal.deal_id }}
+  · <span class="badge {% if deal.status == 'analyzed' %}pass{% elif deal.status == 'ready' %}warn{% else %}diag{% endif %}">{{ deal.status }}</span>
+</p>
+
+{% if saved %}
+<div class="banner info">
+  <strong>Saved.</strong> Inputs updated. Run analysis to compute a new packet.
+</div>
+{% endif %}
+
+{% if not deal.is_ready %}
+<div class="banner warn">
+  <strong>NOT READY TO ANALYZE.</strong>
+  Missing required fields: {{ deal.required_missing()|join(", ") }}.
+  Fill them in below and click <em>Save inputs</em>, then <em>Run analysis</em>.
+</div>
+{% endif %}
+
+{# ============================================================== #}
+{#  Editable inputs panel — T-601.                                 #}
+{#  Every field maps 1:1 to a Deal column. Empty input -> NULL.    #}
+{# ============================================================== #}
+<form method="post" action="/deals/{{ deal.deal_id }}/edit">
+<div class="panel">
+  <h2>Inputs</h2>
+  <p style="color: #6b6b6b; font-size: 12px; margin-bottom: 16px;">
+    Edit any field and click <strong>Save inputs</strong> at the bottom. Changes do
+    not trigger a new analysis on their own — click <strong>Run analysis</strong>
+    once you're ready.
+  </p>
+
+  <h3 style="margin-top: 8px;">Required</h3>
+  <div class="row">
+    <label for="address">Address *</label>
+    <input type="text" id="address" name="address" required
+           value="{{ deal.address }}"/>
+  </div>
+  <div class="row">
+    <label for="arv_base">ARV ($) *</label>
+    <input type="number" step="any" id="arv_base" name="arv_base"
+           value="{{ deal.arv_base if deal.arv_base is not none else '' }}"
+           placeholder="255000"/>
+  </div>
+  <div class="row">
+    <label for="rehab_budget">Rehab budget ($) *</label>
+    <input type="number" step="any" id="rehab_budget" name="rehab_budget"
+           value="{{ deal.rehab_budget if deal.rehab_budget is not none else '' }}"
+           placeholder="55000 (or 0 for turnkey)"/>
+  </div>
+  <div class="row">
+    <label for="section8_status">Section 8 status *</label>
+    <select id="section8_status" name="section8_status">
+      {% for s in section8_options %}
+      <option value="{{ s }}"{% if deal.section8_status == s %} selected{% endif %}>{{ s }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <h3>Deal terms</h3>
+  <div class="row">
+    <label for="purchase_price">Purchase price ($)</label>
+    <input type="number" step="any" id="purchase_price" name="purchase_price"
+           value="{{ deal.purchase_price if deal.purchase_price is not none else '' }}"
+           placeholder="Blank = max-bid mode"/>
+  </div>
+  <div class="row">
+    <label for="beds_override">Beds (override)</label>
+    <input type="number" id="beds_override" name="beds_override"
+           value="{{ deal.beds_override if deal.beds_override is not none else '' }}"
+           placeholder="Blank = let pipeline resolve"/>
+  </div>
+  <div class="row">
+    <label for="baths_override">Baths (override)</label>
+    <input type="number" step="any" id="baths_override" name="baths_override"
+           value="{{ deal.baths_override if deal.baths_override is not none else '' }}"
+           placeholder="Blank = let pipeline resolve"/>
+  </div>
+  <div class="row">
+    <label for="sqft_override">Sqft (override)</label>
+    <input type="number" id="sqft_override" name="sqft_override"
+           value="{{ deal.sqft_override if deal.sqft_override is not none else '' }}"
+           placeholder="Blank = let pipeline resolve"/>
+  </div>
+
+  <h3>Tax</h3>
+  <div class="row">
+    <label for="annual_tax_override">Annual tax (override, $)</label>
+    <input type="number" step="any" id="annual_tax_override" name="annual_tax_override"
+           value="{{ deal.annual_tax_override if deal.annual_tax_override is not none else '' }}"
+           placeholder="Blank = derive from WPRDC/Realtor"/>
+  </div>
+  <div class="row">
+    <label for="prior_year_tax">Prior-year tax ($)</label>
+    <input type="number" step="any" id="prior_year_tax" name="prior_year_tax"
+           value="{{ deal.prior_year_tax if deal.prior_year_tax is not none else '' }}"
+           placeholder="Scaled +10% by the engine"/>
+  </div>
+
+  <h3>Rent</h3>
+  <div class="row">
+    <label for="monthly_rent_override">Monthly rent (override, $)</label>
+    <input type="number" step="any" id="monthly_rent_override" name="monthly_rent_override"
+           value="{{ deal.monthly_rent_override if deal.monthly_rent_override is not none else '' }}"
+           placeholder="Blank = HUD FMR"/>
+  </div>
+
+  <h3>Carrying costs</h3>
+  <div class="row">
+    <label for="insurance_annual">Insurance ($/yr)</label>
+    <input type="number" step="any" id="insurance_annual" name="insurance_annual"
+           value="{{ deal.insurance_annual if deal.insurance_annual is not none else '' }}"
+           placeholder="Default $1,000"/>
+  </div>
+  <div class="row">
+    <label for="owner_utilities_annual">Owner-paid utilities ($/yr)</label>
+    <input type="number" step="any" id="owner_utilities_annual" name="owner_utilities_annual"
+           value="{{ deal.owner_utilities_annual if deal.owner_utilities_annual is not none else '' }}"
+           placeholder="0 if tenant pays"/>
+  </div>
+  <div class="row">
+    <label for="hoa_annual">HOA ($/yr)</label>
+    <input type="number" step="any" id="hoa_annual" name="hoa_annual"
+           value="{{ deal.hoa_annual if deal.hoa_annual is not none else '' }}"
+           placeholder="0 if no HOA"/>
+  </div>
+
+  <h3>Financing</h3>
+  <div class="row">
+    <label for="interest_rate">Interest rate (decimal)</label>
+    <input type="number" step="any" id="interest_rate" name="interest_rate"
+           value="{{ deal.interest_rate if deal.interest_rate is not none else '' }}"
+           placeholder="0.085 = 8.5%"/>
+  </div>
+  <div class="row">
+    <label for="down_payment_pct">Down payment fraction</label>
+    <input type="number" step="any" id="down_payment_pct" name="down_payment_pct"
+           value="{{ deal.down_payment_pct if deal.down_payment_pct is not none else '' }}"
+           placeholder="1.0 = all cash; 0.25 = 25%"/>
+  </div>
+  <div class="row">
+    <label for="refi_year">Refi year</label>
+    <input type="number" id="refi_year" name="refi_year"
+           value="{{ deal.refi_year if deal.refi_year is not none else '' }}"
+           placeholder="3 (BRRRR); blank = no refi"/>
+  </div>
+  <div class="row">
+    <label for="refi_ltv">Refi LTV (post-refi)</label>
+    <input type="number" step="any" id="refi_ltv" name="refi_ltv"
+           value="{{ deal.refi_ltv if deal.refi_ltv is not none else '' }}"
+           placeholder="0.75 = 75% LTV"/>
+  </div>
+
+  <h3>Exit</h3>
+  <div class="row">
+    <label for="hold_period_years">Hold period (years)</label>
+    <input type="number" id="hold_period_years" name="hold_period_years"
+           value="{{ deal.hold_period_years if deal.hold_period_years is not none else '' }}"
+           placeholder="Default 10"/>
+  </div>
+  <div class="row">
+    <label for="exit_cap_rate">Exit cap rate (decimal)</label>
+    <input type="number" step="any" id="exit_cap_rate" name="exit_cap_rate"
+           value="{{ deal.exit_cap_rate if deal.exit_cap_rate is not none else '' }}"
+           placeholder="0.08 = 8.0%"/>
+  </div>
+
+  <h3>Notes</h3>
+  <div class="row">
+    <label for="notes">Free-text notes</label>
+    <textarea id="notes" name="notes" rows="3">{{ deal.notes or '' }}</textarea>
+  </div>
+
+  <div class="row">
+    <span></span>
+    <button class="btn" type="submit">Save inputs</button>
+  </div>
+</div>
+</form>
+
+{# Metadata + actions panel. Run analysis button stays here. #}
+<div class="panel">
+  <h2>Run analysis</h2>
+  <div class="source-grid" style="grid-template-columns: 220px 1fr;">
+    <div class="label">Created</div><div class="value label-mono">{{ deal.created_at }}</div>
+    <div class="label">Updated</div><div class="value label-mono">{{ deal.updated_at }}</div>
+    {% if deal.last_analyzed_run_id %}
+    <div class="label">Last analyzed</div><div class="value label-mono">{{ deal.last_analyzed_run_id }}</div>
+    <div class="label">Last packet</div><div class="value label-mono">{{ deal.last_packet_path }}</div>
+    {% endif %}
+  </div>
+
+  <form method="post" action="/deals/{{ deal.deal_id }}/analyze" style="display: inline-block; margin-top: 12px;">
+    <button class="btn" type="submit" {% if not deal.is_ready %}disabled style="opacity: 0.5"{% endif %}>
+      {% if deal.is_ready %}Run analysis{% else %}Not ready (fill required inputs){% endif %}
+    </button>
+  </form>
+  {% if deal.last_packet_path %}
+    <a class="btn secondary" href="/deals/{{ deal.deal_id }}/runs/{{ deal.last_analyzed_run_id }}">Latest result</a>
+    <a class="btn secondary" href="/deals/{{ deal.deal_id }}/history">Run history</a>
+  {% endif %}
+  <a class="btn secondary" href="/">Back</a>
+</div>
+
+{% endblock %}

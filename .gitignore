@@ -1,0 +1,64 @@
+# ──────────────────────────────────────────────
+# Python
+# ──────────────────────────────────────────────
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# ──────────────────────────────────────────────
+# OS noise
+# ──────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ──────────────────────────────────────────────
+# Secrets
+# ──────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+
+# ──────────────────────────────────────────────
+# Runtime artifacts — generated, not tracked
+# ──────────────────────────────────────────────
+# Each analyze run writes a timestamped packet folder under
+# output/projects/<client>/<slug>/<YYYY-MM-DD_HHMMSS>/. The pattern below
+# matches any folder two levels deep under output/projects/, so client
+# packet folders are ignored while top-level client files (reference_data,
+# README) stay tracked.
+output/projects/*/*/
+
+# Distribution zips
+output/dist/
+
+# Generated PDFs from the report exporter (T-614)
+output/projects/**/*.pdf
+
+# Per-machine intake database starts empty on first run; do not ship
+# Sean's working state.
+templates/property_analysis/data/deal_intake.db
+
+# RentCast cache (per-mode namespaced)
+.rentcast_cache/
+rentcast_cache/
+
+# Playwright browser binaries (downloaded by `playwright install`)
+.playwright/
+
+# Temp regression artifacts (run dir is created in OS temp anyway, but
+# guard against accidental local writes)
+pa_regression_*/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
