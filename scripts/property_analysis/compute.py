@@ -282,12 +282,29 @@ def compute_returns(inputs: Inputs) -> Result:
     closing_cost = inp.purchase_price * inp.closing_cost_pct
     down_payment_dollars = inp.purchase_price * inp.down_payment_pct
     initial_loan = inp.purchase_price - down_payment_dollars
-    # Carrying cost during rehab (interest on the loan)
     initial_pmt = monthly_payment(initial_loan, inp.interest_rate, inp.loan_term_yrs)
-    holding_cost = initial_pmt * inp.holding_months
+    # Holding-period carry: mortgage interest + pro-rated fixed expenses
+    # + owner-paid holding utilities. Real cash out the LP funds during rehab.
+    holding_cost = (
+        initial_pmt * inp.holding_months
+        + (inp.property_tax_annual / 12) * inp.holding_months
+        + (inp.insurance_annual / 12) * inp.holding_months
+        + (inp.utilities_annual / 12) * inp.holding_months
+        + inp.holding_utilities_monthly * inp.holding_months
+    )
 
+    # LP Initial Investment / total cash invested includes every line item
+    # the LP funds at close: down payment + closing + rehab + holding carry
+    # + acquisition fees. Matches the Excel template's "LP Initial Investment"
+    # subtotal on the Summary tab.
     total_cash_invested = (
-        down_payment_dollars + closing_cost + inp.rehab_cost + holding_cost
+        down_payment_dollars
+        + closing_cost
+        + inp.rehab_cost
+        + holding_cost
+        + inp.wholesaler_fee
+        + inp.inspection_fee
+        + inp.appraisal_fee
     )
     initial_equity = total_cash_invested
 

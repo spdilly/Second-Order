@@ -118,9 +118,9 @@ def case_1_known_good() -> list[Check]:
               r.verdict.recommendation, "CONSIDER"),
         Check("Pass count = 3",
               r.verdict.pass_count == 3, r.verdict.pass_count, 3),
-        Check("Cap rate ~= 9.62%",
-              approx(r.cap_rate, 0.0962, 0.001),
-              r.cap_rate, 0.0962),
+        Check("Cap rate ~= 9.52%",
+              approx(r.cap_rate, 0.0952, 0.001),
+              r.cap_rate, 0.0952),
         Check("DSCR min ~= 1.23x",
               approx(r.dscr_min_observed, 1.2264, 0.005),
               r.dscr_min_observed, 1.2264),
@@ -1323,6 +1323,9 @@ def case_24_per_deal_threshold_override() -> list[Check]:
     )
 
     out_a = _run_intake_deal(deal_a, output_dir=packet_root, rentcast_mode="off")
+    # Per-second packet timestamps collide when two runs share an address;
+    # sleep so Deal B writes to a distinct subfolder.
+    time.sleep(1.1)
     out_b = _run_intake_deal(deal_b, output_dir=packet_root, rentcast_mode="off")
 
     checks: list[Check] = []
@@ -1344,8 +1347,8 @@ def case_24_per_deal_threshold_override() -> list[Check]:
         "found" if ">= 12.0%" in report_a else "missing", "found"))
     checks.append(Check(
         "Deal A Cap Rate row reads FAIL (9.6% < 12%)",
-        "Cap Rate (Y1) | 9.62% | >= 12.0% | **FAIL**" in report_a,
-        "found" if "Cap Rate (Y1) | 9.62% | >= 12.0% | **FAIL**" in report_a else "missing",
+        "Cap Rate (Y1) | 9.52% | >= 12.0% | **FAIL**" in report_a,
+        "found" if "Cap Rate (Y1) | 9.52% | >= 12.0% | **FAIL**" in report_a else "missing",
         "found"))
     checks.append(Check(
         "Deal B report shows cap-rate threshold 8.0% (unchanged)",
@@ -1353,8 +1356,8 @@ def case_24_per_deal_threshold_override() -> list[Check]:
         "found" if ">= 8.0%" in report_b else "missing", "found"))
     checks.append(Check(
         "Deal B Cap Rate row reads PASS (9.6% > 8%)",
-        "Cap Rate (Y1) | 9.62% | >= 8.0% | **PASS**" in report_b,
-        "found" if "Cap Rate (Y1) | 9.62% | >= 8.0% | **PASS**" in report_b else "missing",
+        "Cap Rate (Y1) | 9.52% | >= 8.0% | **PASS**" in report_b,
+        "found" if "Cap Rate (Y1) | 9.52% | >= 8.0% | **PASS**" in report_b else "missing",
         "found"))
 
     return checks
@@ -1405,6 +1408,144 @@ def case_25_pdf_export() -> list[Check]:
             "PDF body starts with PDF magic header (%PDF)",
             r.content[:4] == b"%PDF",
             r.content[:4], b"%PDF"))
+
+    return checks
+
+
+def case_26_batch_intake() -> list[Check]:
+    """Phase 6.3 (T-621, T-624): pasting newline-separated addresses creates
+    one deal per non-empty line, each in needs_inputs status."""
+    from fastapi.testclient import TestClient
+    from scripts.property_analysis import intake as _intake
+    import os as _os, importlib
+
+    db_path = TEMP_OUT / "phase6_3_batch" / "intake.db"
+    db_path.parent.mkdir(parents=True, exist_ok=True)
+    _os.environ["PROPERTY_ANALYSIS_DB"] = str(db_path)
+    importlib.reload(_intake)
+    _intake.schema_init()
+
+    from webapp.main import app as _app
+    checks: list[Check] = []
+    with TestClient(_app) as client:
+        addresses = (
+            "1417 S Canal St, Pittsburgh, PA 15215\n"
+            "57 Lower Rd, Pittsburgh, PA 15215\n"
+            "  \n"  # blank line should be skipped
+            "200 Main St, Frankfort, KY 40601\n"
+            "5500 Walnut St, Pittsburgh, PA 15232\n"
+            "100 Main St, Little Rock, AR 72202\n"
+        )
+        r = client.post(
+            "/deals/batch", data={"addresses": addresses},
+            follow_redirects=False,
+        )
+        checks.append(Check("POST /deals/batch returns 303",
+                            r.status_code == 303, r.status_code, 303))
+        checks.append(Check("Redirect URL carries batched=5 count",
+                            "batched=5" in r.headers.get("location", ""),
+                            r.headers.get("location"), "...?batched=5"))
+
+        all_deals = _intake.list_deals()
+        checks.append(Check("Batch created exactly 5 deals (blank skipped)",
+                            len(all_deals) == 5, len(all_deals), 5))
+        checks.append(Check(
+            "Every batch-created deal is in 'new' / 'needs_inputs' status",
+            all(d.status in ("new", "needs_inputs") for d in all_deals),
+            sorted({d.status for d in all_deals}),
+            "{new, needs_inputs}"))
+
+    return checks
+
+
+def case_27_search_filter_and_status_lifecycle() -> list[Check]:
+    """Phase 6.3 (T-622, T-623, T-625): home-page search by address
+    substring, status filter, and the extended status enum lifecycle
+    transition (offer_made / under_contract / passed / closed)."""
+    from fastapi.testclient import TestClient
+    from scripts.property_analysis import intake as _intake
+    import os as _os, importlib
+
+    db_path = TEMP_OUT / "phase6_3_search" / "intake.db"
+    db_path.parent.mkdir(parents=True, exist_ok=True)
+    _os.environ["PROPERTY_ANALYSIS_DB"] = str(db_path)
+    importlib.reload(_intake)
+    _intake.schema_init()
+
+    # Seed: three different addresses, varied state. Use addresses that
+    # don't collide with the placeholder text baked into home.html (which
+    # mentions 1417 S Canal and 57 Lower Rd in form placeholders).
+    a = _intake.create_deal(address="421 Phase63 Alpha Ave, Pittsburgh, PA 15212",
+                            section8_status="confirmed",
+                            arv_base=255000, rehab_budget=55000)
+    b = _intake.create_deal(address="888 Phase63 Bravo Blvd, Pittsburgh, PA 15213",
+                            section8_status="assumed")
+    c = _intake.create_deal(address="555 Phase63 Charlie Cir, Frankfort, KY 40601",
+                            section8_status="unknown")
+
+    from webapp.main import app as _app
+    checks: list[Check] = []
+    with TestClient(_app) as client:
+        # Search "alpha" should return only deal A. Use a unique substring
+        # we control rather than placeholder-shared words.
+        r = client.get("/?q=alpha")
+        checks.append(Check("Search 'alpha' returns 200",
+                            r.status_code == 200, r.status_code, 200))
+        checks.append(Check("Search 'alpha' includes deal A",
+                            "Phase63 Alpha Ave" in r.text, "found", "found"))
+        checks.append(Check("Search 'alpha' excludes deal B",
+                            "Phase63 Bravo" not in r.text, "absent",
+                            "absent" if "Phase63 Bravo" not in r.text else "leaked"))
+        checks.append(Check("Search 'alpha' excludes deal C",
+                            "Phase63 Charlie" not in r.text, "absent",
+                            "absent" if "Phase63 Charlie" not in r.text else "leaked"))
+
+        # Status filter: deal A is 'ready' (has ARV+rehab); B and C are
+        # 'new'/'needs_inputs'. Filter by status=ready -> only A.
+        r = client.get("/?status=ready")
+        checks.append(Check(
+            "Status filter ready includes the ready deal",
+            "Phase63 Alpha" in r.text, "found", "found"))
+        b_leaked = "Phase63 Bravo" in r.text
+        c_leaked = "Phase63 Charlie" in r.text
+        checks.append(Check(
+            "Status filter ready excludes the non-ready deals",
+            not b_leaked and not c_leaked,
+            f"b_leaked={b_leaked} c_leaked={c_leaked}",
+            "neither leaked"))
+
+        # Lifecycle transition: mark deal A as offer_made via POST
+        r = client.post(
+            f"/deals/{a.deal_id}/status",
+            data={"status": "offer_made"},
+            follow_redirects=False,
+        )
+        checks.append(Check("POST /deals/{id}/status returns 303",
+                            r.status_code == 303, r.status_code, 303))
+        a2 = _intake.get_deal(a.deal_id)
+        checks.append(Check("Status persists as offer_made",
+                            a2.status == "offer_made", a2.status, "offer_made"))
+
+        # offer_made is preserved even when update_deal touches other fields
+        _intake.update_deal(a.deal_id, notes="post-offer note")
+        a3 = _intake.get_deal(a.deal_id)
+        checks.append(Check(
+            "Manual status not auto-downgraded by update_deal",
+            a3.status == "offer_made", a3.status, "offer_made"))
+
+        # Invalid status is rejected
+        r = client.post(
+            f"/deals/{a.deal_id}/status", data={"status": "not_a_real_status"},
+        )
+        checks.append(Check(
+            "Invalid status rejected (400)",
+            r.status_code == 400, r.status_code, 400))
+
+        # Filter by offer_made shows deal A
+        r = client.get("/?status=offer_made")
+        checks.append(Check(
+            "Filter by offer_made shows the transitioned deal",
+            "Phase63 Alpha" in r.text, "found", "found"))
 
     return checks
 
@@ -1477,6 +1618,8 @@ CASES = [
     ("23. Phase 6.2: /overrides + /thresholds CRUD round-trip (T-611/T-612/T-615)", case_23_overrides_thresholds_web_crud),
     ("24. Phase 6.2: per-deal threshold override flips one verdict, not the other (T-613/T-616)", case_24_per_deal_threshold_override),
     ("25. Phase 6.2: PDF export endpoint returns valid application/pdf (T-614/T-617)", case_25_pdf_export),
+    ("26. Phase 6.3: batch intake creates one deal per line (T-621/T-624)", case_26_batch_intake),
+    ("27. Phase 6.3: home search + status filter + lifecycle transitions (T-622/T-623/T-625)", case_27_search_filter_and_status_lifecycle),
 ]
 
 

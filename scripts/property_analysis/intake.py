@@ -50,7 +50,18 @@ DB_PATH = Path(
 )
 
 
-VALID_STATUS = ("new", "needs_inputs", "ready", "analyzed", "archived")
+VALID_STATUS = (
+    "new",            # just created, missing required inputs
+    "needs_inputs",   # some inputs set, more required
+    "ready",          # all required inputs present, analyze can run
+    "analyzed",       # at least one packet exists for this deal
+    # T-623: deal lifecycle states past initial analysis
+    "offer_made",     # Joe submitted an offer to the seller
+    "under_contract", # Offer accepted, in diligence / closing
+    "passed",         # Joe walked from the deal
+    "closed",         # Deal completed (property acquired)
+    "archived",       # Hidden from default list
+)
 VALID_SECTION8 = ("confirmed", "assumed", "not_section8", "unknown")
 
 
@@ -320,12 +331,17 @@ def _row_to_deal(row: sqlite3.Row) -> Deal:
 
 
 def _deal_status(deal: Deal) -> str:
-    """Derive the status from the deal's content. 'ready' overrides 'new'
-    when required fields are populated; user can still override via update."""
-    if deal.status == "archived":
-        return "archived"
-    if deal.status == "analyzed":
-        return "analyzed"
+    """Derive the status from the deal's content.
+
+    User-driven lifecycle states (offer_made, under_contract, passed,
+    closed, archived) and the engine-set 'analyzed' state are never
+    auto-downgraded. Only 'new' / 'needs_inputs' / 'ready' are computed
+    from the input completeness.
+    """
+    # Preserve any explicit lifecycle state the user (or engine) set.
+    if deal.status in ("archived", "analyzed", "offer_made",
+                       "under_contract", "passed", "closed"):
+        return deal.status
     if deal.is_ready:
         return "ready"
     return "needs_inputs" if any([

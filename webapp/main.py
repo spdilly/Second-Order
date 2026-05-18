@@ -89,16 +89,57 @@ def healthz():
 
 
 @app.get("/", response_class=HTMLResponse)
-def home(request: Request):
-    deals = intake.list_deals()
-    # New Starlette signature: request first. The old (name, ctx) form
-    # raises in starlette >= 0.32 because the dict is interpreted as a
-    # request object.
+def home(request: Request, q: str = "", status: str = ""):
+    """Home / deal intake list.
+
+    T-622: search box ('q') filters deals by address substring; status
+    dropdown filters by lifecycle state. Both default to empty (no filter).
+    """
+    deals = intake.list_deals(status=status or None)
+    if q:
+        needle = q.strip().lower()
+        deals = [d for d in deals if needle in (d.address or "").lower()]
     return templates.TemplateResponse(
         request,
         "home.html",
-        {"deals": deals, "format_short": intake.format_deal_short},
+        {"deals": deals,
+         "format_short": intake.format_deal_short,
+         "q": q,
+         "status_filter": status,
+         "status_options": list(intake.VALID_STATUS)},
     )
+
+
+@app.post("/deals/batch")
+def deals_batch(addresses: str = Form(...)):
+    """T-621: paste-or-upload newline-separated addresses and create one
+    deal per line. Each created deal starts in 'new' / 'needs_inputs'
+    until Joe fills in ARV/rehab/section8 on the deal page.
+    """
+    created = 0
+    for raw_line in (addresses or "").splitlines():
+        addr = raw_line.strip()
+        if not addr:
+            continue
+        # Tolerate trailing notes after a tab or two spaces
+        if "\t" in addr:
+            addr = addr.split("\t", 1)[0].strip()
+        intake.create_deal(address=addr, section8_status="assumed")
+        created += 1
+    return RedirectResponse(url=f"/?batched={created}", status_code=303)
+
+
+@app.post("/deals/{deal_id}/status")
+def deal_set_status(deal_id: str, status: str = Form(...)):
+    """T-623: user-driven lifecycle transition (offer_made, under_contract,
+    passed, closed, archived). Engine-driven transitions ('analyzed') still
+    happen from analyze() via mark_analyzed."""
+    if status not in intake.VALID_STATUS:
+        raise HTTPException(400, f"Invalid status: {status}")
+    if intake.get_deal(deal_id) is None:
+        raise HTTPException(404, f"Deal {deal_id} not found")
+    intake.update_deal(deal_id, status=status)
+    return RedirectResponse(url=f"/deals/{deal_id}?saved=1", status_code=303)
 
 
 @app.post("/deals")
@@ -142,6 +183,7 @@ def deal_detail(request: Request, deal_id: str, saved: int = 0):
         request, "deal.html",
         {"deal": deal,
          "section8_options": list(intake.VALID_SECTION8),
+         "status_options": list(intake.VALID_STATUS),
          "saved": bool(saved)},
     )
 

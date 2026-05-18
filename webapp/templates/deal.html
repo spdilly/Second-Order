@@ -220,6 +220,31 @@
 </div>
 </form>
 
+{# T-623: lifecycle status change. Visible whenever the deal is at least
+   'ready' — lets Joe move it through the offer/contract/closed states. #}
+<div class="panel">
+  <h2>Lifecycle</h2>
+  <form method="post" action="/deals/{{ deal.deal_id }}/status">
+    <div class="row">
+      <label for="status">Current status</label>
+      <select id="status" name="status">
+        {% for s in status_options %}
+        <option value="{{ s }}"{% if deal.status == s %} selected{% endif %}>{{ s }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="row">
+      <span></span>
+      <button class="btn secondary" type="submit">Update status</button>
+    </div>
+  </form>
+  <p style="color: #6b6b6b; font-size: 12px; margin-top: 6px;">
+    The engine sets <code>analyzed</code> automatically after a successful
+    analysis. Manual transitions for the rest (offer_made &rarr;
+    under_contract &rarr; closed, or passed/archived) live here.
+  </p>
+</div>
+
 {# Metadata + actions panel. Run analysis button stays here. #}
 <div class="panel">
   <h2>Run analysis</h2>

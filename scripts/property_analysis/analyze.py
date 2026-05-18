@@ -314,9 +314,67 @@ def analyze(
     packet_dir = Path(output_dir) / label / run_stamp
     packet_dir.mkdir(parents=True, exist_ok=True)
 
-    # 6a. Populate Excel inside the packet folder
+    # 6a. Populate Excel inside the packet folder.
+    # V2: pass full provenance metadata so the Sources tab carries the
+    # audit trail.
+    def _prov_meta(p):
+        if p is None:
+            return {"value": None, "source": "n/a", "confidence": "n/a", "note": ""}
+        return {
+            "value": p.value,
+            "source": p.source or "",
+            "confidence": p.confidence or "",
+            "note": p.note or "",
+        }
+
+    sources_meta_for_xl = {
+        "address":             _prov_meta(provenance_map.get("address")),
+        "zip":                 _prov_meta(provenance_map.get("zip")),
+        "beds":                _prov_meta(provenance_map.get("beds")),
+        "baths":               _prov_meta(provenance_map.get("baths")),
+        "purchase_price":      _prov_meta(provenance_map.get("purchase_price")),
+        "arv":                 _prov_meta(provenance_map.get("arv")),
+        "rehab_cost":          _prov_meta(provenance_map.get("rehab_cost")),
+        "monthly_rent":        _prov_meta(provenance_map.get("monthly_rent")),
+        "market_rent":         _prov_meta(provenance_map.get("market_rent")),
+        "property_tax_annual": _prov_meta(provenance_map.get("property_tax_annual")),
+        "insurance_annual":    {"value": inputs.insurance_annual,
+                                "source": "industry default" if not inputs.insurance_source else inputs.insurance_source,
+                                "confidence": "medium",
+                                "note": ""},
+    }
+    freshness_meta = {
+        "hud_fmr":      "FY2026",
+        "geo":          "Census 2020 ZCTA-county",
+        "wprdc":        f"tax_year={wprdc_details.tax_year}, as_of={wprdc_details.as_of_date}"
+                        if wprdc_details else "n/a (non-Allegheny)",
+        "allegheny":    "TAX_YEAR=2025",
+        "rentcast":     rentcast_client.mode,
+        "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    }
+    # Push source strings into Inputs.* so the Inputs tab named-range cells
+    # populate too (rent_source, tax_source, etc.). Non-destructive — only
+    # set fields the caller didn't already set.
+    if not inputs.monthly_rent_source:
+        inputs.monthly_rent_source = sources_meta_for_xl["monthly_rent"]["source"]
+    if not inputs.market_rent_source:
+        inputs.market_rent_source = sources_meta_for_xl["market_rent"]["source"]
+    if not inputs.property_tax_source:
+        inputs.property_tax_source = sources_meta_for_xl["property_tax_annual"]["source"]
+    if not inputs.insurance_source:
+        inputs.insurance_source = sources_meta_for_xl["insurance_annual"]["source"]
+    if not inputs.arv_source:
+        inputs.arv_source = sources_meta_for_xl["arv"]["source"]
+    if not inputs.purchase_price_source:
+        inputs.purchase_price_source = sources_meta_for_xl["purchase_price"]["source"]
+    if not inputs.beds_source:
+        inputs.beds_source = sources_meta_for_xl["beds"]["source"]
+
     excel_path = populate_proforma(
         inputs=inputs, output_dir=packet_dir, property_label=label,
+        sources_meta=sources_meta_for_xl,
+        freshness_meta=freshness_meta,
+        blockers=blockers,
     )
 
     # Diagnostic mode: any blocker means the verdict is not trustworthy.

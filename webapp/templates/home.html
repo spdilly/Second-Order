@@ -4,6 +4,34 @@
 
 <h1>Deal Intake</h1>
 
+{% if request.query_params.get('batched') %}
+<div class="banner info">
+  <strong>Batched.</strong> {{ request.query_params.get('batched') }} new
+  deals created. Open each one to fill in ARV, rehab, and Section 8 status
+  before running an analysis.
+</div>
+{% endif %}
+
+<div class="panel">
+  <h2>Batch entry</h2>
+  <p style="color: #6b6b6b; font-size: 12px; margin-bottom: 8px;">
+    Paste one address per line. Each becomes a draft deal (no ARV / rehab
+    yet); open and complete each one when you have the full picture. Useful
+    when you scan a batch of MLS listings and want them all queued at once.
+  </p>
+  <form method="post" action="/deals/batch">
+    <div class="row">
+      <label for="addresses">Addresses</label>
+      <textarea id="addresses" name="addresses" rows="4"
+                placeholder="1417 S Canal St, Pittsburgh, PA 15215&#10;57 Lower Rd, Pittsburgh, PA 15215&#10;..."></textarea>
+    </div>
+    <div class="row">
+      <span></span>
+      <button class="btn" type="submit">Create batch</button>
+    </div>
+  </form>
+</div>
+
 <div class="panel">
   <h2>New deal</h2>
   <form method="post" action="/deals">
@@ -69,6 +97,34 @@
 
 <div class="panel">
   <h2>Deals ({{ deals|length }})</h2>
+
+  {# T-622: search + status filter #}
+  <form method="get" action="/" style="margin-bottom: 14px;">
+    <div class="row">
+      <label for="q">Search address</label>
+      <input type="text" id="q" name="q" value="{{ q }}"
+             placeholder="Substring of the address, e.g. Canal"/>
+    </div>
+    <div class="row">
+      <label for="status">Status filter</label>
+      <select id="status" name="status">
+        <option value=""{% if not status_filter %} selected{% endif %}>All</option>
+        {% for s in status_options %}
+        <option value="{{ s }}"{% if status_filter == s %} selected{% endif %}>{{ s }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="row">
+      <span></span>
+      <span>
+        <button class="btn" type="submit">Filter</button>
+        {% if q or status_filter %}
+          <a class="btn secondary" href="/" style="margin-left: 6px;">Clear</a>
+        {% endif %}
+      </span>
+    </div>
+  </form>
+
   {% if deals %}
     <table>
       <thead>
@@ -87,7 +143,14 @@
         <tr>
           <td class="label-mono">{{ d.deal_id }}</td>
           <td>
-            <span class="badge {% if d.status == 'analyzed' %}pass{% elif d.status == 'ready' %}warn{% else %}diag{% endif %}">
+            {# Status colors: pass for completed (analyzed/closed/under_contract);
+               fail for dead (passed/archived); warn for active (ready/offer_made);
+               diag for early lifecycle (new/needs_inputs).             #}
+            <span class="badge
+              {% if d.status in ('analyzed','closed','under_contract') %}pass
+              {% elif d.status in ('passed','archived') %}fail
+              {% elif d.status in ('ready','offer_made') %}warn
+              {% else %}diag{% endif %}">
               {{ d.status }}
             </span>
           </td>
@@ -101,7 +164,13 @@
       </tbody>
     </table>
   {% else %}
-    <p class="empty-state">No deals yet. Create one above.</p>
+    <p class="empty-state">
+      {% if q or status_filter %}
+        No deals match the current filter. <a href="/">Clear filter</a> to see all deals.
+      {% else %}
+        No deals yet. Create one above.
+      {% endif %}
+    </p>
   {% endif %}
 </div>
 
