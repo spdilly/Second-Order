@@ -36,6 +36,14 @@ desktop.ini
 # README) stay tracked.
 output/projects/*/*/
 
+# Flat-file runtime artifacts at any depth (test exports, sample renders).
+# reference_data.xlsx and README.md are intentionally allowed for the client
+# folder; everything matching these patterns is generated.
+output/projects/**/*_proforma.xlsx
+output/projects/**/*_report.md
+output/projects/**/*_report.pdf
+output/projects/**/*_sources.json
+
 # Distribution zips
 output/dist/
 
