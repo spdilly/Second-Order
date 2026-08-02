@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A number carried to sixteen decimal places was solved for · Second Order</title>
+  <meta name="description" content="Three mechanical signatures separate an assumption someone chose from a figure reverse-engineered to make an output land on a target, and all three can be detected by script.">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="wrap">
+      <a class="wordmark" href="/"><span class="delta">δ</span>Second Order</a>
+      <div class="nav-links">
+        <a href="/work/">WORK</a>
+        <a class="active" href="/notes/">NOTES</a>
+        <a href="/offers.html">OFFERS</a>
+        <a href="/about.html">ABOUT</a>
+        <a class="btn btn-ghost" href="/start.html">START</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="section-tight">
+    <div class="wrap">
+      <p class="eyebrow">FIELD NOTES · MODEL INTEGRITY</p>
+      <h1>A number carried to sixteen decimal places was solved for, not chosen.</h1>
+      <p class="byline">02 AUGUST 2026 · SEAN DILLARD</p>
+    </div>
+  </header>
+
+  <main class="section-tight" style="padding-top: 20px;">
+    <div class="wrap">
+      <div class="article">
+
+        <p>A plug is a number reverse-engineered to make an output land on a target and then presented as an assumption. Somebody wanted the raise to come out at $900,000, the model produced $985,000, and a 8.6 percent haircut appeared on a line labeled adjustment. The arithmetic is now correct in every cell and the model has stopped being a model, because one of its inputs is an output wearing a disguise.</p>
+
+        <p>Plugs survive review. They survive it because a reviewer reads a model cell by cell, asks whether each number is plausible, and a plug is always plausible. It was constructed to be. What a plug cannot disguise is how it was produced, and production leaves marks a script can find.</p>
+
+        <h2>The signature</h2>
+
+        <p>People choose round numbers. Asked for a discount rate, an analyst says 12 percent or 12.5 percent. Asked for a cost reduction, an analyst says 10 percent, or 9.5 percent if the estimate came from somewhere specific. Nobody has ever looked at a business and concluded that the correct figure is 8.73419628055137 percent.</p>
+
+        <p>Solvers do produce that number. Excel's goal seek, a manual binary search, or an analyst dragging a cell until the total turns green all terminate at whatever value happens to close the gap, and that value carries the full binary precision of the arithmetic that made it. The decimal tail is a receipt.</p>
+
+        <figure class="exhibit">
+          <p class="exhibit-label">EXHIBIT 1 · TWO NUMBERS, ONE OF THEM CHOSEN</p>
+          <svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Comparison of two values. A chosen assumption reads 0.095 with three decimal places and a stated basis. A solved value reads 0.0873419628055137 with sixteen decimal places and no basis, terminating wherever the target was met.">
+            <!-- chosen -->
+            <text x="14" y="34" font-family="Consolas, monospace" font-size="11" fill="#2EE6DA">CHOSEN BY A PERSON</text>
+            <rect x="14" y="46" width="322" height="52" fill="none" stroke="#2EE6DA" stroke-width="1"/>
+            <text x="30" y="80" font-family="Consolas, monospace" font-size="22" fill="#F1F2F0">0.095</text>
+            <text x="14" y="122" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5">3 DECIMAL PLACES</text>
+            <text x="14" y="140" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5">BASIS. VENDOR QUOTE, MARCH 2026</text>
+            <text x="14" y="158" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5">SURVIVES THE QUESTION</text>
+
+            <!-- solved -->
+            <text x="384" y="34" font-family="Consolas, monospace" font-size="11" fill="#7FD2CE">PRODUCED BY A SOLVER</text>
+            <rect x="384" y="46" width="322" height="52" fill="none" stroke="#0B7C7C" stroke-width="1"/>
+            <text x="398" y="80" font-family="Consolas, monospace" font-size="15" fill="#E3E5E6">0.0873419628055137</text>
+            <text x="384" y="122" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5">16 DECIMAL PLACES</text>
+            <text x="384" y="140" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5">BASIS. THE TARGET WAS $900,000</text>
+            <text x="384" y="158" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5">FAILS THE QUESTION</text>
+
+            <line x1="14" y1="182" x2="706" y2="182" stroke="#2A2D31" stroke-width="1"/>
+            <text x="14" y="204" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5">ILLUSTRATIVE VALUES. THE TEST IS THE DECIMAL TAIL, NEVER THE MAGNITUDE.</text>
+          </svg>
+          <figcaption>Both values are near 9 percent and both are plausible. Only one of them answers the question of where it came from. Illustrative figures.</figcaption>
+        </figure>
+
+        <h2>The three checks</h2>
+
+        <p>The detector runs three tests against the workbook and reports each hit with its sheet, its cell, and the rule it broke.</p>
+
+        <ol>
+          <li><strong>Machine-precision inputs.</strong> Any hardcoded value carrying seven or more decimal places. Seven is the threshold because measured quantities and quoted rates almost never reach it, while solver output almost always does. This test raises an error.</li>
+          <li><strong>Precise values on plug-shaped labels.</strong> A non-round hardcoded number sitting on a row whose label contains reduction, adjustment, haircut, true-up, gross-up, factor, or plug. The label vocabulary is the confession, and the precision is the evidence. This test raises an error.</li>
+          <li><strong>Magic constants inside formulas.</strong> A hardcoded number scaling or dividing a reference, as in a formula that multiplies other costs by 95,000 divided by 207,000. That ratio was true once, for one period, and it is now frozen inside a formula where nobody will find it. This test raises a warning and asks for the constant to be lifted into a named input.</li>
+        </ol>
+
+        <p>Zero errors is the condition for delivery. A warning is a request to show the basis rather than a blocker, because label matching is a heuristic and a false positive must never be able to stop a legitimate model from shipping.</p>
+
+        <p class="pull">The reviewer who builds a number is the worst available reader of that number, which is the entire reason the test is a script and not a habit.</p>
+
+        <h2>The second question</h2>
+
+        <p>Detecting plugs asks whether a number was chosen. A second and harder question asks whether a number does anything.</p>
+
+        <p>A model can pass every plug test, every balance check, and every tie-out while being mechanically inert. Five failure modes recur, and each is detectable.</p>
+
+        <ul>
+          <li><strong>Dead inputs.</strong> A hardcoded number on an input sheet that no formula anywhere reads. It looks editable and drives nothing, so a user changes it, sees no movement, and draws a conclusion about the business from a cell that was never connected.</li>
+          <li><strong>Binary multipliers.</strong> A cell resolving to zero or one that is then multiplied into a business flow. The flag itself is fine as a readout, and multiplying it into revenue or spend replaces a continuous response with a cliff, so a one-dollar change in an assumption can erase a year of modeled revenue.</li>
+          <li><strong>Frozen exhibits.</strong> A worksheet whose name promises a sensitivity or a scenario sweep and whose contents are mostly hardcoded values. It shows an answer computed at some point in the past with nothing on the page saying so.</li>
+          <li><strong>Buried constants.</strong> A governing quantity hardcoded inside a formula. The user cannot find it, so the user cannot change it.</li>
+          <li><strong>Enumerated inputs.</strong> An input whose consumers only ever test it against specific literal values, so a cell that looks like a year is a two-position switch that falls to an error branch for any other entry.</li>
+        </ul>
+
+        <p>The binary multiplier is the one that costs the most and hides the best. A gate that computes a threshold and displays a status is a readout, and a reader can argue with it. The same gate multiplied into marketing spend has stopped reporting and started deciding, and the model now enforces a management judgment that nobody agreed to and no memo records.</p>
+
+        <h2>The general rule</h2>
+
+        <p>A gate may report and must not drive. Compute the policy number, display it, and let the driver flow through to the output unchanged. Physical and contractual limits earn the right to constrain arithmetic, because production cannot exceed capacity and an expired contract genuinely stops. Economic thresholds, cash-floor shutdowns, and performance-gated hiring plans are management judgment, and judgment belongs on the readout where a reader can see it and dispute it.</p>
+
+        <p>One test summarizes the whole discipline. Take the most contested driver in the model, sweep it across its plausible range, and plot the output. The curve should be continuous and should slope the way the economics say it slopes. A cliff in that curve is a decision someone wired into the arithmetic, and the model's job was to show the consequence of the decision rather than to make it.</p>
+
+        <p style="margin-top: 48px;"><a class="btn" href="/start.html">SEND A MODEL FOR A READ</a></p>
+
+      </div>
+    </div>
+  </main>
+
+  <section class="section-tight dark">
+    <div class="wrap">
+      <div class="prose">
+        <p class="eyebrow">FIELD NOTES</p>
+        <p><a href="/notes/">All notes</a> &nbsp;·&nbsp; <a href="/work/">Case studies</a></p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-lines">
+        Second Order · Little Rock, AR · Est. 2022<br>
+        Sean Dillard, Principal · Stanford MBA · BCG<br>
+        <a href="https://www.linkedin.com/in/sean-dillard">LinkedIn</a> · <a href="mailto:sean@2oadvisory.com">sean@2oadvisory.com</a>
+      </div>
+      <div class="footer-mark"><span class="delta-mono">δ²</span></div>
+    </div>
+  </footer>
+
+</body>
+</html>

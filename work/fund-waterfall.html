@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The waterfall the GP took to market · Second Order</title>
+  <meta name="description" content="A GP/LP distribution waterfall for a renewable energy fund, reconciled to capital accounts every period, with a scenario engine and an audit tab built into the workbook.">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="wrap">
+      <a class="wordmark" href="/"><span class="delta">δ</span>Second Order</a>
+      <div class="nav-links">
+        <a class="active" href="/work/">WORK</a>
+        <a href="/notes/">NOTES</a>
+        <a href="/offers.html">OFFERS</a>
+        <a href="/about.html">ABOUT</a>
+        <a class="btn btn-ghost" href="/start.html">START</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="section-tight">
+    <div class="wrap">
+      <p class="eyebrow">CASE STUDY · FUND FORMATION · RENEWABLE ENERGY</p>
+      <h1>The waterfall carried its own audit tab into the LP conversation.</h1>
+      <p class="byline">A RENEWABLE ENERGY FUND OF APPROXIMATELY $5M · GP PROCEEDED TO LP FUNDRAISING</p>
+    </div>
+  </header>
+
+  <main class="section-tight" style="padding-top: 20px;">
+    <div class="wrap">
+      <div class="article">
+
+        <p>A general partner forming a renewable energy fund needed a distribution model an institutional limited partner could trace. Limited partners read a waterfall by following a dollar of proceeds through each tier and checking that the capital account balances move the way the tiers say they should. A model that produces the right headline number and cannot survive that walk does not close a commitment.</p>
+
+        <h2>The distribution engine</h2>
+
+        <p>Proceeds run through the tiers in order, period by period, and every tier reconciles to the capital accounts it draws down. Return of contributed capital comes first, then the preferred return accrued to date, then the general partner catch-up, then the residual split. Each period closes with a balance check tying beginning capital, contributions, distributions, and ending capital together for every partner class.</p>
+
+        <figure class="exhibit">
+          <p class="exhibit-label">EXHIBIT 1 · DISTRIBUTION ORDER, EACH TIER RECONCILED TO CAPITAL ACCOUNTS</p>
+          <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram of a four tier distribution waterfall. Distributable proceeds pass through return of capital, then preferred return, then general partner catch up, then the residual split, with each tier reconciled to the capital accounts.">
+            <text x="14" y="24" font-family="Consolas, monospace" font-size="11" fill="#2EE6DA">DISTRIBUTABLE PROCEEDS</text>
+
+            <!-- tier 1 -->
+            <rect x="14" y="36" width="470" height="38" fill="none" stroke="#2EE6DA" stroke-width="1"/>
+            <text x="30" y="60" font-family="Consolas, monospace" font-size="12" fill="#F1F2F0">TIER 1 · RETURN OF CONTRIBUTED CAPITAL</text>
+            <!-- tier 2 -->
+            <rect x="14" y="82" width="470" height="38" fill="none" stroke="#7FD2CE" stroke-width="1"/>
+            <text x="30" y="106" font-family="Consolas, monospace" font-size="12" fill="#E3E5E6">TIER 2 · PREFERRED RETURN ACCRUED TO DATE</text>
+            <!-- tier 3 -->
+            <rect x="14" y="128" width="470" height="38" fill="none" stroke="#0B7C7C" stroke-width="1"/>
+            <text x="30" y="152" font-family="Consolas, monospace" font-size="12" fill="#E3E5E6">TIER 3 · GENERAL PARTNER CATCH-UP</text>
+            <!-- tier 4 -->
+            <rect x="14" y="174" width="470" height="38" fill="none" stroke="#0B7C7C" stroke-width="1"/>
+            <text x="30" y="198" font-family="Consolas, monospace" font-size="12" fill="#E3E5E6">TIER 4 · RESIDUAL SPLIT</text>
+
+            <!-- flow arrows down the left -->
+            <line x1="6" y1="74" x2="6" y2="82" stroke="#2A2D31" stroke-width="1"/>
+            <line x1="6" y1="120" x2="6" y2="128" stroke="#2A2D31" stroke-width="1"/>
+            <line x1="6" y1="166" x2="6" y2="174" stroke="#2A2D31" stroke-width="1"/>
+
+            <!-- capital accounts column -->
+            <rect x="516" y="36" width="190" height="176" fill="none" stroke="#2A2D31" stroke-width="1"/>
+            <text x="611" y="62" font-family="Consolas, monospace" font-size="12" fill="#E3E5E6" text-anchor="middle">CAPITAL ACCOUNTS</text>
+            <text x="611" y="88" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5" text-anchor="middle">BEGINNING BALANCE</text>
+            <text x="611" y="108" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5" text-anchor="middle">+ CONTRIBUTIONS</text>
+            <text x="611" y="128" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5" text-anchor="middle">− DISTRIBUTIONS</text>
+            <text x="611" y="148" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5" text-anchor="middle">= ENDING BALANCE</text>
+            <line x1="546" y1="162" x2="676" y2="162" stroke="#2A2D31" stroke-width="1"/>
+            <text x="611" y="186" font-family="Consolas, monospace" font-size="10" fill="#2EE6DA" text-anchor="middle">CHECKED EVERY PERIOD</text>
+
+            <!-- tie lines -->
+            <line x1="484" y1="55" x2="516" y2="80" stroke="#2A2D31" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="484" y1="101" x2="516" y2="105" stroke="#2A2D31" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="484" y1="147" x2="516" y2="130" stroke="#2A2D31" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="484" y1="193" x2="516" y2="155" stroke="#2A2D31" stroke-width="1" stroke-dasharray="3 3"/>
+
+            <text x="14" y="232" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5">TIER TERMS AND FUND ECONOMICS WITHHELD. STRUCTURE SHOWN, FIGURES NOT SHOWN.</text>
+          </svg>
+          <figcaption>The distribution order and the capital account reconciliation that governs it. Tier terms and fund economics are withheld. Source, engagement workbook, client name withheld.</figcaption>
+        </figure>
+
+        <h2>The audit tab</h2>
+
+        <p>The workbook grades itself. A dedicated tab runs the integrity tests a limited partner's analyst would run by hand, covering the balance identity on every capital account, the reconciliation between distributions paid and proceeds available, and the arithmetic that closes each tier before the next one opens. Each test states its own pass condition, so a reader can see what was tested rather than trusting a green cell.</p>
+
+        <p class="pull">A check that cannot fail is worse than no check, because it prints a pass over a defect nobody is looking for any more.</p>
+
+        <p>Tests that compare a figure to itself always pass. Every test in the tab was verified by breaking an input on purpose and confirming the test caught it, which is the only evidence that a passing check means anything.</p>
+
+        <h2>The package</h2>
+
+        <ul>
+          <li>A period-by-period distribution waterfall reconciled to capital accounts by partner class</li>
+          <li>A scenario engine driving the fund case from one visible set of assumptions</li>
+          <li>A hold analysis for the operating assets, sized against the fund's own timeline</li>
+          <li>An integrity tab whose tests were each proven capable of failing</li>
+        </ul>
+
+        <p>The general partner proceeded to limited partner fundraising with the model.</p>
+
+        <h2>The transferable point</h2>
+
+        <p>Fund models get read adversarially, and the reader is checking arithmetic rather than judgment. Building the audit into the workbook moves that examination from the diligence call, where a surprise costs credibility, to the build, where it costs an afternoon.</p>
+
+        <p class="provenance">SOURCE · ENGAGEMENT WORKBOOK · CLIENT NAME WITHHELD · NO FUND RETURNS OR ASSET-LEVEL FIGURES SHOWN</p>
+
+      </div>
+    </div>
+  </main>
+
+  <section class="section-tight dark">
+    <div class="wrap">
+      <h2>Send the deal.</h2>
+      <p class="prose" style="margin-top: 20px;">A written read arrives within two business days, before any call.</p>
+      <p style="margin-top: 36px;"><a class="btn" href="/start.html">START</a> &nbsp; <a href="/work/" style="margin-left: 18px;">All work</a></p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-lines">
+        Second Order · Little Rock, AR · Est. 2022<br>
+        Sean Dillard, Principal · Stanford MBA · BCG<br>
+        <a href="https://www.linkedin.com/in/sean-dillard">LinkedIn</a> · <a href="mailto:sean@2oadvisory.com">sean@2oadvisory.com</a>
+      </div>
+      <div class="footer-mark"><span class="delta-mono">δ²</span></div>
+    </div>
+  </footer>
+
+</body>
+</html>

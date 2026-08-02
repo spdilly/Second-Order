@@ -1,0 +1,847 @@
+/* ==========================================================================
+   Second Order — 2oadvisory.com — v2 stylesheet
+   Design system: second_order/plans/11_design_language.md
+   Three voices: serif states conclusions, mono carries evidence,
+   sans connects them.
+
+   DARK BY DEFAULT (Sean 2026-07-03): the site is charcoal #16181B with
+   bright teal #2EE6DA accents on every page. The light "corporate shell"
+   concept is retired. Section rhythm comes from two dark tones: the base
+   charcoal and slightly lifted panels (#1C1F23), separated by 1px #2A2D31
+   rules. Paper tokens remain defined for future print styles only.
+
+   FONTS, v1: system stacks only, zero external requests.
+   When self-hosted woff2 files are added under /fonts, declare
+   @font-face blocks here and swap the stacks:
+     STIX Two Display / STIX Two Text  ->  --serif
+     Inter                             ->  --sans
+     IBM Plex Mono                     ->  --mono
+   ========================================================================== */
+
+:root {
+  /* dark surfaces */
+  --room:        #16181B;   /* charcoal base, never green */
+  --room-lift:   #1C1F23;   /* lifted panel tone */
+  --room-deep:   #101214;   /* hero top, deepest tone */
+  --room-line:   #2A2D31;
+  --room-text:   #E3E5E6;
+  --room-muted:  #9BA1A5;
+  --heading:     #F1F2F0;
+
+  /* teal ramp */
+  --teal-bright: #2EE6DA;   /* primary accent on charcoal */
+  --teal-soft:   #7FD2CE;   /* hover / secondary */
+  --teal-deep:   #0B7C7C;   /* dim rules, resting card borders */
+  --teal:        #009E9E;
+
+  /* light tokens, retained for print styles only (unused on screen) */
+  --ink:         #141618;
+  --paper:       #FAFAF7;
+  --paper-line:  #E3E1DA;
+  --gray-1:      #55534E;
+  --gray-2:      #8A8781;
+
+  --serif: Georgia, 'Times New Roman', 'STIX Two Text', serif;
+  --sans:  system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono:  Consolas, 'IBM Plex Mono', 'Courier New', monospace;
+
+  --measure: 720px;
+  --chrome: 1200px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--room-text);
+  background: var(--room);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* legacy opt-in class; dark is now the default everywhere */
+body.room { background: var(--room); color: var(--room-text); }
+
+.wrap {
+  max-width: var(--chrome);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.prose { max-width: var(--measure); }
+
+/* --------------------------------------------------------------------------
+   Type
+   -------------------------------------------------------------------------- */
+
+h1, h2, h3 {
+  font-family: var(--serif);
+  font-weight: 400;
+  color: var(--heading);
+}
+
+h1 {
+  font-size: clamp(38px, 5.5vw, 66px);
+  line-height: 1.06;
+  letter-spacing: -0.012em;
+}
+
+h2 {
+  font-size: clamp(28px, 3.4vw, 40px);
+  line-height: 1.15;
+  letter-spacing: -0.008em;
+  max-width: 20em;
+}
+
+h3 {
+  font-size: 23px;
+  line-height: 1.25;
+}
+
+p { max-width: var(--measure); }
+
+a { color: var(--teal-bright); text-decoration: none; }
+a:hover { color: var(--teal-soft); }
+
+/* Mono eyebrow labels. Caps are typed literally in the HTML.
+   No text-transform anywhere near content that could carry the glyph. */
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: var(--teal-bright);
+  margin-bottom: 20px;
+}
+
+/* The delta glyph. KNOWN BUG GUARD: text-transform uppercase flips
+   the lowercase delta to uppercase. This class must never inherit or
+   receive any text-transform. Keep it explicit. */
+.delta {
+  text-transform: none !important;
+  font-family: var(--serif);
+  font-style: normal;
+  color: var(--teal-bright);
+}
+
+.delta-mono {
+  text-transform: none !important;
+  font-family: var(--mono);
+  font-style: normal;
+  color: var(--teal-bright);
+}
+
+.mono {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.dek {
+  font-size: 19px;
+  color: var(--room-muted);
+  max-width: 40em;
+}
+
+/* --------------------------------------------------------------------------
+   Navigation: wordmark + glyph left, links + CTA right. No mega-menu.
+   -------------------------------------------------------------------------- */
+
+.nav {
+  border-bottom: 1px solid var(--room-line);
+  background: var(--room);
+}
+
+.nav .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+}
+
+.wordmark {
+  font-family: var(--serif);
+  font-size: 20px;
+  color: var(--heading);
+  letter-spacing: 0.01em;
+}
+
+.wordmark:hover { color: var(--heading); }
+
+.wordmark .delta { margin-right: 8px; font-size: 22px; }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+
+.nav-links a { color: var(--room-muted); }
+.nav-links a:hover, .nav-links a.active { color: var(--teal-bright); }
+
+/* --------------------------------------------------------------------------
+   Buttons: flat, square-ish, one accent. Nothing moves.
+   -------------------------------------------------------------------------- */
+
+.btn {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  padding: 14px 28px;
+  background: var(--teal-bright);
+  color: var(--room);
+  border: 1px solid var(--teal-bright);
+  border-radius: 2px;
+}
+
+.btn:hover {
+  background: var(--teal-soft);
+  border-color: var(--teal-soft);
+  color: var(--room);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--teal-bright);
+  border: 1px solid var(--teal-deep);
+}
+
+.btn-ghost:hover {
+  background: transparent;
+  color: var(--teal-soft);
+  border-color: var(--teal-bright);
+}
+
+/* --------------------------------------------------------------------------
+   Section rhythm: two dark tones, generous whitespace, 1px rules.
+   -------------------------------------------------------------------------- */
+
+.section { padding: 130px 0; }
+
+.section-tight { padding: 90px 0; }
+
+/* .dark sections become lifted panels on the all-dark site */
+.dark {
+  background: var(--room-lift);
+  border-top: 1px solid var(--room-line);
+  border-bottom: 1px solid var(--room-line);
+}
+
+/* Hero atmosphere (Sean 2026-07-08): high-contrast teal gradient on dark,
+   a horizontal light sheen (like the VC deck, horizontal not vertical), a
+   quiet teal glow low-right, over a faint blueprint grid. Layered so the
+   type stays dominant. */
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 150px 0 140px;
+  background:
+    radial-gradient(1200px 560px at 90% 112%, rgba(46, 230, 218, 0.14), transparent 60%),
+    linear-gradient(168deg, var(--room-deep) 0%, var(--room) 62%, #14201F 100%);
+}
+
+/* faint teal blueprint grid, fading toward the top */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-image:
+    linear-gradient(rgba(46, 230, 218, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(46, 230, 218, 0.05) 1px, transparent 1px);
+  background-size: 52px 52px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 40%, #000 80%, transparent);
+          mask-image: linear-gradient(to bottom, transparent, #000 40%, #000 80%, transparent);
+}
+
+/* horizontal light sheen sweeping left to right, high on the hero */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    rgba(46, 230, 218, 0.05) 38%,
+    rgba(198, 255, 250, 0.09) 50%,
+    rgba(46, 230, 218, 0.05) 62%,
+    transparent 82%
+  );
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 72%);
+          mask-image: linear-gradient(to bottom, #000 0%, transparent 72%);
+  pointer-events: none;
+}
+
+/* Global film grain, fixed, keeps charcoal reading like paper stock, not fill */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+.hero h1 { max-width: 15em; margin-bottom: 32px; }
+
+.hero .dek { margin-bottom: 44px; }
+
+/* Metrics band: lifted strip, numbers large in mono, labels in tracked caps. */
+.metrics {
+  background: var(--room-lift);
+  border-top: 1px solid var(--room-line);
+  border-bottom: 1px solid var(--room-line);
+  padding: 56px 0;
+}
+
+.metrics .wrap {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+
+.metric-value {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 34px;
+  color: var(--heading);
+  margin-bottom: 6px;
+}
+
+.metric-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--room-muted);
+}
+
+/* --------------------------------------------------------------------------
+   Imagery: treated bands and strips. Every image is grayscale with the
+   teal-charcoal duotone (see assets/img/CREDITS.md for the recipe), so it
+   joins the system. Edge fades blend each band into the charcoal so the
+   photograph reads as embedded, never pasted. Static: no parallax, no
+   zoom, nothing moves.
+   -------------------------------------------------------------------------- */
+
+.img-band {
+  position: relative;
+  height: clamp(280px, 40vh, 440px);
+  overflow: hidden;
+}
+
+.img-band img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.img-band::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    var(--room) 0%,
+    rgba(22, 24, 27, 0.28) 22%,
+    rgba(22, 24, 27, 0.28) 78%,
+    var(--room) 100%
+  );
+  pointer-events: none;
+}
+
+.img-strip {
+  position: relative;
+  height: clamp(180px, 26vh, 300px);
+  overflow: hidden;
+  border-top: 1px solid var(--room-line);
+  border-bottom: 1px solid var(--room-line);
+}
+
+.img-strip img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.img-strip::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(22, 24, 27, 0.55) 0%,
+    rgba(22, 24, 27, 0.30) 50%,
+    rgba(22, 24, 27, 0.55) 100%
+  );
+  pointer-events: none;
+}
+
+/* Thin case-study header image, inside the column */
+.case-img {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  margin-bottom: 48px;
+  border: 1px solid var(--room-line);
+}
+
+.case-img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.case-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(22, 24, 27, 0.30);
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   Cards: 1px teal top rule, mono eyebrow, serif title, one-line dek.
+   Hover brightens the rule. Nothing moves.
+   -------------------------------------------------------------------------- */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.card-grid.two { grid-template-columns: repeat(2, 1fr); }
+.card-grid.four { grid-template-columns: repeat(4, 1fr); }
+
+.card {
+  border-top: 1px solid var(--teal-deep);
+  padding-top: 24px;
+  display: block;
+  color: inherit;
+}
+
+.card:hover { border-top-color: var(--teal-bright); color: inherit; }
+
+.card .eyebrow { margin-bottom: 14px; }
+
+.card h3 { margin-bottom: 12px; }
+
+.card p { font-size: 16px; color: var(--room-muted); }
+
+/* Case study blocks on the Work page */
+.case {
+  border-top: 1px solid var(--room-line);
+  padding: 72px 0;
+}
+
+.case h2 { margin-bottom: 24px; }
+
+.case p { margin-bottom: 18px; }
+
+.provenance {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--room-muted);
+  border-left: 2px solid var(--teal-deep);
+  padding-left: 14px;
+  margin-top: 28px;
+}
+
+/* --------------------------------------------------------------------------
+   Offer ladder
+   -------------------------------------------------------------------------- */
+
+.offer {
+  border-top: 1px solid var(--room-line);
+  padding: 56px 0;
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 48px;
+}
+
+.offer-meta {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--teal-bright);
+  line-height: 2;
+}
+
+.offer h3 { margin-bottom: 14px; }
+
+.offer p { margin-bottom: 14px; }
+
+.offer ul {
+  list-style: none;
+  margin-top: 8px;
+}
+
+.offer li {
+  padding-left: 26px;
+  position: relative;
+  margin-bottom: 8px;
+  color: var(--room-muted);
+}
+
+/* the glyph as list marker, per the design language */
+.offer li::before {
+  content: 'δ';
+  position: absolute;
+  left: 0;
+  color: var(--teal-bright);
+  font-family: var(--serif);
+  text-transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   Intake form (Start page): dark inputs, teal focus.
+   -------------------------------------------------------------------------- */
+
+.intake { max-width: var(--measure); }
+
+.field { margin-bottom: 34px; }
+
+.field label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--teal-bright);
+  margin-bottom: 10px;
+}
+
+.field .hint {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--room-muted);
+  margin-top: 8px;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  font-family: var(--sans);
+  font-size: 16px;
+  color: var(--room-text);
+  background: var(--room-lift);
+  border: 1px solid var(--room-line);
+  border-radius: 2px;
+  padding: 13px 14px;
+}
+
+.field input::placeholder,
+.field textarea::placeholder { color: #6E7479; }
+
+.field textarea { min-height: 130px; resize: vertical; }
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--teal-bright);
+}
+
+/* --------------------------------------------------------------------------
+   Footer: the institutional proof zone, mostly mono at small sizes.
+   -------------------------------------------------------------------------- */
+
+.footer {
+  background: var(--room-deep);
+  border-top: 1px solid var(--room-line);
+  padding: 64px 0;
+}
+
+.footer .wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+}
+
+.footer-lines {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--room-muted);
+  line-height: 2.1;
+}
+
+.footer-lines a { color: var(--room-muted); text-decoration: underline; }
+.footer-lines a:hover { color: var(--teal-bright); }
+
+.footer-mark {
+  font-family: var(--mono);
+  font-size: 22px;
+  color: var(--teal-bright);
+  text-transform: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   Case study index: one row per case, the number carried in mono at size.
+   -------------------------------------------------------------------------- */
+
+.case-row {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 48px;
+  border-top: 1px solid var(--room-line);
+  padding: 52px 0;
+  color: inherit;
+}
+
+.case-row:hover { border-top-color: var(--teal-deep); color: inherit; }
+
+.case-row .figure-big {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 40px;
+  line-height: 1.1;
+  color: var(--teal-bright);
+}
+
+.case-row .figure-note {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--room-muted);
+  margin-top: 10px;
+}
+
+.case-row h3 { margin-bottom: 12px; }
+
+.case-row p { color: var(--room-muted); font-size: 16px; }
+
+.read-on {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: var(--teal-bright);
+  margin-top: 18px;
+}
+
+/* --------------------------------------------------------------------------
+   Long-form article body, used by case studies and Field Notes.
+   -------------------------------------------------------------------------- */
+
+.article { max-width: var(--measure); }
+
+.article p { margin-bottom: 22px; }
+
+.article h2 {
+  font-size: 27px;
+  margin: 52px 0 20px;
+  max-width: 100%;
+}
+
+.article h3 {
+  font-size: 20px;
+  margin: 40px 0 14px;
+}
+
+.article ul, .article ol { margin: 0 0 22px 0; list-style: none; }
+
+.article li {
+  padding-left: 26px;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.article ul li::before {
+  content: 'δ';
+  position: absolute;
+  left: 0;
+  color: var(--teal-deep);
+  font-family: var(--serif);
+  text-transform: none;
+}
+
+.article ol { counter-reset: a; }
+
+.article ol li { counter-increment: a; }
+
+.article ol li::before {
+  content: counter(a);
+  position: absolute;
+  left: 0;
+  color: var(--teal-bright);
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+.article strong { color: var(--heading); font-weight: 600; }
+
+.article code {
+  font-family: var(--mono);
+  font-size: 15px;
+  color: var(--teal-soft);
+  background: var(--room-lift);
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+/* A pulled statement, serif, set off by a teal rule. Never a punch line,
+   always a full sentence carrying a conclusion the body earned. */
+.pull {
+  font-family: var(--serif);
+  font-size: 22px;
+  line-height: 1.45;
+  color: var(--heading);
+  border-left: 2px solid var(--teal-deep);
+  padding-left: 26px;
+  margin: 44px 0;
+}
+
+.byline {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--room-muted);
+  margin-top: 26px;
+}
+
+/* --------------------------------------------------------------------------
+   Exhibits: inline SVG figures with a caption and a source line.
+   -------------------------------------------------------------------------- */
+
+.exhibit {
+  margin: 52px 0;
+  max-width: var(--measure);
+}
+
+.exhibit svg { display: block; width: 100%; height: auto; }
+
+.exhibit figcaption {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--room-muted);
+  margin-top: 14px;
+  line-height: 1.7;
+}
+
+.exhibit-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--teal-bright);
+  margin-bottom: 14px;
+}
+
+/* Provenance pill, carried from the field guide furniture */
+.pill {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  padding: 3px 9px;
+  border: 1px solid var(--teal-deep);
+  color: var(--teal-bright);
+  border-radius: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Notes index
+   -------------------------------------------------------------------------- */
+
+.note-row {
+  display: block;
+  border-top: 1px solid var(--room-line);
+  padding: 42px 0;
+  color: inherit;
+}
+
+.note-row:hover { border-top-color: var(--teal-deep); color: inherit; }
+
+.note-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--room-muted);
+  margin-bottom: 14px;
+}
+
+.note-row h3 { margin-bottom: 10px; max-width: 26em; }
+
+.note-row p { color: var(--room-muted); font-size: 16px; }
+
+/* --------------------------------------------------------------------------
+   Findings list, used on the field guide page.
+   -------------------------------------------------------------------------- */
+
+.finding {
+  border-top: 1px solid var(--room-line);
+  padding: 40px 0;
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 36px;
+}
+
+.finding-num {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--teal-deep);
+  padding-top: 6px;
+}
+
+.finding h3 { margin-bottom: 14px; }
+
+.finding p { color: var(--room-muted); margin-bottom: 14px; }
+
+/* --------------------------------------------------------------------------
+   Responsive
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .case-row, .finding { grid-template-columns: 1fr; gap: 18px; }
+  .case-row .figure-big { font-size: 34px; }
+  .pull { font-size: 19px; padding-left: 18px; }
+  .section { padding: 90px 0; }
+  .hero { padding: 100px 0 90px; }
+  .metrics .wrap { grid-template-columns: repeat(2, 1fr); }
+  .card-grid, .card-grid.four, .card-grid.two { grid-template-columns: 1fr 1fr; }
+  .offer { grid-template-columns: 1fr; gap: 20px; }
+  .img-band { height: clamp(220px, 32vh, 320px); }
+  .case-img { height: 150px; }
+}
+
+@media (max-width: 600px) {
+  .metrics .wrap { grid-template-columns: 1fr; }
+  .card-grid, .card-grid.four, .card-grid.two { grid-template-columns: 1fr; }
+}
+
+/* Five nav items plus the wordmark exceed a phone viewport on one line, so the
+   bar becomes two rows below 620px. Nothing is hidden behind a menu button. */
+@media (max-width: 620px) {
+  .nav .wrap {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    gap: 13px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+  .nav-links {
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 12px;
+  }
+  .nav-links .btn { padding: 9px 15px; font-size: 12px; }
+  .wordmark { font-size: 19px; }
+}

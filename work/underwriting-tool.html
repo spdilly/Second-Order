@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>An underwriter in a box · Second Order</title>
+  <meta name="description" content="A Section 8 single-family underwriting tool that takes an address and returns a proforma, a decision memo, and a provenance trail, and suppresses its own verdict when an input cannot be sourced.">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="wrap">
+      <a class="wordmark" href="/"><span class="delta">δ</span>Second Order</a>
+      <div class="nav-links">
+        <a class="active" href="/work/">WORK</a>
+        <a href="/notes/">NOTES</a>
+        <a href="/offers.html">OFFERS</a>
+        <a href="/about.html">ABOUT</a>
+        <a class="btn btn-ghost" href="/start.html">START</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="section-tight">
+    <div class="wrap">
+      <p class="eyebrow">CASE STUDY · CUSTOM UNDERWRITING TOOL · SECTION 8 SFH</p>
+      <h1>An address goes in. A proforma, a memo, and a provenance trail come out.</h1>
+      <p class="byline">A SECTION 8 SINGLE-FAMILY INVESTOR · PRODUCTION TOOL WITH A REGRESSION SUITE</p>
+    </div>
+  </header>
+
+  <main class="section-tight" style="padding-top: 20px;">
+    <div class="wrap">
+      <div class="article">
+
+        <p>A repeat buyer of Section 8 single-family rentals underwrote every deal by hand, which meant each read cost an evening and no two reads used quite the same assumptions. The volume made the inconsistency expensive before it made the hours expensive.</p>
+
+        <p>The tool takes an address and a price. It returns a populated rental proforma, a one-page decision memo, and a provenance record naming the source behind every load-bearing number. The first working version shipped the same day the job was awarded.</p>
+
+        <h2>The suppression rule</h2>
+
+        <p>Every figure the tool relies on carries a provenance record holding its value, its source, a confidence level, the number of retrieval attempts, and any reconciliation between competing sources. Rent comes from the published HUD fair market rent schedule for the county and bedroom count. Taxes come from the assessor record. When a figure cannot be sourced, the tool reports the gap and withholds its verdict rather than substituting an estimate.</p>
+
+        <p class="pull">A read the buyer cannot trace never reaches the buyer.</p>
+
+        <figure class="exhibit">
+          <p class="exhibit-label">EXHIBIT 1 · INTAKE TO VERDICT</p>
+          <svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flow diagram. An address and price enter. Sourced inputs are gathered, each carrying a provenance record. Complete provenance produces a full underwriting packet. Missing provenance produces a diagnostic report with the verdict withheld.">
+            <!-- node 1 -->
+            <rect x="6" y="78" width="132" height="58" fill="none" stroke="#0B7C7C" stroke-width="1"/>
+            <text x="72" y="103" font-family="Consolas, monospace" font-size="12" fill="#E3E5E6" text-anchor="middle">ADDRESS</text>
+            <text x="72" y="121" font-family="Consolas, monospace" font-size="12" fill="#E3E5E6" text-anchor="middle">+ PRICE</text>
+            <line x1="138" y1="107" x2="176" y2="107" stroke="#2A2D31" stroke-width="1"/>
+            <polygon points="176,103 186,107 176,111" fill="#2A2D31"/>
+
+            <!-- node 2 -->
+            <rect x="186" y="66" width="150" height="82" fill="none" stroke="#0B7C7C" stroke-width="1"/>
+            <text x="261" y="92" font-family="Consolas, monospace" font-size="12" fill="#E3E5E6" text-anchor="middle">SOURCED</text>
+            <text x="261" y="110" font-family="Consolas, monospace" font-size="12" fill="#E3E5E6" text-anchor="middle">INPUTS</text>
+            <text x="261" y="130" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5" text-anchor="middle">HUD FMR · ASSESSOR</text>
+            <line x1="336" y1="107" x2="374" y2="107" stroke="#2A2D31" stroke-width="1"/>
+            <polygon points="374,103 384,107 374,111" fill="#2A2D31"/>
+
+            <!-- decision diamond -->
+            <polygon points="452,66 512,107 452,148 392,107" fill="none" stroke="#7FD2CE" stroke-width="1"/>
+            <text x="452" y="103" font-family="Consolas, monospace" font-size="11" fill="#E3E5E6" text-anchor="middle">EVERY FIGURE</text>
+            <text x="452" y="118" font-family="Consolas, monospace" font-size="11" fill="#E3E5E6" text-anchor="middle">SOURCED</text>
+
+            <!-- yes branch up -->
+            <line x1="512" y1="107" x2="540" y2="107" stroke="#2A2D31" stroke-width="1"/>
+            <line x1="540" y1="107" x2="540" y2="48" stroke="#2A2D31" stroke-width="1"/>
+            <line x1="540" y1="48" x2="566" y2="48" stroke="#2A2D31" stroke-width="1"/>
+            <polygon points="566,44 576,48 566,52" fill="#2A2D31"/>
+            <text x="528" y="80" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5">YES</text>
+            <rect x="576" y="22" width="138" height="52" fill="none" stroke="#2EE6DA" stroke-width="1"/>
+            <text x="645" y="43" font-family="Consolas, monospace" font-size="11" fill="#F1F2F0" text-anchor="middle">PROFORMA,</text>
+            <text x="645" y="60" font-family="Consolas, monospace" font-size="11" fill="#F1F2F0" text-anchor="middle">MEMO, VERDICT</text>
+
+            <!-- no branch down -->
+            <line x1="540" y1="107" x2="540" y2="168" stroke="#2A2D31" stroke-width="1"/>
+            <line x1="540" y1="168" x2="566" y2="168" stroke="#2A2D31" stroke-width="1"/>
+            <polygon points="566,164 576,168 566,172" fill="#2A2D31"/>
+            <text x="530" y="140" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5">NO</text>
+            <rect x="576" y="142" width="138" height="52" fill="none" stroke="#0B7C7C" stroke-width="1"/>
+            <text x="645" y="163" font-family="Consolas, monospace" font-size="11" fill="#E3E5E6" text-anchor="middle">GAP REPORTED,</text>
+            <text x="645" y="180" font-family="Consolas, monospace" font-size="11" fill="#E3E5E6" text-anchor="middle">VERDICT HELD</text>
+          </svg>
+          <figcaption>The tool produces two document types. A full underwriting packet when provenance is complete, and a diagnostic report naming the missing source when it is not. Source, production tool and regression suite.</figcaption>
+        </figure>
+
+        <h2>The package</h2>
+
+        <ul>
+          <li>A command-line runner and a browser interface over one underwriting engine</li>
+          <li>A local database of HUD fair market rents, rebuilt on the annual publication cycle</li>
+          <li>Per-deal output folders holding the proforma, the memo, and the provenance record for every read</li>
+          <li>A regression suite that runs the whole engine with the network disabled, so a change to the code cannot quietly change a verdict</li>
+        </ul>
+
+        <h2>The transferable point</h2>
+
+        <p>An automated read is worth having only when it declines to answer. A tool that fills every blank with a plausible default produces an underwriting packet that looks identical whether the inputs were sourced or invented, and the buyer inherits a risk the tool created. Suppression makes the difference visible on the page.</p>
+
+        <p class="provenance">SOURCE · PRODUCTION TOOL · REGRESSION SUITE · PER-DEAL OUTPUT PACKETS · NO CLIENT THRESHOLDS OR ADDRESSES SHOWN</p>
+
+      </div>
+    </div>
+  </main>
+
+  <section class="section-tight dark">
+    <div class="wrap">
+      <h2>Send the deal.</h2>
+      <p class="prose" style="margin-top: 20px;">A written read arrives within two business days, before any call.</p>
+      <p style="margin-top: 36px;"><a class="btn" href="/start.html">START</a> &nbsp; <a href="/work/" style="margin-left: 18px;">All work</a></p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-lines">
+        Second Order · Little Rock, AR · Est. 2022<br>
+        Sean Dillard, Principal · Stanford MBA · BCG<br>
+        <a href="https://www.linkedin.com/in/sean-dillard">LinkedIn</a> · <a href="mailto:sean@2oadvisory.com">sean@2oadvisory.com</a>
+      </div>
+      <div class="footer-mark"><span class="delta-mono">δ²</span></div>
+    </div>
+  </footer>
+
+</body>
+</html>
