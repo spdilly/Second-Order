@@ -1,0 +1,8 @@
+# GitHub Pages reads CNAME as a single hostname. A CRLF line ending can make it
+# reject the custom domain, so pin this file to LF regardless of platform.
+CNAME text eol=lf
+
+# Keep the served files consistent for the same reason.
+*.html text eol=lf
+*.css  text eol=lf
+*.js   text eol=lf
