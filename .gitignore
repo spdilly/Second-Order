@@ -5,3 +5,9 @@ desktop.ini
 *.swp
 .vscode/
 .idea/
+
+# The NWA field guide page stays out of the published site until Sean clears
+# publication_authorized and email_authorized in the source build manifest at
+# output/projects/vc-deck/print/R39_build_manifest.json. The file remains in the
+# working folder. Delete these two lines to publish it.
+field-guide.html
