@@ -32,14 +32,6 @@
 
   <main class="section-tight" style="padding-top: 30px;">
     <div class="wrap">
-      <!-- One Formspree endpoint serves every form on the site, so a single
-           find-and-replace of the FORMSPREE_ID token across start.html,
-           notes/index.html, and field-guide.html completes the setup. Create a
-           free form at formspree.io pointed at sean@2oadvisory.com, replace the
-           token, then submit one test from each form and confirm all three land
-           in the inbox before the domain goes live. The request_type field
-           distinguishes them. The _gotcha field is a spam honeypot and stays
-           hidden from users. -->
       <form class="intake" data-fallback-to="sean@2oadvisory.com" action="https://formspree.io/f/FORMSPREE_ID" method="POST">
         <input type="hidden" name="_subject" value="New intake from 2oadvisory.com">
         <input type="hidden" name="request_type" value="deal-intake">
