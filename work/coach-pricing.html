@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Four pricing regimes replaced one · Second Order</title>
+  <meta name="description" content="Replacing one fare rule with four pricing regimes is worth $41.8M a year on a $712M intercity coach network. A sample pricing study on a synthetic network.">
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="wrap">
+      <a class="wordmark" href="../index.html"><span class="delta">δ</span>Second Order</a>
+      <div class="nav-links">
+        <a class="active" href="../work/index.html">WORK</a>
+        <a href="../notes/index.html">NOTES</a>
+        <a href="../offers.html">OFFERS</a>
+        <a href="../about.html">ABOUT</a>
+        <a class="btn btn-ghost" href="../start.html">START</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="section-tight">
+    <div class="wrap">
+      <p class="eyebrow">CASE STUDY · PRICING &amp; REVENUE MANAGEMENT · INTERCITY COACH</p>
+      <h1>Replacing one fare rule with four pricing regimes is worth $41.8M a year on a $712M network.</h1>
+      <p class="byline">A SAMPLE STUDY · NATIONAL INTERCITY COACH OPERATOR · SYNTHETIC NETWORK DATA</p>
+    </div>
+  </header>
+
+  <main class="section-tight" style="padding-top: 20px;">
+    <div class="wrap">
+      <div class="article">
+
+        <p>This study is a sample of the pricing practice. It is built on a synthetic network constructed to mirror the public structure of the US intercity coach industry, and every number below comes from that one model.</p>
+
+        <h2>The situation</h2>
+
+        <p>The operator runs a national network of roughly 4,100 origin-destination pairs producing $712M in annual ticket revenue across 16.4M passenger trips, an average fare of $43. Fifty city pairs, the trunk corridors between major metros, carry 54 percent of that revenue. The next 350 pairs carry 31 percent. The remaining 3,700 pairs carry 15 percent, and most of them sell fewer than a dozen seats a day.</p>
+
+        <figure class="exhibit">
+          <p class="exhibit-label">EXHIBIT 1 · REVENUE CONCENTRATION BY ROUTE TIER</p>
+          <svg viewBox="0 0 720 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bar chart. Fifty trunk pairs carry 384 million dollars, 54 percent of revenue. Three hundred fifty secondary pairs carry 221 million, 31 percent. Three thousand seven hundred tail pairs carry 107 million, 15 percent.">
+            <line x1="225" y1="25" x2="225" y2="210" stroke="#2A2D31" stroke-width="1"/>
+
+            <text x="210" y="66" font-family="Consolas, monospace" font-size="12" fill="#9BA1A5" text-anchor="end">50 TRUNK PAIRS</text>
+            <rect x="225" y="45" width="415" height="34" fill="#2EE6DA"/>
+            <text x="632" y="67" font-family="Consolas, monospace" font-size="14" fill="#16181B" text-anchor="end">$384M · 54%</text>
+
+            <text x="210" y="126" font-family="Consolas, monospace" font-size="12" fill="#9BA1A5" text-anchor="end">350 SECONDARY PAIRS</text>
+            <rect x="225" y="105" width="238" height="34" fill="#0B7C7C"/>
+            <text x="475" y="127" font-family="Consolas, monospace" font-size="14" fill="#E3E5E6">$221M · 31%</text>
+
+            <text x="210" y="186" font-family="Consolas, monospace" font-size="12" fill="#9BA1A5" text-anchor="end">3,700 TAIL PAIRS</text>
+            <rect x="225" y="165" width="115" height="34" fill="#0B7C7C"/>
+            <text x="352" y="187" font-family="Consolas, monospace" font-size="14" fill="#E3E5E6">$107M · 15%</text>
+          </svg>
+          <figcaption>Annual gross ticket revenue by origin-destination pair, sorted by revenue and grouped into three tiers. The tiers become the pricing regimes in Exhibit 5.</figcaption>
+        </figure>
+
+        <p>Fares were set by mileage band and reviewed annually. A trip of a given distance cost roughly the same whether it left New York on a Friday at 5pm or crossed New Mexico on a Tuesday morning. The rule was simple to administer, and it priced three markets that behave nothing alike as if they were one.</p>
+
+        <p>The pressure came from the trunk. Low-cost entrants price the dense corridors dynamically, filling early seats at promotional fares and selling the last seats at multiples of the base. Against a flat fare, the entrant wins the price-sensitive advance buyer and leaves the incumbent holding the network's fixed costs.</p>
+
+        <h2>The problem</h2>
+
+        <p>The operator asked where the flat fare was leaving revenue, and set one constraint before the work began. A quarter of tickets are bought at the station on the day of travel, disproportionately by riders with the fewest alternatives, and the program could not fund itself by raising prices on them.</p>
+
+        <p>That constraint is analytical, and it shaped the answer. Day-of walk-up demand prices at an elasticity near negative 0.4, while online advance purchasers who cross-shop the entrants and rail price near negative 1.6. The inelastic segment is the one the operator will not price against, so the revenue has to come from the elastic segment, from timing, and from the seats the network was refusing to sell.</p>
+
+        <h2>The work</h2>
+
+        <p>The first move was to split the network into pricing regimes before touching a single fare. Dense corridors generate enough booking history to forecast demand by departure, which is the raw material dynamic pricing requires. The tail does not. On a route selling nine seats a day, week-to-week noise swamps any demand signal, and a dynamic price there behaves like a random one. The 50 trunk pairs got booking-curve pricing. The 350 secondary pairs got seasonal and day-of-week tables. The 3,700 tail pairs kept stable published fares.</p>
+
+        <p>The second move was to price seats by displacement. A multi-stop schedule sells one physical seat into several markets at once. On the Washington to Charlotte schedule, the last seat out of Washington can be sold to Richmond for $25 or held for a through passenger to Charlotte paying $62. Selling the short leg forecloses the long one, so the short fare has to clear the $37 of displaced value, and near departure on a full leg it did not. Fixing that decision requires no fare change at all, only a control that knows the value of the seat on every leg it touches.</p>
+
+        <figure class="exhibit">
+          <p class="exhibit-label">EXHIBIT 2 · ONE SEAT, SEVERAL MARKETS, ONE DEPARTURE</p>
+          <svg viewBox="0 0 720 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Route schematic. Washington to Richmond to Raleigh to Charlotte on one schedule. Leg demand forecasts are 46 of 50 seats, 38 of 50, and 41 of 50. The Washington to Richmond walk-up fare is 25 dollars. The through itinerary to Charlotte is 62 dollars. The displaced value of the last Washington seat is 37 dollars.">
+            <path d="M 80 110 Q 360 18 640 110" fill="none" stroke="#2EE6DA" stroke-width="1" stroke-dasharray="5 4"/>
+            <text x="360" y="40" font-family="Consolas, monospace" font-size="12" fill="#2EE6DA" text-anchor="middle">THROUGH ITINERARY · $62</text>
+
+            <line x1="80" y1="110" x2="640" y2="110" stroke="#E3E5E6" stroke-width="2"/>
+            <circle cx="80" cy="110" r="5" fill="#E3E5E6"/>
+            <circle cx="267" cy="110" r="5" fill="#E3E5E6"/>
+            <circle cx="453" cy="110" r="5" fill="#E3E5E6"/>
+            <circle cx="640" cy="110" r="5" fill="#E3E5E6"/>
+
+            <text x="173" y="98" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="middle">46 OF 50 SEATS</text>
+            <text x="360" y="98" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="middle">38 OF 50</text>
+            <text x="546" y="98" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="middle">41 OF 50</text>
+
+            <text x="80" y="135" font-family="Consolas, monospace" font-size="12" fill="#E3E5E6" text-anchor="middle">WASHINGTON</text>
+            <text x="267" y="135" font-family="Consolas, monospace" font-size="12" fill="#E3E5E6" text-anchor="middle">RICHMOND</text>
+            <text x="453" y="135" font-family="Consolas, monospace" font-size="12" fill="#E3E5E6" text-anchor="middle">RALEIGH</text>
+            <text x="640" y="135" font-family="Consolas, monospace" font-size="12" fill="#E3E5E6" text-anchor="middle">CHARLOTTE</text>
+
+            <text x="173" y="164" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="middle">WALK-UP FARE $25</text>
+
+            <text x="360" y="200" font-family="Consolas, monospace" font-size="13" fill="#2EE6DA" text-anchor="middle">DISPLACED VALUE OF THE LAST WASHINGTON SEAT · $62 − $25 = $37</text>
+          </svg>
+          <figcaption>Forecast leg demand for one Friday departure. With Raleigh to Charlotte still open, the last Washington seat is worth $62 as a through itinerary and $25 as a short leg, so the $25 sale destroys $37 of value the moment the Washington leg fills.</figcaption>
+        </figure>
+
+        <p>The third move is where a coach network stops resembling an airline. An airline caps a sold-out flight and prices to ration it, because adding capacity means adding an aircraft. A coach operator can add a second section, one more vehicle and one more driver on the same departure, for about $1,100 of incremental cost. On a Friday departure forecasting 78 riders against 50 seats at a $45 fare, rationing by price to fill one bus at $65 contributes $3,250, while running a second section at the posted fare contributes $2,410, so at that demand level the higher fare wins. Past 97 forecast riders the second section wins, and the rule flips. The recommendation is the crossover itself, a dispatch threshold that prices and schedules each peak departure jointly instead of treating capacity as fixed.</p>
+
+        <figure class="exhibit">
+          <p class="exhibit-label">EXHIBIT 3 · PRICE THE SCARCITY OR ADD THE BUS</p>
+          <svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Line chart. Contribution from pricing to fill one coach is flat at 3,250 dollars. Contribution from running a second section rises with forecast demand and crosses the pricing line at 97 riders. At the 78-rider forecast, pricing wins.">
+            <line x1="90" y1="40" x2="90" y2="220" stroke="#2A2D31" stroke-width="1"/>
+            <line x1="90" y1="220" x2="650" y2="220" stroke="#2A2D31" stroke-width="1"/>
+
+            <text x="82" y="224" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="end">$0</text>
+            <text x="82" y="144" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="end">$2,000</text>
+            <text x="82" y="64" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="end">$4,000</text>
+
+            <line x1="466" y1="40" x2="466" y2="220" stroke="#9BA1A5" stroke-width="1" stroke-dasharray="4 4"/>
+
+            <line x1="90" y1="90" x2="650" y2="90" stroke="#0B7C7C" stroke-width="2.5"/>
+            <line x1="90" y1="174" x2="650" y2="48" stroke="#2EE6DA" stroke-width="2.5"/>
+
+            <circle cx="314" cy="124" r="4" fill="#2EE6DA"/>
+            <circle cx="466" cy="90" r="4" fill="#E3E5E6"/>
+
+            <text x="100" y="78" font-family="Consolas, monospace" font-size="12" fill="#7FD2CE">PRICE TO FILL ONE COACH · $3,250</text>
+            <text x="470" y="62" font-family="Consolas, monospace" font-size="12" fill="#2EE6DA">RUN A SECOND SECTION</text>
+
+            <text x="90" y="240" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="middle">50</text>
+            <text x="314" y="240" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="middle">78</text>
+            <text x="466" y="240" font-family="Consolas, monospace" font-size="11" fill="#E3E5E6" text-anchor="middle">97</text>
+            <text x="650" y="240" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="middle">120</text>
+            <text x="370" y="264" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="middle">FORECAST RIDERS ON THE DEPARTURE</text>
+          </svg>
+          <figcaption>Contribution per departure on a 50-seat coach at a $45 posted fare. The pricing option solves the fare that clears demand to one coach. The second-section option keeps the posted fare and pays about $1,100 for the added vehicle and driver. The dispatch threshold sits at 97 forecast riders.</figcaption>
+        </figure>
+
+        <p>The peak is where the money concentrates. Friday departures on trunk corridors run at 84 percent average load and Sundays at 81, against a system average of 61, and 6.2 percent of trunk departures sell out two or more days early. Those sellouts turned away an estimated 410,000 trips last year, about $19M of demand at prevailing fares, spilled to competitors or to no trip at all at prices the operator itself had set.</p>
+
+        <figure class="exhibit">
+          <p class="exhibit-label">EXHIBIT 4 · TRUNK LOAD FACTOR BY DAY OF WEEK</p>
+          <svg viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bar chart of average load factor by day of week on trunk corridors. Monday 55 percent, Tuesday 48, Wednesday 51, Thursday 62, Friday 84, Saturday 66, Sunday 81, against a system average of 61 percent.">
+            <line x1="70" y1="88" x2="670" y2="88" stroke="#7FD2CE" stroke-width="1" stroke-dasharray="4 4"/>
+            <text x="75" y="80" font-family="Consolas, monospace" font-size="11" fill="#7FD2CE">SYSTEM AVG 61%</text>
+
+            <rect x="90" y="100" width="55" height="110" fill="#0B7C7C"/>
+            <rect x="175" y="114" width="55" height="96" fill="#0B7C7C"/>
+            <rect x="260" y="108" width="55" height="102" fill="#0B7C7C"/>
+            <rect x="345" y="86" width="55" height="124" fill="#0B7C7C"/>
+            <rect x="430" y="42" width="55" height="168" fill="#2EE6DA"/>
+            <rect x="515" y="78" width="55" height="132" fill="#0B7C7C"/>
+            <rect x="600" y="48" width="55" height="162" fill="#2EE6DA"/>
+
+            <text x="117" y="94" font-family="Consolas, monospace" font-size="12" fill="#9BA1A5" text-anchor="middle">55</text>
+            <text x="202" y="108" font-family="Consolas, monospace" font-size="12" fill="#9BA1A5" text-anchor="middle">48</text>
+            <text x="287" y="102" font-family="Consolas, monospace" font-size="12" fill="#9BA1A5" text-anchor="middle">51</text>
+            <text x="372" y="80" font-family="Consolas, monospace" font-size="12" fill="#9BA1A5" text-anchor="middle">62</text>
+            <text x="457" y="36" font-family="Consolas, monospace" font-size="12" fill="#F1F2F0" text-anchor="middle">84</text>
+            <text x="542" y="72" font-family="Consolas, monospace" font-size="12" fill="#9BA1A5" text-anchor="middle">66</text>
+            <text x="627" y="42" font-family="Consolas, monospace" font-size="12" fill="#F1F2F0" text-anchor="middle">81</text>
+
+            <line x1="70" y1="210" x2="670" y2="210" stroke="#2A2D31" stroke-width="1"/>
+            <text x="117" y="230" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="middle">MON</text>
+            <text x="202" y="230" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="middle">TUE</text>
+            <text x="287" y="230" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="middle">WED</text>
+            <text x="372" y="230" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="middle">THU</text>
+            <text x="457" y="230" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="middle">FRI</text>
+            <text x="542" y="230" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="middle">SAT</text>
+            <text x="627" y="230" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="middle">SUN</text>
+          </svg>
+          <figcaption>Average load factor on the 50 trunk pairs. On the Friday and Sunday peaks, 6.2 percent of departures sell out two or more days early, spilling an estimated 410,000 annual trips worth about $19M at prevailing fares.</figcaption>
+        </figure>
+
+        <p>The fourth move rebuilt the fences between segments. The advance discount deepened online, where the elastic cross-shopper decides. The day-of fare became the undiscounted base rather than a surcharge, which holds the walk-up rider harmless in structure as well as in optics. Seat selection and a flexible-fare option were added as paid attachments, the one page of the entrant playbook worth copying directly.</p>
+
+        <p>Tail fares stayed published and fixed, and each repricing decision there was made at the network level. A rural pair that loses money in isolation can be profitable once its connecting revenue onto the trunk is counted, and roughly 340 tail pairs moved price only after that contribution test, most of them downward or with through-fares introduced.</p>
+
+        <h2>The result</h2>
+
+        <p>The five workstreams bridge to $41.8M of annual revenue, 5.9 percent of the base, with each block carrying its own elasticity assumption and sensitivity in the model. Booking-curve pricing on the trunk contributes $10.8M. Capturing half of the spilled peak demand through second sections and peak fares contributes $9.6M. The fence redesign contributes $7.9M, ancillary attachment $8.7M, and tail repricing on network contribution $4.8M. None of it prices against the day-of walk-up rider, and the largest single block comes from demand the operator was already generating and turning away.</p>
+
+        <figure class="exhibit">
+          <p class="exhibit-label">EXHIBIT 5 · THE REVENUE BRIDGE, $M ANNUAL</p>
+          <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Waterfall chart. Trunk dynamic pricing 10.8 million, peak spill capture 9.6, fence redesign 7.9, ancillary attach 8.7, tail repricing 4.8, total 41.8 million dollars, 5.9 percent of revenue.">
+            <line x1="40" y1="240" x2="680" y2="240" stroke="#2A2D31" stroke-width="1"/>
+
+            <rect x="60" y="188" width="70" height="52" fill="#0B7C7C"/>
+            <line x1="130" y1="188" x2="165" y2="188" stroke="#9BA1A5" stroke-width="1" stroke-dasharray="3 3"/>
+            <rect x="165" y="142" width="70" height="46" fill="#0B7C7C"/>
+            <line x1="235" y1="142" x2="270" y2="142" stroke="#9BA1A5" stroke-width="1" stroke-dasharray="3 3"/>
+            <rect x="270" y="104" width="70" height="38" fill="#0B7C7C"/>
+            <line x1="340" y1="104" x2="375" y2="104" stroke="#9BA1A5" stroke-width="1" stroke-dasharray="3 3"/>
+            <rect x="375" y="63" width="70" height="41" fill="#0B7C7C"/>
+            <line x1="445" y1="63" x2="480" y2="63" stroke="#9BA1A5" stroke-width="1" stroke-dasharray="3 3"/>
+            <rect x="480" y="40" width="70" height="23" fill="#0B7C7C"/>
+            <line x1="550" y1="40" x2="585" y2="40" stroke="#9BA1A5" stroke-width="1" stroke-dasharray="3 3"/>
+            <rect x="585" y="40" width="70" height="200" fill="#2EE6DA"/>
+
+            <text x="95" y="178" font-family="Consolas, monospace" font-size="13" fill="#E3E5E6" text-anchor="middle">10.8</text>
+            <text x="200" y="132" font-family="Consolas, monospace" font-size="13" fill="#E3E5E6" text-anchor="middle">9.6</text>
+            <text x="305" y="94" font-family="Consolas, monospace" font-size="13" fill="#E3E5E6" text-anchor="middle">7.9</text>
+            <text x="410" y="53" font-family="Consolas, monospace" font-size="13" fill="#E3E5E6" text-anchor="middle">8.7</text>
+            <text x="515" y="30" font-family="Consolas, monospace" font-size="13" fill="#E3E5E6" text-anchor="middle">4.8</text>
+            <text x="620" y="30" font-family="Consolas, monospace" font-size="14" fill="#2EE6DA" text-anchor="middle">$41.8M</text>
+
+            <text x="95" y="260" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5" text-anchor="middle">TRUNK</text>
+            <text x="95" y="274" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5" text-anchor="middle">DYNAMIC</text>
+            <text x="200" y="260" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5" text-anchor="middle">PEAK</text>
+            <text x="200" y="274" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5" text-anchor="middle">SPILL</text>
+            <text x="305" y="260" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5" text-anchor="middle">FENCE</text>
+            <text x="305" y="274" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5" text-anchor="middle">REDESIGN</text>
+            <text x="410" y="260" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5" text-anchor="middle">ANCILLARY</text>
+            <text x="410" y="274" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5" text-anchor="middle">ATTACH</text>
+            <text x="515" y="260" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5" text-anchor="middle">TAIL</text>
+            <text x="515" y="274" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5" text-anchor="middle">REPRICING</text>
+            <text x="620" y="260" font-family="Consolas, monospace" font-size="10" fill="#E3E5E6" text-anchor="middle">TOTAL</text>
+            <text x="620" y="274" font-family="Consolas, monospace" font-size="10" fill="#E3E5E6" text-anchor="middle">5.9% OF REV</text>
+          </svg>
+          <figcaption>Each block carries its own elasticity assumption and a sensitivity range in the model. The peak spill block assumes half of the 410,000 spilled trips are recaptured through second sections and peak fares.</figcaption>
+        </figure>
+
+        <h2>The transferable point</h2>
+
+        <p>Most pricing programs fail by uniformity, one clever rule applied to every market the company serves. A network business earns its revenue in segments that differ by an order of magnitude in density, and the pricing architecture has to differ with them. The analytical work is deciding where each regime's evidence runs out. The trunk earns dynamic pricing because the data supports a forecast. The tail earns a stable fare because it does not, and pretending otherwise converts pricing into noise.</p>
+
+      </div>
+    </div>
+  </main>
+
+  <section class="section-tight dark">
+    <div class="wrap">
+      <h2>Send the deal.</h2>
+      <p style="margin-top: 36px;"><a class="btn" href="../start.html">START</a> &nbsp; <a href="../work/index.html" style="margin-left: 18px;">All work</a></p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-lines">
+        Second Order · Little Rock, AR · Est. 2022<br>
+        Sean Dillard, Principal · Stanford MBA · BCG<br>
+        <a href="https://www.linkedin.com/in/sean-dillard">LinkedIn</a> · <a href="mailto:sean@2oadvisory.com">sean@2oadvisory.com</a>
+      </div>
+      <div class="footer-mark"><span class="delta-mono">δ²</span></div>
+    </div>
+  </footer>
+
+</body>
+</html>
