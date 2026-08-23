@@ -597,9 +597,7 @@ body::after {
    -------------------------------------------------------------------------- */
 
 .case-row {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  gap: 48px;
+  display: block;
   border-top: 1px solid var(--room-line);
   padding: 52px 0;
   color: inherit;
