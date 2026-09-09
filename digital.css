@@ -26,7 +26,7 @@ html{scroll-padding-top:30px}body{font-family:var(--sans);font-size:17px;line-he
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
 @media print{.nav,.footer,.skip-link,.optical-art,.hero-links{display:none}body{background:white;color:black}.wrap{padding:0}h1,h2,h3{color:black}.section,.section-tight{padding:25px 0}.digital-hero-grid,.hero-lower,.section-heading,.team-member{display:block}.coverage-figure{break-inside:avoid}a{color:black}}
 /* Use the same straight-topped lowercase delta in marks and headings. */
-.section-heading .delta-letter{font-size:1em;line-height:inherit;letter-spacing:0;margin-left:.025em;margin-right:.012em}
+.section-heading .delta-letter{font-size:1em;line-height:inherit;letter-spacing:0;margin-left:.025em;margin-right:-.03em}
 @supports (mask-image:url("")) or (-webkit-mask-image:url("")){
   .wordmark-symbol{display:inline-block;width:.57em;height:1em;overflow:hidden;vertical-align:-.153em;letter-spacing:0;background:currentColor;-webkit-mask:url("assets/img/second-order-delta.svg") center/100% 100% no-repeat;mask:url("assets/img/second-order-delta.svg") center/100% 100% no-repeat;mask-mode:alpha}
 }
