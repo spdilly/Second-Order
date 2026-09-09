@@ -4,63 +4,67 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Insights · Second Order</title>
-  <meta name="description" content="Second Order analysis on revenue quality, coverage and credit, and fund economics, each published with the model or dataset behind it.">
+  <meta name="description" content="Second Order analysis on revenue quality, financial modeling, and regional capital, with stated assumptions and sources.">
   <link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../digital.css">
+<script src="../design.js" defer></script>
+<link rel="stylesheet" href="../pages.css">
 </head>
-<body>
+<body class="insights-page">
 
-  <nav class="nav">
+  <a class="skip-link" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Main navigation">
     <div class="wrap">
-      <a class="wordmark" href="../index.html"><span class="delta">δ</span>Second Order</a>
-      <div class="nav-links">
-        <a href="../about.html">ABOUT</a>
+      <a class="wordmark" href="../index.html">Second Order<span class="wordmark-symbol" aria-hidden="true">δ</span></a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="site-menu" type="button">Menu <span aria-hidden="true">+</span></button><div class="nav-links" id="site-menu">
+        <a href="../about.html">FIRM</a>
         <a href="../practices.html">CAPABILITIES</a>
-        <a href="../work/index.html">ENGAGEMENTS</a>
-        <a class="active" href="../notes/index.html">INSIGHTS</a>
-        <a href="../people.html">PRINCIPAL</a>
+        <a href="../work/index.html">WORK</a>
+        <a class="active" aria-current="page" href="../notes/index.html">INSIGHTS</a>
+        <a href="../people.html">TEAM</a>
         <a href="../contact.html">CONTACT</a>
       </div>
     </div>
   </nav>
 
-  <header class="section-tight">
+  <header id="main" tabindex="-1" class="section-tight">
     <div class="wrap">
       <p class="eyebrow">INSIGHTS</p>
-      <h1>Analysis on the numbers that decide capital events.</h1>
-      <p class="dek" style="margin-top: 24px;">Each piece carries the model, chart, or dataset built for it, so a reader can check the work rather than take the conclusion. The recurring subjects are revenue quality, coverage and credit, and fund economics.</p>
+      <h1>A closer look<br>at the numbers.</h1>
+      <p class="dek" style="margin-top: 24px;">These articles examine revenue quality, financial modeling, and regional capital. They explain the sources and assumptions supporting the findings.</p>
     </div>
   </header>
 
   <main class="section-tight" style="padding-top: 10px;">
-    <div class="wrap">
+    <div class="wrap note-index">
 
-      <a class="note-row" href="../notes/central-arkansas-capital.html">
+      <a class="note-row research-entry" href="../notes/central-arkansas-capital.html"><span class="note-number" aria-hidden="true">01</span>
         <p class="note-meta">22 AUGUST 2026 · ECOSYSTEM FINANCE</p>
-        <h3>Central Arkansas received about $350,000 in disclosed angel and seed capital in 2024.</h3>
-        <p>A four-year strategy starts with corporate buyers, tracks what reaches a first check, and holds the larger funding campaign until the region has a public operating record.</p>
-      </a>
+        <h3>A strategy for Central Arkansas</h3>
+        <p>A four-year strategy proposes corporate customer relationships and a documented record of early investments before a larger regional funding campaign.</p>
+      <span class="research-link">Read analysis <span aria-hidden="true">↗</span></span></a>
 
-      <a class="note-row" href="../notes/the-retention-screen.html">
+      <a class="note-row research-entry" href="../notes/the-retention-screen.html"><span class="note-number" aria-hidden="true">02</span>
         <p class="note-meta">02 AUGUST 2026 · REVENUE QUALITY</p>
-        <h3>The median AI-native software company kept 40 percent of its prior-year recurring revenue in 2025.</h3>
-        <p>Seven reproducible tests restate a reported ARR figure into collected recurring revenue and estimate the share that persists twelve months out. A worked example takes a $10.0M headline to $4.10M.</p>
-      </a>
+        <h3>Look beyond reported ARR</h3>
+        <p>A synthetic example separates a $10.0M reported figure from the subscription base, then tests a $4.10M twelve-month retention scenario.</p>
+      <span class="research-link">Read analysis <span aria-hidden="true">↗</span></span></a>
 
-      <a class="note-row" href="../notes/the-plug-detector.html">
+      <a class="note-row research-entry" href="../notes/the-plug-detector.html"><span class="note-number" aria-hidden="true">03</span>
         <p class="note-meta">02 AUGUST 2026 · MODEL INTEGRITY</p>
-        <h3>A number carried to sixteen decimal places was solved for, not chosen.</h3>
-        <p>Three mechanical signatures separate an assumption someone selected from a figure reverse-engineered to make an output land on a target, and all three can be detected without opening the model.</p>
-      </a>
+        <h3>What supports the assumption?</h3>
+        <p>Unusual precision can signal an input calculated to produce a target result. Three checks help identify inputs for review; precision alone does not establish their origin.</p>
+      <span class="research-link">Read analysis <span aria-hidden="true">↗</span></span></a>
 
     </div>
   </main>
 
-  <section class="section-tight dark">
+  <section class="section-tight dark subscribe-section">
     <div class="wrap">
       <div class="prose">
         <p class="eyebrow">BY EMAIL</p>
-        <h2>New analysis arrives as it publishes.</h2>
-        <form class="intake" style="margin-top: 32px;" data-fallback-to="sean@2oadvisory.com" data-success="Subscribed. New analysis arrives by email as it publishes." action="https://script.google.com/macros/s/AKfycbyij-zrD3xNOiite7eM0voDxlWXa8bv0Zp3JlOOJm-kkcACtSzxv2KP4AUsfWhc_pl2-w/exec" method="POST">
+        <h2>Receive new analysis by email.</h2>
+        <form class="intake" style="margin-top: 32px;" data-fallback-to="sean@2oadvisory.com" data-success="Thank you for subscribing." action="https://script.google.com/macros/s/AKfycbyij-zrD3xNOiite7eM0voDxlWXa8bv0Zp3JlOOJm-kkcACtSzxv2KP4AUsfWhc_pl2-w/exec" method="POST">
           <input type="hidden" name="_subject" value="Field Notes subscription from 2oadvisory.com">
           <input type="hidden" name="request_type" value="field-notes-subscribe">
           <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
@@ -75,15 +79,7 @@
     </div>
   </section>
 
-  <footer class="footer">
-    <div class="wrap">
-      <div class="footer-lines">
-        Second Order · Little Rock, Arkansas · Est. 2022<br>
-        <a href="https://www.linkedin.com/in/sean-dillard">LinkedIn</a> · <a href="mailto:sean@2oadvisory.com">sean@2oadvisory.com</a>
-      </div>
-      <div class="footer-mark"><span class="delta-mono">δ²</span></div>
-    </div>
-  </footer>
+  <footer class="footer"><div class="wrap"><div class="footer-top"><p class="eyebrow">CONTACT SECOND ORDER</p><a class="footer-contact" href="../contact.html">Discuss your<br>next decision.<span aria-hidden="true">↗</span></a></div><div class="footer-bottom"><a class="footer-wordmark" href="../index.html">Second Order<span class="wordmark-symbol" aria-hidden="true">δ</span></a><div><p>Strategic Finance Advisory<br>Little Rock, Arkansas</p></div><div class="footer-links"><a href="mailto:sean@2oadvisory.com">Email Second Order</a><a href="../people.html">Meet the team</a><span>© 2026 Second Order</span></div></div></div></footer>
 
   <script src="../form-fallback.js"></script>
 </body>

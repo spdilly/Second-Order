@@ -3,47 +3,51 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Four pricing regimes replaced one · Second Order</title>
-  <meta name="description" content="Replacing one fare rule with four pricing regimes is worth $41.8M a year on a $712M intercity coach network. A sample pricing study on a synthetic network.">
+  <title>Modeled $41.8M pricing lift · Second Order</title>
+  <meta name="description" content="An illustrative pricing study models $41.8M in annual revenue lift on a synthetic $712M intercity coach network.">
   <link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../digital.css">
+<script src="../design.js" defer></script>
+<link rel="stylesheet" href="../pages.css">
 </head>
-<body>
+<body class="article-page">
 
-  <nav class="nav">
+  <a class="skip-link" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Main navigation">
     <div class="wrap">
-      <a class="wordmark" href="../index.html"><span class="delta">δ</span>Second Order</a>
-      <div class="nav-links">
-        <a href="../about.html">ABOUT</a>
+      <a class="wordmark" href="../index.html">Second Order<span class="wordmark-symbol" aria-hidden="true">δ</span></a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="site-menu" type="button">Menu <span aria-hidden="true">+</span></button><div class="nav-links" id="site-menu">
+        <a href="../about.html">FIRM</a>
         <a href="../practices.html">CAPABILITIES</a>
-        <a class="active" href="../work/index.html">ENGAGEMENTS</a>
+        <a class="active" aria-current="page" href="../work/index.html">WORK</a>
         <a href="../notes/index.html">INSIGHTS</a>
-        <a href="../people.html">PRINCIPAL</a>
+        <a href="../people.html">TEAM</a>
         <a href="../contact.html">CONTACT</a>
       </div>
     </div>
   </nav>
 
-  <header class="section-tight">
-    <div class="wrap">
-      <p class="eyebrow">ENGAGEMENT · PRICING &amp; REVENUE MANAGEMENT · INTERCITY COACH</p>
-      <h1>Replacing one fare rule with four pricing regimes is worth $41.8M a year on a $712M network.</h1>
+  <header id="main" tabindex="-1" class="section-tight">
+    <div class="wrap"><a class="back-link" href="index.html">← All Work</a>
+      <p class="eyebrow">ILLUSTRATIVE STUDY · PRICING &amp; REVENUE MANAGEMENT · INTERCITY COACH</p>
+      <h1>The study models $41.8M in annual revenue lift on a synthetic $712M coach network.</h1>
       <p class="byline">A SAMPLE STUDY · NATIONAL INTERCITY COACH OPERATOR · SYNTHETIC NETWORK DATA</p>
     </div>
   </header>
 
   <main class="section-tight" style="padding-top: 20px;">
-    <div class="wrap">
+    <div class="wrap article-layout"><aside class="article-contents"><p class="eyebrow">IN THIS CASE</p><nav aria-label="Article contents"><a href="#section-1">The synthetic network</a><a href="#section-2">The pricing constraint</a><a href="#section-3">The modeled changes</a><a href="#section-4">The modeled result</a></nav></aside>
       <div class="article">
 
-        <p>This study is a sample of the pricing practice. It is built on a synthetic network constructed to mirror the public structure of the US intercity coach industry, and every number below comes from that one model.</p>
+        <p>This illustrative study uses a synthetic network based on the public structure of the US intercity coach industry. All figures are model assumptions or outputs; the revenue lift has not been realized by a client.</p>
 
-        <h2>The situation</h2>
+        <h2 id="section-1">The synthetic network</h2>
 
-        <p>The operator runs a national network of roughly 4,100 origin-destination pairs producing $712M in annual ticket revenue across 16.4M passenger trips, an average fare of $43. Fifty city pairs, the trunk corridors between major metros, carry 54 percent of that revenue. The next 350 pairs carry 31 percent. The remaining 3,700 pairs carry 15 percent, and most of them sell fewer than a dozen seats a day.</p>
+        <p>The synthetic network comprises roughly 4,100 origin-destination pairs, with $712M in annual ticket revenue across 16.4M passenger trips and an average fare of $43. Fifty city pairs, the trunk corridors between major metros, account for 54 percent of revenue. The next 350 pairs account for 31 percent. The remaining 3,700 pairs account for 15 percent, and most sell fewer than a dozen seats a day.</p>
 
         <figure class="exhibit">
           <p class="exhibit-label">EXHIBIT 1 · REVENUE CONCENTRATION BY ROUTE TIER</p>
-          <svg viewBox="0 0 720 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bar chart. Fifty trunk pairs carry 384 million dollars, 54 percent of revenue. Three hundred fifty secondary pairs carry 221 million, 31 percent. Three thousand seven hundred tail pairs carry 107 million, 15 percent.">
+          <div class="exhibit-scroll" role="region" aria-label="Financial exhibit" tabindex="0"><svg viewBox="0 0 720 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bar chart. Fifty trunk pairs carry 384 million dollars, 54 percent of revenue. Three hundred fifty secondary pairs carry 221 million, 31 percent. Three thousand seven hundred tail pairs carry 107 million, 15 percent.">
             <line x1="225" y1="25" x2="225" y2="210" stroke="#2A2D31" stroke-width="1"/>
 
             <text x="210" y="66" font-family="Consolas, monospace" font-size="12" fill="#9BA1A5" text-anchor="end">50 TRUNK PAIRS</text>
@@ -57,29 +61,29 @@
             <text x="210" y="186" font-family="Consolas, monospace" font-size="12" fill="#9BA1A5" text-anchor="end">3,700 TAIL PAIRS</text>
             <rect x="225" y="165" width="115" height="34" fill="#0B7C7C"/>
             <text x="352" y="187" font-family="Consolas, monospace" font-size="14" fill="#E3E5E6">$107M · 15%</text>
-          </svg>
-          <figcaption>Annual gross ticket revenue by origin-destination pair, sorted by revenue and grouped into three tiers. The tiers become the pricing regimes in Exhibit 5.</figcaption>
+          </svg></div>
+          <figcaption>Synthetic annual gross ticket revenue by origin-destination pair, sorted by revenue and grouped into three tiers.</figcaption>
         </figure>
 
-        <p>Fares were set by mileage band and reviewed annually. A trip of a given distance cost roughly the same whether it left New York on a Friday at 5pm or crossed New Mexico on a Tuesday morning. The rule was simple to administer, and it priced three markets that behave nothing alike as if they were one.</p>
+        <p>The baseline assumes fares set by mileage band and reviewed annually. Trips of a given distance cost roughly the same despite differences in demand by corridor, day, and departure time.</p>
 
-        <p>The pressure came from the trunk. Low-cost entrants price the dense corridors dynamically, filling early seats at promotional fares and selling the last seats at multiples of the base. Against a flat fare, the entrant wins the price-sensitive advance buyer and leaves the incumbent holding the network's fixed costs.</p>
+        <p>The study considers competition from dynamic pricing on dense corridors. Promotional advance fares can attract price-sensitive buyers, while higher fares apply to the remaining seats near departure.</p>
 
-        <h2>The problem</h2>
+        <h2 id="section-2">The pricing constraint</h2>
 
-        <p>The operator asked where the flat fare was leaving revenue, and set one constraint before the work began. A quarter of tickets are bought at the station on the day of travel, disproportionately by riders with the fewest alternatives, and the program could not fund itself by raising prices on them.</p>
+        <p>The study tests additional revenue subject to an unchanged day-of station fare. It assumes a quarter of tickets are bought at the station on the day of travel, including riders with limited alternatives.</p>
 
-        <p>That constraint is analytical, and it shaped the answer. Day-of walk-up demand prices at an elasticity near negative 0.4, while online advance purchasers who cross-shop the entrants and rail price near negative 1.6. The inelastic segment is the one the operator will not price against, so the revenue has to come from the elastic segment, from timing, and from the seats the network was refusing to sell.</p>
+        <p>The model assumes a price elasticity near negative 0.4 for day-of walk-up demand and near negative 1.6 for online advance purchasers comparing coach operators and rail. With the day-of fare unchanged, additional revenue depends on advance pricing, purchase timing, and capacity for demand above the available seats.</p>
 
-        <h2>The work</h2>
+        <h2 id="section-3">The modeled changes</h2>
 
-        <p>The first move was to split the network into pricing regimes before touching a single fare. Dense corridors generate enough booking history to forecast demand by departure, which is the raw material dynamic pricing requires. The tail does not. On a route selling nine seats a day, week-to-week noise swamps any demand signal, and a dynamic price there behaves like a random one. The 50 trunk pairs got booking-curve pricing. The 350 secondary pairs got seasonal and day-of-week tables. The 3,700 tail pairs kept stable published fares.</p>
+        <p>The study assigns pricing methods according to booking volume. Dense corridors provide enough booking history to forecast demand by departure. On a route selling nine seats a day, weekly variation makes that forecast less reliable. The model applies booking-curve pricing to the 50 trunk pairs, seasonal and day-of-week tables to the 350 secondary pairs, and stable published fares to the 3,700 tail pairs.</p>
 
-        <p>The second move was to price seats by displacement. A multi-stop schedule sells one physical seat into several markets at once. On the Washington to Charlotte schedule, the last seat out of Washington can be sold to Richmond for $25 or held for a through passenger to Charlotte paying $62. Selling the short leg forecloses the long one, so the short fare has to clear the $37 of displaced value, and near departure on a full leg it did not. Fixing that decision requires no fare change at all, only a control that knows the value of the seat on every leg it touches.</p>
+        <p>The model also evaluates the revenue displaced by a short journey on a multi-stop schedule. In the illustrative Washington to Charlotte departure, the last seat out of Washington can sell to Richmond for $25 or to Charlotte for $62. Accepting the short trip prevents the through sale when the shared leg is full, a $37 difference. Availability controls compare these alternatives before accepting a booking.</p>
 
         <figure class="exhibit">
           <p class="exhibit-label">EXHIBIT 2 · ONE SEAT, SEVERAL MARKETS, ONE DEPARTURE</p>
-          <svg viewBox="0 0 720 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Route schematic. Washington to Richmond to Raleigh to Charlotte on one schedule. Leg demand forecasts are 46 of 50 seats, 38 of 50, and 41 of 50. The Washington to Richmond walk-up fare is 25 dollars. The through itinerary to Charlotte is 62 dollars. The displaced value of the last Washington seat is 37 dollars.">
+          <div class="exhibit-scroll" role="region" aria-label="Financial exhibit" tabindex="0"><svg viewBox="0 0 720 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Route schematic. Washington to Richmond to Raleigh to Charlotte on one schedule. Leg demand forecasts are 46 of 50 seats, 38 of 50, and 41 of 50. The Washington to Richmond walk-up fare is 25 dollars. The through itinerary to Charlotte is 62 dollars. The displaced value of the last Washington seat is 37 dollars.">
             <path d="M 80 110 Q 360 18 640 110" fill="none" stroke="#2EE6DA" stroke-width="1" stroke-dasharray="5 4"/>
             <text x="360" y="40" font-family="Consolas, monospace" font-size="12" fill="#2EE6DA" text-anchor="middle">THROUGH ITINERARY · $62</text>
 
@@ -101,15 +105,15 @@
             <text x="173" y="164" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="middle">WALK-UP FARE $25</text>
 
             <text x="360" y="200" font-family="Consolas, monospace" font-size="13" fill="#2EE6DA" text-anchor="middle">DISPLACED VALUE OF THE LAST WASHINGTON SEAT · $62 − $25 = $37</text>
-          </svg>
-          <figcaption>Forecast leg demand for one Friday departure. With Raleigh to Charlotte still open, the last Washington seat is worth $62 as a through itinerary and $25 as a short leg, so the $25 sale destroys $37 of value the moment the Washington leg fills.</figcaption>
+          </svg></div>
+          <figcaption>Illustrative demand for one Friday departure. With Raleigh to Charlotte still open, the last Washington seat can earn $62 on a through itinerary or $25 on a short leg, a $37 difference when the Washington leg is full.</figcaption>
         </figure>
 
-        <p>The third move is where a coach network stops resembling an airline. An airline caps a sold-out flight and prices to ration it, because adding capacity means adding an aircraft. A coach operator can add a second section, one more vehicle and one more driver on the same departure, for about $1,100 of incremental cost. On a Friday departure forecasting 78 riders against 50 seats at a $45 fare, rationing by price to fill one bus at $65 contributes $3,250, while running a second section at the posted fare contributes $2,410, so at that demand level the higher fare wins. Past 97 forecast riders the second section wins, and the rule flips. The recommendation is the crossover itself, a dispatch threshold that prices and schedules each peak departure jointly instead of treating capacity as fixed.</p>
+        <p>Added capacity is evaluated alongside peak pricing. The model assumes about $1,100 to add a vehicle and driver to a departure. At 78 forecast riders, 50 seats, and a $45 posted fare, filling one bus at $65 contributes $3,250, while a second section at the posted fare contributes $2,410. Above 97 forecast riders, the modeled contribution from the second section exceeds the pricing alternative. The study uses that crossover as a dispatch threshold for joint pricing and capacity decisions.</p>
 
         <figure class="exhibit">
           <p class="exhibit-label">EXHIBIT 3 · PRICE THE SCARCITY OR ADD THE BUS</p>
-          <svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Line chart. Contribution from pricing to fill one coach is flat at 3,250 dollars. Contribution from running a second section rises with forecast demand and crosses the pricing line at 97 riders. At the 78-rider forecast, pricing wins.">
+          <div class="exhibit-scroll" role="region" aria-label="Financial exhibit" tabindex="0"><svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Line chart. Contribution from pricing to fill one coach is flat at 3,250 dollars. Contribution from running a second section rises with forecast demand and crosses the pricing line at 97 riders. At the 78-rider forecast, pricing wins.">
             <line x1="90" y1="40" x2="90" y2="220" stroke="#2A2D31" stroke-width="1"/>
             <line x1="90" y1="220" x2="650" y2="220" stroke="#2A2D31" stroke-width="1"/>
 
@@ -133,15 +137,15 @@
             <text x="466" y="240" font-family="Consolas, monospace" font-size="11" fill="#E3E5E6" text-anchor="middle">97</text>
             <text x="650" y="240" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="middle">120</text>
             <text x="370" y="264" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="middle">FORECAST RIDERS ON THE DEPARTURE</text>
-          </svg>
-          <figcaption>Contribution per departure on a 50-seat coach at a $45 posted fare. The pricing option solves the fare that clears demand to one coach. The second-section option keeps the posted fare and pays about $1,100 for the added vehicle and driver. The dispatch threshold sits at 97 forecast riders.</figcaption>
+          </svg></div>
+          <figcaption>Modeled contribution per departure on a 50-seat coach at a $45 posted fare. The pricing option solves the fare that clears demand to one coach. The second-section option keeps the posted fare and assumes about $1,100 for the added vehicle and driver. The modeled dispatch threshold is 97 forecast riders.</figcaption>
         </figure>
 
-        <p>The peak is where the money concentrates. Friday departures on trunk corridors run at 84 percent average load and Sundays at 81, against a system average of 61, and 6.2 percent of trunk departures sell out two or more days early. Those sellouts turned away an estimated 410,000 trips last year, about $19M of demand at prevailing fares, spilled to competitors or to no trip at all at prices the operator itself had set.</p>
+        <p>The synthetic network assumes average trunk load factors of 84 percent on Fridays and 81 percent on Sundays, against a system average of 61 percent. It models 6.2 percent of trunk departures selling out two or more days early, leaving an estimated 410,000 annual trips unserved, equivalent to about $19M at prevailing fares.</p>
 
         <figure class="exhibit">
           <p class="exhibit-label">EXHIBIT 4 · TRUNK LOAD FACTOR BY DAY OF WEEK</p>
-          <svg viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bar chart of average load factor by day of week on trunk corridors. Monday 55 percent, Tuesday 48, Wednesday 51, Thursday 62, Friday 84, Saturday 66, Sunday 81, against a system average of 61 percent.">
+          <div class="exhibit-scroll" role="region" aria-label="Financial exhibit" tabindex="0"><svg viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bar chart of average load factor by day of week on trunk corridors. Monday 55 percent, Tuesday 48, Wednesday 51, Thursday 62, Friday 84, Saturday 66, Sunday 81, against a system average of 61 percent.">
             <line x1="70" y1="88" x2="670" y2="88" stroke="#7FD2CE" stroke-width="1" stroke-dasharray="4 4"/>
             <text x="75" y="80" font-family="Consolas, monospace" font-size="11" fill="#7FD2CE">SYSTEM AVG 61%</text>
 
@@ -169,21 +173,21 @@
             <text x="457" y="230" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="middle">FRI</text>
             <text x="542" y="230" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="middle">SAT</text>
             <text x="627" y="230" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="middle">SUN</text>
-          </svg>
-          <figcaption>Average load factor on the 50 trunk pairs. On the Friday and Sunday peaks, 6.2 percent of departures sell out two or more days early, spilling an estimated 410,000 annual trips worth about $19M at prevailing fares.</figcaption>
+          </svg></div>
+          <figcaption>Synthetic average load factor on the 50 trunk pairs. The study assumes 6.2 percent of peak departures sell out two or more days early, leaving an estimated 410,000 annual trips unserved, equivalent to about $19M at prevailing fares.</figcaption>
         </figure>
 
-        <p>The fourth move rebuilt the fences between segments. The advance discount deepened online, where the elastic cross-shopper decides. The day-of fare became the undiscounted base rather than a surcharge, which holds the walk-up rider harmless in structure as well as in optics. Seat selection and a flexible-fare option were added as paid attachments, the one page of the entrant playbook worth copying directly.</p>
+        <p>The proposed fare structure increases online advance discounts while retaining the undiscounted day-of base fare. Seat selection and a flexible-fare option are modeled as optional paid additions.</p>
 
-        <p>Tail fares stayed published and fixed, and each repricing decision there was made at the network level. A rural pair that loses money in isolation can be profitable once its connecting revenue onto the trunk is counted, and roughly 340 tail pairs moved price only after that contribution test, most of them downward or with through-fares introduced.</p>
+        <p>Tail fares remain published and stable between reviews. The study evaluates changes using total network contribution, including revenue from connecting journeys. Approximately 340 tail pairs receive modeled price changes, mostly reductions or the introduction of through-fares.</p>
 
-        <h2>The result</h2>
+        <h2 id="section-4">The modeled result</h2>
 
-        <p>The five workstreams bridge to $41.8M of annual revenue, 5.9 percent of the base, with each block carrying its own elasticity assumption and sensitivity in the model. Booking-curve pricing on the trunk contributes $10.8M. Capturing half of the spilled peak demand through second sections and peak fares contributes $9.6M. The fence redesign contributes $7.9M, ancillary attachment $8.7M, and tail repricing on network contribution $4.8M. None of it prices against the day-of walk-up rider, and the largest single block comes from demand the operator was already generating and turning away.</p>
+        <p>The five workstreams produce $41.8M of modeled annual revenue lift, 5.9 percent of the base, with separate elasticity assumptions and sensitivities. Booking-curve pricing contributes $10.8M, the largest component. Capturing half of the unserved peak demand through second sections and peak fares contributes $9.6M. The revised fare structure contributes $7.9M, optional additions $8.7M, and tail repricing based on network contribution $4.8M. The day-of walk-up fare remains unchanged.</p>
 
         <figure class="exhibit">
           <p class="exhibit-label">EXHIBIT 5 · THE REVENUE BRIDGE, $M ANNUAL</p>
-          <svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Waterfall chart. Trunk dynamic pricing 10.8 million, peak spill capture 9.6, fence redesign 7.9, ancillary attach 8.7, tail repricing 4.8, total 41.8 million dollars, 5.9 percent of revenue.">
+          <div class="exhibit-scroll" role="region" aria-label="Financial exhibit" tabindex="0"><svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Waterfall chart. Trunk dynamic pricing 10.8 million, peak spill capture 9.6, fence redesign 7.9, ancillary attach 8.7, tail repricing 4.8, total 41.8 million dollars, 5.9 percent of revenue.">
             <line x1="40" y1="240" x2="680" y2="240" stroke="#2A2D31" stroke-width="1"/>
 
             <rect x="60" y="188" width="70" height="52" fill="#0B7C7C"/>
@@ -217,31 +221,19 @@
             <text x="515" y="274" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5" text-anchor="middle">REPRICING</text>
             <text x="620" y="260" font-family="Consolas, monospace" font-size="10" fill="#E3E5E6" text-anchor="middle">TOTAL</text>
             <text x="620" y="274" font-family="Consolas, monospace" font-size="10" fill="#E3E5E6" text-anchor="middle">5.9% OF REV</text>
-          </svg>
-          <figcaption>Each block carries its own elasticity assumption and a sensitivity range in the model. The peak spill block assumes half of the 410,000 spilled trips are recaptured through second sections and peak fares.</figcaption>
+          </svg></div>
+          <figcaption>Each component of modeled revenue lift has a separate elasticity assumption and sensitivity range. The peak-demand component assumes half of the 410,000 unserved trips are captured through second sections and peak fares.</figcaption>
         </figure>
 
-        <p>The trunk earns dynamic pricing because its booking data supports a forecast, and the tail earns a stable fare because it does not.</p>
+        <p>In this study, booking volume determines the pricing method, while forecast peak demand determines whether an added vehicle produces more contribution than a higher fare.</p>
 
       </div>
     </div>
   </main>
 
-  <section class="section-tight dark">
-    <div class="wrap">
-      <p><a class="btn" href="../contact.html">CONTACT</a> &nbsp; <a href="../work/index.html" style="margin-left: 18px;">Selected engagements</a></p>
-    </div>
-  </section>
 
-  <footer class="footer">
-    <div class="wrap">
-      <div class="footer-lines">
-        Second Order · Little Rock, Arkansas · Est. 2022<br>
-        <a href="https://www.linkedin.com/in/sean-dillard">LinkedIn</a> · <a href="mailto:sean@2oadvisory.com">sean@2oadvisory.com</a>
-      </div>
-      <div class="footer-mark"><span class="delta-mono">δ²</span></div>
-    </div>
-  </footer>
+
+  <section class="related-reading"><div class="wrap"><p class="eyebrow">RELATED CAPABILITY</p><a href="../practices.html#performance"><h2>Performance & Pricing</h2><span aria-hidden="true">↗</span></a></div></section><footer class="footer"><div class="wrap"><div class="footer-top"><p class="eyebrow">CONTACT SECOND ORDER</p><a class="footer-contact" href="../contact.html">Discuss your<br>next decision.<span aria-hidden="true">↗</span></a></div><div class="footer-bottom"><a class="footer-wordmark" href="../index.html">Second Order<span class="wordmark-symbol" aria-hidden="true">δ</span></a><div><p>Strategic Finance Advisory<br>Little Rock, Arkansas</p></div><div class="footer-links"><a href="mailto:sean@2oadvisory.com">Email Second Order</a><a href="../people.html">Meet the team</a><span>© 2026 Second Order</span></div></div></div></footer>
 
 </body>
 </html>

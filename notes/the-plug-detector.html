@@ -3,51 +3,55 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>A number carried to sixteen decimal places was solved for · Second Order</title>
-  <meta name="description" content="Three mechanical signatures separate an assumption someone chose from a figure reverse-engineered to make an output land on a target, and all three can be detected by script.">
+  <title>Unusually precise inputs deserve a closer look · Second Order</title>
+  <meta name="description" content="Three workbook checks flag inputs and formula constants whose basis deserves review.">
   <link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../digital.css">
+<script src="../design.js" defer></script>
+<link rel="stylesheet" href="../pages.css">
 </head>
-<body>
+<body class="article-page">
 
-  <nav class="nav">
+  <a class="skip-link" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Main navigation">
     <div class="wrap">
-      <a class="wordmark" href="../index.html"><span class="delta">δ</span>Second Order</a>
-      <div class="nav-links">
-        <a href="../about.html">ABOUT</a>
+      <a class="wordmark" href="../index.html">Second Order<span class="wordmark-symbol" aria-hidden="true">δ</span></a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="site-menu" type="button">Menu <span aria-hidden="true">+</span></button><div class="nav-links" id="site-menu">
+        <a href="../about.html">FIRM</a>
         <a href="../practices.html">CAPABILITIES</a>
-        <a href="../work/index.html">ENGAGEMENTS</a>
-        <a class="active" href="../notes/index.html">INSIGHTS</a>
-        <a href="../people.html">PRINCIPAL</a>
+        <a href="../work/index.html">WORK</a>
+        <a class="active" aria-current="page" href="../notes/index.html">INSIGHTS</a>
+        <a href="../people.html">TEAM</a>
         <a href="../contact.html">CONTACT</a>
       </div>
     </div>
   </nav>
 
-  <header class="section-tight">
-    <div class="wrap">
+  <header id="main" tabindex="-1" class="section-tight">
+    <div class="wrap"><a class="back-link" href="index.html">← All Insights</a>
       <p class="eyebrow">INSIGHTS · MODEL INTEGRITY</p>
-      <h1>A number carried to sixteen decimal places was solved for, not chosen.</h1>
+      <h1>Unusually precise inputs deserve a closer look.</h1>
       <p class="byline">02 AUGUST 2026 · SEAN DILLARD</p>
     </div>
   </header>
 
   <main class="section-tight" style="padding-top: 20px;">
-    <div class="wrap">
+    <div class="wrap article-layout"><aside class="article-contents"><p class="eyebrow">IN THIS ARTICLE</p><nav aria-label="Article contents"><a href="#section-1">The signal</a><a href="#section-2">The three checks</a><a href="#section-3">The second question</a><a href="#section-4">Make decision rules explicit</a></nav></aside>
       <div class="article">
 
-        <p>A plug is a number reverse-engineered to make an output land on a target and then presented as an assumption. Somebody wanted the raise to come out at $900,000, the model produced $985,000, and a 8.6 percent haircut appeared on a line labeled adjustment. The arithmetic is now correct in every cell and the model has stopped being a model, because one of its inputs is an output wearing a disguise.</p>
+        <p>A plug is a number reverse-engineered to make an output land on a target and then presented as an assumption. For example, a model might show a $985,000 funding need while the desired raise is $900,000. An unexplained reduction entered solely to close that gap would conceal the underlying funding need. This example is illustrative.</p>
 
-        <p>Plugs survive review. They survive it because a reviewer reads a model cell by cell, asks whether each number is plausible, and a plug is always plausible. It was constructed to be. What a plug cannot disguise is how it was produced, and production leaves marks a script can find.</p>
+        <p>A plausible value can still lack a defensible basis. Automated checks help a reviewer find inputs that deserve explanation, but they cannot determine intent or replace a review of the source.</p>
 
-        <h2>The signature</h2>
+        <h2 id="section-1">The signal</h2>
 
-        <p>People choose round numbers. Asked for a discount rate, an analyst says 12 percent or 12.5 percent. Asked for a cost reduction, an analyst says 10 percent, or 9.5 percent if the estimate came from somewhere specific. Nobody has ever looked at a business and concluded that the correct figure is 8.73419628055137 percent.</p>
+        <p>Unusually precise hardcoded inputs can be worth checking. Goal Seek and similar tools can produce long decimal tails, but so can legitimate unit conversions, weighted averages and imported calculations. Precision alone does not establish that a value was reverse-engineered.</p>
 
-        <p>Solvers do produce that number. Excel's goal seek, a manual binary search, or an analyst dragging a cell until the total turns green all terminate at whatever value happens to close the gap, and that value carries the full binary precision of the arithmetic that made it. The decimal tail is a receipt.</p>
+        <p>Ask how the number was calculated, what evidence supports it, and whether it changes appropriately when the underlying assumptions change.</p>
 
         <figure class="exhibit">
-          <p class="exhibit-label">EXHIBIT 1 · TWO NUMBERS, ONE OF THEM CHOSEN</p>
-          <svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Comparison of two values. A chosen assumption reads 0.095 with three decimal places and a stated basis. A solved value reads 0.0873419628055137 with sixteen decimal places and no basis, terminating wherever the target was met.">
+          <p class="exhibit-label">EXHIBIT 1 · TWO ILLUSTRATIVE INPUTS</p>
+          <div class="exhibit-scroll" role="region" aria-label="Financial exhibit" tabindex="0"><svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Two illustrative inputs. In this constructed example, 0.095 has a documented basis and 0.0873419628055137 is assumed to have been solved to reach a target. Decimal precision alone cannot establish how a value was produced.">
             <!-- chosen -->
             <text x="14" y="34" font-family="Consolas, monospace" font-size="11" fill="#2EE6DA">CHOSEN BY A PERSON</text>
             <rect x="14" y="46" width="322" height="52" fill="none" stroke="#2EE6DA" stroke-width="1"/>
@@ -65,46 +69,38 @@
             <text x="384" y="158" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5">FAILS THE QUESTION</text>
 
             <line x1="14" y1="182" x2="706" y2="182" stroke="#2A2D31" stroke-width="1"/>
-            <text x="14" y="204" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5">ILLUSTRATIVE VALUES. THE TEST IS THE DECIMAL TAIL, NEVER THE MAGNITUDE.</text>
-          </svg>
-          <figcaption>Both values are near 9 percent and both are plausible. Only one of them answers the question of where it came from. Illustrative figures.</figcaption>
+            <text x="14" y="204" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5">ILLUSTRATIVE VALUES. PRECISION FLAGS A QUESTION; THE SOURCE DETERMINES THE ANSWER.</text>
+          </svg></div>
+          <figcaption>Both values are near 9 percent. In this illustration, one has a documented basis and the other was solved to reach a target. Precision alone cannot distinguish them.</figcaption>
         </figure>
 
-        <h2>The three checks</h2>
+        <h2 id="section-2">The three checks</h2>
 
-        <p>The detector runs three tests against the workbook and reports each hit with its sheet, its cell, and the rule it broke.</p>
-
+        <p>The detector flags unusually precise hardcoded values, adjustment labels and embedded constants for review, reporting the sheet, cell and reason for each flag.</p>
         <ol>
-          <li><strong>Machine-precision inputs.</strong> Any hardcoded value carrying seven or more decimal places. Seven is the threshold because measured quantities and quoted rates almost never reach it, while solver output almost always does. This test raises an error.</li>
-          <li><strong>Precise values on plug-shaped labels.</strong> A non-round hardcoded number sitting on a row whose label contains reduction, adjustment, haircut, true-up, gross-up, factor, or plug. The label vocabulary is the confession, and the precision is the evidence. This test raises an error.</li>
-          <li><strong>Magic constants inside formulas.</strong> A hardcoded number scaling or dividing a reference, as in a formula that multiplies other costs by 95,000 divided by 207,000. That ratio was true once, for one period, and it is now frozen inside a formula where nobody will find it. This test raises a warning and asks for the constant to be lifted into a named input.</li>
+          <li><strong>Unusually precise inputs.</strong> Hardcoded values with seven or more decimal places are a screening convention here, not proof of a plug. Check the calculation or source before changing them.</li>
+          <li><strong>Adjustment labels.</strong> Review non-round hardcoded values near labels such as reduction, adjustment, haircut, true-up, gross-up or factor. These can be legitimate; the question is whether their basis is documented.</li>
+          <li><strong>Embedded constants.</strong> Review hardcoded scaling ratios inside formulas. A governing assumption is usually easier to inspect and maintain as a labeled input, while ordinary mathematical constants need no such treatment.</li>
         </ol>
+        <p>Each flag needs a source, an explanation or a correction before delivery. A documented false positive is not a model error.</p>
 
-        <p>Zero errors is the condition for delivery. A warning is a request to show the basis rather than a blocker, because label matching is a heuristic and a false positive must never be able to stop a legitimate model from shipping.</p>
-
-        <p class="pull">The reviewer who builds a number is the worst available reader of that number, which is the entire reason the test is a script and not a habit.</p>
-
-        <h2>The second question</h2>
+        <h2 id="section-3">The second question</h2>
 
         <p>Detecting plugs asks whether a number was chosen. A second and harder question asks whether a number does anything.</p>
 
-        <p>A model can pass every plug test, every balance check, and every tie-out while being mechanically inert. Five failure modes recur, and each is detectable.</p>
+        <p>A model can pass every plug test, every balance check, and every tie-out while being mechanically inert. Five patterns deserve review; some are deliberate design choices that need clear documentation.</p>
 
         <ul>
           <li><strong>Dead inputs.</strong> A hardcoded number on an input sheet that no formula anywhere reads. It looks editable and drives nothing, so a user changes it, sees no movement, and draws a conclusion about the business from a cell that was never connected.</li>
-          <li><strong>Binary multipliers.</strong> A cell resolving to zero or one that is then multiplied into a business flow. The flag itself is fine as a readout, and multiplying it into revenue or spend replaces a continuous response with a cliff, so a one-dollar change in an assumption can erase a year of modeled revenue.</li>
+          <li><strong>Binary multipliers.</strong> A zero-or-one flag multiplied into a business flow can create a sharp discontinuity. Check whether it represents a physical limit, a contractual condition or an explicit management-policy scenario.</li>
           <li><strong>Frozen exhibits.</strong> A worksheet whose name promises a sensitivity or a scenario sweep and whose contents are mostly hardcoded values. It shows an answer computed at some point in the past with nothing on the page saying so.</li>
           <li><strong>Buried constants.</strong> A governing quantity hardcoded inside a formula. The user cannot find it, so the user cannot change it.</li>
           <li><strong>Enumerated inputs.</strong> An input whose consumers only ever test it against specific literal values, so a cell that looks like a year is a two-position switch that falls to an error branch for any other entry.</li>
         </ul>
 
-        <p>The binary multiplier is the one that costs the most and hides the best. A gate that computes a threshold and displays a status is a readout, and a reader can argue with it. The same gate multiplied into marketing spend has stopped reporting and started deciding, and the model now enforces a management judgment that nobody agreed to and no memo records.</p>
-
-        <h2>The general rule</h2>
-
-        <p>A gate may report and must not drive. Compute the policy number, display it, and let the driver flow through to the output unchanged. Physical and contractual limits earn the right to constrain arithmetic, because production cannot exceed capacity and an expired contract genuinely stops. Economic thresholds, cash-floor shutdowns, and performance-gated hiring plans are management judgment, and judgment belongs on the readout where a reader can see it and dispute it.</p>
-
-        <p>One test summarizes the whole discipline. Take the most contested driver in the model, sweep it across its plausible range, and plot the output. The curve should be continuous and should slope the way the economics say it slopes. A cliff in that curve is a decision someone wired into the arithmetic, and the model's job was to show the consequence of the decision rather than to make it.</p>
+        <h2 id="section-4">Make decision rules explicit</h2>
+        <p>Show policy thresholds separately from operating assumptions. If a scenario assumes hiring, spending or shutdown decisions at a threshold, make that rule explicit and compare it with the unconstrained case. Physical and contractual limits should also be visible and supported.</p>
+        <p>Sweep a contested driver across its plausible range and inspect the output. A discontinuity may reflect a real capacity limit or an agreed decision rule. An unexplained cliff deserves investigation.</p>
 
         <p style="margin-top: 48px;"><a class="btn" href="../contact.html">SEND A MODEL FOR A READ</a></p>
 
@@ -112,24 +108,9 @@
     </div>
   </main>
 
-  <section class="section-tight dark">
-    <div class="wrap">
-      <div class="prose">
-        <p class="eyebrow">FIELD NOTES</p>
-        <p><a href="../notes/index.html">All notes</a> &nbsp;·&nbsp; <a href="../work/index.html">Case studies</a></p>
-      </div>
-    </div>
-  </section>
 
-  <footer class="footer">
-    <div class="wrap">
-      <div class="footer-lines">
-        Second Order · Little Rock, Arkansas · Est. 2022<br>
-        <a href="https://www.linkedin.com/in/sean-dillard">LinkedIn</a> · <a href="mailto:sean@2oadvisory.com">sean@2oadvisory.com</a>
-      </div>
-      <div class="footer-mark"><span class="delta-mono">δ²</span></div>
-    </div>
-  </footer>
+
+  <section class="related-reading"><div class="wrap"><p class="eyebrow">MORE INSIGHTS</p><a href="the-retention-screen.html"><h2>Revenue quality</h2><span aria-hidden="true">↗</span></a></div></section><footer class="footer"><div class="wrap"><div class="footer-top"><p class="eyebrow">CONTACT SECOND ORDER</p><a class="footer-contact" href="../contact.html">Discuss your<br>next decision.<span aria-hidden="true">↗</span></a></div><div class="footer-bottom"><a class="footer-wordmark" href="../index.html">Second Order<span class="wordmark-symbol" aria-hidden="true">δ</span></a><div><p>Strategic Finance Advisory<br>Little Rock, Arkansas</p></div><div class="footer-links"><a href="mailto:sean@2oadvisory.com">Email Second Order</a><a href="../people.html">Meet the team</a><span>© 2026 Second Order</span></div></div></div></footer>
 
 </body>
 </html>

@@ -3,116 +3,90 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Contracted output priced as merchant power · Second Order</title>
-  <meta name="description" content="A variant-perception equity research sample on Constellation Energy, built from a reverse discounted cash flow and a sum-of-the-parts that separates contracted from uncontracted generation.">
+  <title>Constellation reverse DCF research sample · Second Order</title>
+  <meta name="description" content="A June 2026 equity research sample testing the discount rate, contract growth and power-price assumptions embedded in Constellation Energy's valuation.">
   <link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../digital.css">
+<script src="../design.js" defer></script>
+<link rel="stylesheet" href="../pages.css">
 </head>
-<body>
+<body class="article-page">
 
-  <nav class="nav">
+  <a class="skip-link" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Main navigation">
     <div class="wrap">
-      <a class="wordmark" href="../index.html"><span class="delta">δ</span>Second Order</a>
-      <div class="nav-links">
-        <a href="../about.html">ABOUT</a>
+      <a class="wordmark" href="../index.html">Second Order<span class="wordmark-symbol" aria-hidden="true">δ</span></a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="site-menu" type="button">Menu <span aria-hidden="true">+</span></button><div class="nav-links" id="site-menu">
+        <a href="../about.html">FIRM</a>
         <a href="../practices.html">CAPABILITIES</a>
-        <a class="active" href="../work/index.html">ENGAGEMENTS</a>
+        <a class="active" aria-current="page" href="../work/index.html">WORK</a>
         <a href="../notes/index.html">INSIGHTS</a>
-        <a href="../people.html">PRINCIPAL</a>
+        <a href="../people.html">TEAM</a>
         <a href="../contact.html">CONTACT</a>
       </div>
     </div>
   </nav>
 
-  <header class="section-tight">
-    <div class="wrap">
-      <p class="eyebrow">ENGAGEMENT · EQUITY RESEARCH · PUBLIC COMPANY</p>
-      <h1>The market prices contracted nuclear output as merchant power.</h1>
-      <p class="byline">CONSTELLATION ENERGY · PUBLISHED AS ANALYSIS, NOT AS INVESTMENT ADVICE</p>
+  <header id="main" tabindex="-1" class="section-tight">
+    <div class="wrap"><a class="back-link" href="index.html">← All Work</a>
+      <p class="eyebrow">RESEARCH SAMPLE · EQUITY VALUATION</p>
+      <h1>Testing the assumptions embedded in Constellation's share price.</h1>
+      <p class="byline">CONSTELLATION ENERGY · JUNE 2026 RESEARCH SAMPLE</p>
     </div>
   </header>
 
   <main class="section-tight" style="padding-top: 20px;">
-    <div class="wrap">
+    <div class="wrap article-layout"><aside class="article-contents"><p class="eyebrow">IN THIS CASE</p><nav aria-label="Article contents"><a href="#section-1">The question</a><a href="#section-2">The analysis</a><a href="#section-3">Policy support</a><a href="#section-4">The research note</a></nav></aside>
       <div class="article">
 
-        <p>Constellation Energy operates the largest carbon-free generation fleet in the United States, and the equity trades on a valuation shaped by decades of merchant power history. Merchant generation earns whatever the wholesale market pays on the day, which is volatile and cyclical, and the market applies a multiple that reflects that volatility.</p>
+        <p>This research sample examines whether Constellation Energy's valuation already reflected the expected growth in long-term nuclear power contracts. The linked note is dated June 2026. Prices, operating assumptions and valuation outputs below refer to that analysis.</p>
 
-        <p>A growing share of the fleet no longer sells that way. Output placed under long-term contract with a buyer who needs firm carbon-free supply earns a fixed price over a fixed term, which is a different cash flow with a different risk profile. The analysis asks what the equity is worth when those two revenue streams are valued separately.</p>
+        <h2 id="section-1">The question</h2>
 
-        <h2>The variant perception</h2>
+        <p>Long-term contracts can reduce exposure to wholesale power prices. The investment question is how much of that benefit the share price already assumes. The note tests contract volumes and prices alongside the discount rate applied to future cash flows.</p>
 
-        <p>Two mechanisms separate contracted output from uncontracted output. The federal nuclear production tax credit pays a fixed amount for every megawatt-hour generated, which guarantees a minimum revenue per unit and removes any reason to sell uncontracted output below that level. A long-term contract with a hyperscaler or an industrial buyer commands a premium above that floor, because the buyer is paying for supply guaranteed over a term rather than for power delivered today.</p>
+        <h2 id="section-2">The analysis</h2>
 
-        <p>The gap between the two prices accrues to Constellation each time a unit of output converts from the floor to a contract. The position therefore depends on the pace of conversion, and the analysis argues that the conversion runs faster than the market price assumes.</p>
-
-
-        <h2>The valuation</h2>
-
-        <p>A sum-of-the-parts values the contracted and uncontracted generation separately and bridges to a consolidated equity value. A reverse discounted cash flow runs the same arithmetic backward, solving for the contracted share the market price already implies, which converts the thesis into a testable claim about a single operating variable.</p>
+        <p>The reverse discounted cash flow supported the note's $255 reference share price at a 0.90 beta and an 8.1 percent weighted average cost of capital. Using a beta of 1.0 to 1.2 produced values of $218 to $241 per share. Under those assumptions, the reference price already incorporated a lower level of equity risk.</p>
 
         <figure class="exhibit">
-          <p class="exhibit-label">EXHIBIT 1 · VALUATION LADDER, PER SHARE</p>
-          <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Valuation ladder per share. Sum of the parts range 250 to 262 dollars. Base case 287 dollars. Bull case 339 dollars.">
-            <!-- scale baseline -->
-            <line x1="40" y1="150" x2="690" y2="150" stroke="#2A2D31" stroke-width="1"/>
-            <text x="40" y="172" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5">$230</text>
-            <text x="676" y="172" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5">$350</text>
-
-            <!-- SOTP range 250-262  -> x = 40 + (v-230)/120*650 -->
-            <rect x="148" y="52" width="65" height="26" fill="#0B7C7C"/>
-            <text x="148" y="44" font-family="Consolas, monospace" font-size="11" fill="#E3E5E6">SOTP $250 TO $262</text>
-            <line x1="148" y1="78" x2="148" y2="150" stroke="#0B7C7C" stroke-width="1" stroke-dasharray="3 3"/>
-            <line x1="213" y1="78" x2="213" y2="150" stroke="#0B7C7C" stroke-width="1" stroke-dasharray="3 3"/>
-
-            <!-- base 287 -->
-            <rect x="349" y="92" width="9" height="26" fill="#2EE6DA"/>
-            <text x="349" y="84" font-family="Consolas, monospace" font-size="11" fill="#F1F2F0">BASE $287</text>
-            <line x1="353" y1="118" x2="353" y2="150" stroke="#2EE6DA" stroke-width="1" stroke-dasharray="3 3"/>
-
-            <!-- bull 339 -->
-            <rect x="631" y="92" width="9" height="26" fill="#7FD2CE"/>
-            <text x="631" y="84" font-family="Consolas, monospace" font-size="11" fill="#E3E5E6" text-anchor="end">BULL $339</text>
-            <line x1="635" y1="118" x2="635" y2="150" stroke="#7FD2CE" stroke-width="1" stroke-dasharray="3 3"/>
-
-            <text x="40" y="192" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5">FIGURES AS OF THE ANALYSIS DATE. NOT A RECOMMENDATION.</text>
-          </svg>
-          <figcaption>The sum-of-the-parts sets the floor, the base case reflects the contracting runway the analysis underwrites, and the bull case reflects faster conversion. Source, own analysis of public filings and public market data.</figcaption>
+          <p class="exhibit-label">EXHIBIT 1 · JUNE 2026 DCF SENSITIVITY, PER SHARE</p>
+          <div class="exhibit-scroll" role="region" aria-label="Financial exhibit" tabindex="0"><svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="June 2026 research sample. DCF value range 218 to 241 dollars at beta 1.0 to 1.2, compared with the note's 255 dollar reference share price.">
+            <line x1="65" y1="150" x2="665" y2="150" stroke="#2A2D31" stroke-width="1"/>
+            <text x="65" y="177" font-family="Consolas, monospace" font-size="12" fill="#9BA1A5">$200</text>
+            <text x="665" y="177" font-family="Consolas, monospace" font-size="12" fill="#9BA1A5" text-anchor="end">$270</text>
+            <rect x="219" y="65" width="197" height="32" fill="#0B7C7C"/>
+            <text x="219" y="52" font-family="Consolas, monospace" font-size="13" fill="#E3E5E6">DCF $218 TO $241</text>
+            <line x1="219" y1="97" x2="219" y2="150" stroke="#0B7C7C" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="416" y1="97" x2="416" y2="150" stroke="#0B7C7C" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="536" y1="65" x2="536" y2="150" stroke="#2EE6DA" stroke-width="3"/>
+            <text x="536" y="52" font-family="Consolas, monospace" font-size="13" fill="#2EE6DA" text-anchor="middle">REFERENCE $255</text>
+            <text x="65" y="208" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5">HISTORICAL SAMPLE. VALUES FROM THE LINKED JUNE 2026 NOTE.</text>
+          </svg></div>
+          <figcaption>The note's $218 to $241 DCF range corresponds to approximately 5 to 15 percent below its $255 reference price. These are historical model outputs, not current price targets.</figcaption>
         </figure>
 
-        <h2>The package</h2>
+        <p>The note also compares assumed contract growth with disclosed volumes and tests the value of premium power contracts, capacity revenue and interconnection rights. These comparisons identify the operating evidence that would justify changing the valuation.</p>
 
-        <ul>
-          <li>A fourteen-slide research note carrying the thesis, the valuation, and the risks</li>
-          <li>A sum-of-the-parts separating contracted from uncontracted generation</li>
-          <li>A reverse discounted cash flow solving for the contracted share embedded in the market price</li>
-          <li>A diligence pack naming what would falsify the thesis and which disclosures would show it</li>
-        </ul>
+        <h2 id="section-3">Policy support</h2>
 
-        <p style="margin-top: 32px;"><a class="btn" href="../assets/work/Equity_Research_Constellation_Energy_v1.pdf" target="_blank" rel="noopener">OPEN THE RESEARCH NOTE</a></p>
+        <p>The federal section 45U nuclear production credit can support qualifying generation when receipts are lower. The credit is reduced as facility gross receipts rise and is subject to eligibility conditions. The note models it as downside support through 2032. <a href="https://www.irs.gov/credits-deductions/zero-emission-nuclear-power-production-credit" target="_blank" rel="noopener">IRS credit guidance</a>.</p>
 
-        <p>The reverse discounted cash flow states the operating assumption Constellation's price requires, and the sum-of-the-parts values contracted and uncontracted generation separately. A reader who disagrees has to disagree about a specific quantity.</p>
+        <h2 id="section-4">The research note</h2>
 
-        <p class="provenance">BUILT FROM PUBLIC FILINGS AND PUBLIC MARKET DATA. PUBLISHED AS ANALYSIS AND NOT AS INVESTMENT ADVICE.</p>
+        <p>The fourteen-slide note includes the reverse DCF, beta sensitivity, contract-volume and pricing scenarios, and the evidence that would change the conclusion.</p>
+
+        <p style="margin-top: 32px;"><a class="btn" href="../assets/work/Equity_Research_Constellation_Energy_v1.pdf" target="_blank" rel="noopener">OPEN THE JUNE 2026 RESEARCH NOTE</a></p>
+
+        <p class="provenance">HISTORICAL RESEARCH SAMPLE · JUNE 2026 · FOR DISCUSSION. THIS PAGE SUMMARIZES THE LINKED NOTE AND DOES NOT UPDATE ITS UNDERLYING ANALYSIS.</p>
 
       </div>
     </div>
   </main>
 
-  <section class="section-tight dark">
-    <div class="wrap">
-      <p><a class="btn" href="../contact.html">CONTACT</a> &nbsp; <a href="../work/index.html" style="margin-left: 18px;">Selected engagements</a></p>
-    </div>
-  </section>
 
-  <footer class="footer">
-    <div class="wrap">
-      <div class="footer-lines">
-        Second Order · Little Rock, Arkansas · Est. 2022<br>
-        <a href="https://www.linkedin.com/in/sean-dillard">LinkedIn</a> · <a href="mailto:sean@2oadvisory.com">sean@2oadvisory.com</a>
-      </div>
-      <div class="footer-mark"><span class="delta-mono">δ²</span></div>
-    </div>
-  </footer>
+
+  <section class="related-reading"><div class="wrap"><p class="eyebrow">RELATED CAPABILITY</p><a href="../practices.html#valuation"><h2>Valuation</h2><span aria-hidden="true">↗</span></a></div></section><footer class="footer"><div class="wrap"><div class="footer-top"><p class="eyebrow">CONTACT SECOND ORDER</p><a class="footer-contact" href="../contact.html">Discuss your<br>next decision.<span aria-hidden="true">↗</span></a></div><div class="footer-bottom"><a class="footer-wordmark" href="../index.html">Second Order<span class="wordmark-symbol" aria-hidden="true">δ</span></a><div><p>Strategic Finance Advisory<br>Little Rock, Arkansas</p></div><div class="footer-links"><a href="mailto:sean@2oadvisory.com">Email Second Order</a><a href="../people.html">Meet the team</a><span>© 2026 Second Order</span></div></div></div></footer>
 
 </body>
 </html>

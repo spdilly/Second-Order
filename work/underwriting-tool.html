@@ -6,25 +6,29 @@
   <title>Section 8 underwriting tool · Second Order</title>
   <meta name="description" content="A Section 8 single-family underwriting tool that takes an address and returns a proforma, a decision memo, and a provenance trail, and suppresses its own verdict when an input cannot be sourced.">
   <link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../digital.css">
+<script src="../design.js" defer></script>
+<link rel="stylesheet" href="../pages.css">
 </head>
-<body>
+<body class="article-page">
 
-  <nav class="nav">
+  <a class="skip-link" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Main navigation">
     <div class="wrap">
-      <a class="wordmark" href="../index.html"><span class="delta">δ</span>Second Order</a>
-      <div class="nav-links">
-        <a href="../about.html">ABOUT</a>
+      <a class="wordmark" href="../index.html">Second Order<span class="wordmark-symbol" aria-hidden="true">δ</span></a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="site-menu" type="button">Menu <span aria-hidden="true">+</span></button><div class="nav-links" id="site-menu">
+        <a href="../about.html">FIRM</a>
         <a href="../practices.html">CAPABILITIES</a>
-        <a class="active" href="../work/index.html">ENGAGEMENTS</a>
+        <a class="active" aria-current="page" href="../work/index.html">WORK</a>
         <a href="../notes/index.html">INSIGHTS</a>
-        <a href="../people.html">PRINCIPAL</a>
+        <a href="../people.html">TEAM</a>
         <a href="../contact.html">CONTACT</a>
       </div>
     </div>
   </nav>
 
-  <header class="section-tight">
-    <div class="wrap">
+  <header id="main" tabindex="-1" class="section-tight">
+    <div class="wrap"><a class="back-link" href="index.html">← All Work</a>
       <p class="eyebrow">ENGAGEMENT · CUSTOM UNDERWRITING TOOL · SECTION 8 SFH</p>
       <h1>An address and a price produce a sourced proforma and a decision memo.</h1>
       <p class="byline">A REPEAT BUYER OF SECTION 8 SINGLE-FAMILY RENTALS</p>
@@ -32,93 +36,38 @@
   </header>
 
   <main class="section-tight" style="padding-top: 20px;">
-    <div class="wrap">
+    <div class="wrap article-layout"><aside class="article-contents"><p class="eyebrow">IN THIS CASE</p><nav aria-label="Article contents"><a href="#section-1">The suppression rule</a><a href="#section-2">The package</a></nav></aside>
       <div class="article">
 
-        <p>A repeat buyer of Section 8 single-family rentals underwrote every deal by hand, which meant each read cost an evening and no two reads used quite the same assumptions. The volume made the inconsistency expensive before it made the hours expensive.</p>
+        <p>A repeat buyer of Section 8 single-family rentals spent an evening underwriting each deal by hand. Assumptions varied between properties, making the resulting returns difficult to compare.</p>
 
-        <p>The tool takes an address and a price. It returns a populated rental proforma, a one-page decision memo, and a provenance record naming the source behind every load-bearing number. The first working version shipped the same day the job was awarded.</p>
+        <p>The tool takes an address and a price. It returns a populated rental proforma, a one-page decision memo, and a provenance record naming the source behind each required input. The first working version shipped the same day the job was awarded.</p>
 
-        <h2>The suppression rule</h2>
+        <h2 id="section-1">The suppression rule</h2>
 
-        <p>Every figure the tool relies on carries a provenance record holding its value, its source, a confidence level, the number of retrieval attempts, and any reconciliation between competing sources. Rent comes from the published HUD fair market rent schedule for the county and bedroom count. Taxes come from the assessor record. When a figure cannot be sourced, the tool reports the gap and withholds its verdict rather than substituting an estimate.</p>
+        <p>Each required input has a source record. Rent comes from the published HUD fair market rent schedule for the county and bedroom count; taxes come from the assessor record. The tool identifies missing sources and withholds the recommendation until the required inputs are documented.</p>
 
 
-        <figure class="exhibit">
-          <p class="exhibit-label">EXHIBIT 1 · INTAKE TO VERDICT</p>
-          <svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flow diagram. An address and price enter. Sourced inputs are gathered, each carrying a provenance record. Complete provenance produces a full underwriting packet. Missing provenance produces a diagnostic report with the verdict withheld.">
-            <!-- node 1 -->
-            <rect x="6" y="78" width="132" height="58" fill="none" stroke="#0B7C7C" stroke-width="1"/>
-            <text x="72" y="103" font-family="Consolas, monospace" font-size="12" fill="#E3E5E6" text-anchor="middle">ADDRESS</text>
-            <text x="72" y="121" font-family="Consolas, monospace" font-size="12" fill="#E3E5E6" text-anchor="middle">+ PRICE</text>
-            <line x1="138" y1="107" x2="176" y2="107" stroke="#2A2D31" stroke-width="1"/>
-            <polygon points="176,103 186,107 176,111" fill="#2A2D31"/>
+        <figure class="method-figure"><figcaption class="eyebrow">FROM ADDRESS TO UNDERWRITING</figcaption><ol class="method-steps"><li><span class="method-number">01</span><h3>Property intake</h3><p>Address and purchase price define the starting case.</p></li><li><span class="method-number">02</span><h3>Sourced inputs</h3><p>Each rent, cost, and financing input carries its source.</p></li><li><span class="method-number">03</span><h3>Provenance check</h3><p>Complete inputs produce an underwriting packet. Missing inputs produce a diagnostic report with the recommendation withheld.</p></li></ol><p class="method-caption">Workflow schematic. The source record is part of the underwriting output.</p></figure>
 
-            <!-- node 2 -->
-            <rect x="186" y="66" width="150" height="82" fill="none" stroke="#0B7C7C" stroke-width="1"/>
-            <text x="261" y="92" font-family="Consolas, monospace" font-size="12" fill="#E3E5E6" text-anchor="middle">SOURCED</text>
-            <text x="261" y="110" font-family="Consolas, monospace" font-size="12" fill="#E3E5E6" text-anchor="middle">INPUTS</text>
-            <text x="261" y="130" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5" text-anchor="middle">HUD FMR · ASSESSOR</text>
-            <line x1="336" y1="107" x2="374" y2="107" stroke="#2A2D31" stroke-width="1"/>
-            <polygon points="374,103 384,107 374,111" fill="#2A2D31"/>
-
-            <!-- decision diamond -->
-            <polygon points="452,66 512,107 452,148 392,107" fill="none" stroke="#7FD2CE" stroke-width="1"/>
-            <text x="452" y="103" font-family="Consolas, monospace" font-size="11" fill="#E3E5E6" text-anchor="middle">EVERY FIGURE</text>
-            <text x="452" y="118" font-family="Consolas, monospace" font-size="11" fill="#E3E5E6" text-anchor="middle">SOURCED</text>
-
-            <!-- yes branch up -->
-            <line x1="512" y1="107" x2="540" y2="107" stroke="#2A2D31" stroke-width="1"/>
-            <line x1="540" y1="107" x2="540" y2="48" stroke="#2A2D31" stroke-width="1"/>
-            <line x1="540" y1="48" x2="566" y2="48" stroke="#2A2D31" stroke-width="1"/>
-            <polygon points="566,44 576,48 566,52" fill="#2A2D31"/>
-            <text x="528" y="80" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5">YES</text>
-            <rect x="576" y="22" width="138" height="52" fill="none" stroke="#2EE6DA" stroke-width="1"/>
-            <text x="645" y="43" font-family="Consolas, monospace" font-size="11" fill="#F1F2F0" text-anchor="middle">PROFORMA,</text>
-            <text x="645" y="60" font-family="Consolas, monospace" font-size="11" fill="#F1F2F0" text-anchor="middle">MEMO, VERDICT</text>
-
-            <!-- no branch down -->
-            <line x1="540" y1="107" x2="540" y2="168" stroke="#2A2D31" stroke-width="1"/>
-            <line x1="540" y1="168" x2="566" y2="168" stroke="#2A2D31" stroke-width="1"/>
-            <polygon points="566,164 576,168 566,172" fill="#2A2D31"/>
-            <text x="530" y="140" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5">NO</text>
-            <rect x="576" y="142" width="138" height="52" fill="none" stroke="#0B7C7C" stroke-width="1"/>
-            <text x="645" y="163" font-family="Consolas, monospace" font-size="11" fill="#E3E5E6" text-anchor="middle">GAP REPORTED,</text>
-            <text x="645" y="180" font-family="Consolas, monospace" font-size="11" fill="#E3E5E6" text-anchor="middle">VERDICT HELD</text>
-          </svg>
-          <figcaption>The tool produces two document types. A full underwriting packet when provenance is complete, and a diagnostic report naming the missing source when it is not.</figcaption>
-        </figure>
-
-        <h2>The package</h2>
+        <h2 id="section-2">The package</h2>
 
         <ul>
           <li>A command-line runner and a browser interface over one underwriting engine</li>
           <li>A local database of HUD fair market rents, rebuilt on the annual publication cycle</li>
           <li>Per-deal output folders holding the proforma, the memo, and the provenance record for every read</li>
-          <li>A regression suite that runs the whole engine with the network disabled, so a change to the code cannot quietly change a verdict</li>
+          <li>A regression suite that runs the engine with the network disabled to check whether code changes alter the expected results on the test cases</li>
         </ul>
 
-        <p>The tool withholds its verdict when an input has no source, so a packet assembled from plausible defaults never reaches the buyer wearing the same face as one assembled from published rents.</p>
+        <p>The buyer receives a recommendation only when the required inputs have documented sources.</p>
 
       </div>
     </div>
   </main>
 
-  <section class="section-tight dark">
-    <div class="wrap">
-      <p><a class="btn" href="../contact.html">CONTACT</a> &nbsp; <a href="../work/index.html" style="margin-left: 18px;">Selected engagements</a></p>
-    </div>
-  </section>
 
-  <footer class="footer">
-    <div class="wrap">
-      <div class="footer-lines">
-        Second Order · Little Rock, Arkansas · Est. 2022<br>
-        <a href="https://www.linkedin.com/in/sean-dillard">LinkedIn</a> · <a href="mailto:sean@2oadvisory.com">sean@2oadvisory.com</a>
-      </div>
-      <div class="footer-mark"><span class="delta-mono">δ²</span></div>
-    </div>
-  </footer>
+
+  <section class="related-reading"><div class="wrap"><p class="eyebrow">RELATED CAPABILITY</p><a href="../practices.html#mergers-acquisitions"><h2>Mergers & Acquisitions</h2><span aria-hidden="true">↗</span></a></div></section><footer class="footer"><div class="wrap"><div class="footer-top"><p class="eyebrow">CONTACT SECOND ORDER</p><a class="footer-contact" href="../contact.html">Discuss your<br>next decision.<span aria-hidden="true">↗</span></a></div><div class="footer-bottom"><a class="footer-wordmark" href="../index.html">Second Order<span class="wordmark-symbol" aria-hidden="true">δ</span></a><div><p>Strategic Finance Advisory<br>Little Rock, Arkansas</p></div><div class="footer-links"><a href="mailto:sean@2oadvisory.com">Email Second Order</a><a href="../people.html">Meet the team</a><span>© 2026 Second Order</span></div></div></div></footer>
 
 </body>
 </html>

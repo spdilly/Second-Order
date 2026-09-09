@@ -6,25 +6,29 @@
   <title>The DSCR that flipped · Second Order</title>
   <meta name="description" content="Coverage moved from 0.62x to 1.43x on the same building and the same costs, once voucher and subsidy revenue led the base case.">
   <link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../digital.css">
+<script src="../design.js" defer></script>
+<link rel="stylesheet" href="../pages.css">
 </head>
-<body>
+<body class="article-page">
 
-  <nav class="nav">
+  <a class="skip-link" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Main navigation">
     <div class="wrap">
-      <a class="wordmark" href="../index.html"><span class="delta">δ</span>Second Order</a>
-      <div class="nav-links">
-        <a href="../about.html">ABOUT</a>
+      <a class="wordmark" href="../index.html">Second Order<span class="wordmark-symbol" aria-hidden="true">δ</span></a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="site-menu" type="button">Menu <span aria-hidden="true">+</span></button><div class="nav-links" id="site-menu">
+        <a href="../about.html">FIRM</a>
         <a href="../practices.html">CAPABILITIES</a>
-        <a class="active" href="../work/index.html">ENGAGEMENTS</a>
+        <a class="active" aria-current="page" href="../work/index.html">WORK</a>
         <a href="../notes/index.html">INSIGHTS</a>
-        <a href="../people.html">PRINCIPAL</a>
+        <a href="../people.html">TEAM</a>
         <a href="../contact.html">CONTACT</a>
       </div>
     </div>
   </nav>
 
-  <header class="section-tight">
-    <div class="wrap">
+  <header id="main" tabindex="-1" class="section-tight">
+    <div class="wrap"><a class="back-link" href="index.html">← All Work</a>
       <p class="eyebrow">ENGAGEMENT · SBA LENDER PACKAGE · CHILDCARE · NEW YORK CITY</p>
       <h1>Coverage moved from 0.62x to 1.43x on the same building and the same costs.</h1>
       <p class="byline">A COMMUNITY CHILDCARE CENTER PREPARING AN SBA 7(a) APPLICATION</p>
@@ -32,14 +36,27 @@
   </header>
 
   <main class="section-tight" style="padding-top: 20px;">
-    <div class="wrap">
-      <div class="article">
+    <div class="wrap article-layout"><aside class="article-contents"><p class="eyebrow">IN THIS CASE</p><nav aria-label="Article contents"><a href="#section-1">The revenue rebuild</a><a href="#section-2">The package</a></nav></aside>
+      <div class="article"><figure class="coverage-figure">
+      <figcaption><span class="eyebrow">DEBT SERVICE COVERAGE</span><span class="chart-unit">Modeled · annual NOI / debt service</span></figcaption>
+      <div class="coverage-values"><span>0.62<span class="times">x</span></span><span class="value-arrow" aria-hidden="true">→</span><span>1.43<span class="times">x</span></span></div>
+      <div class="coverage-plot">
+        <div class="threshold" style="left:71.875%" aria-hidden="true"></div>
+        <div class="bar-label">Original revenue model <span>0.62x</span></div>
+        <div class="bar-track"><div class="bar original" style="width:38.75%"></div></div>
+        <div class="bar-label">Voucher-led revenue model <span>1.43x</span></div>
+        <div class="bar-track"><div class="bar revised" style="width:89.375%"></div></div>
+        <div class="chart-axis"><span>0</span><span>0.8x</span><span>1.6x</span></div>
+      </div>
+      <p class="threshold-key"><span aria-hidden="true"></span>1.15x lender requirement</p>
+      <p class="chart-caption">Same building, staffing, rent, and debt in both models.</p>
+    </figure>
 
-        <p>The first model showed debt service coverage of 0.62x. At that number the building produced 62 cents of cash for every dollar of annual debt payment, and no lender funds a shortfall.</p>
+        <p>The first model showed debt service coverage of 0.62x. The model showed 62 cents of cash for every dollar of annual debt service, below the lender's 1.15x coverage requirement.</p>
 
-        <p>The center was an affordable childcare facility in a neighborhood where most families pay through publicly funded childcare vouchers and subsidy programs. The model led with market-rate tuition because that is how price usually gets modeled. Market-rate tuition was the exception in this building, and the model had made it the base.</p>
+        <p>The center was an affordable childcare facility where most families paid through publicly funded vouchers and subsidy programs. The original revenue forecast assumed market-rate tuition as the primary source of income, despite its limited use at the facility.</p>
 
-        <h2>The revenue rebuild</h2>
+        <h2 id="section-1">The revenue rebuild</h2>
 
         <p>The revenue stack was rebuilt from the bottom. Voucher and subsidy income moved to the base of the model, sized against the eligible population and the published reimbursement rates for each program. Market-rate tuition moved on top as the smaller and less certain layer.</p>
 
@@ -47,30 +64,9 @@
 
         <p>The lender reopened the application on the rebuilt package, and the loan closed.</p>
 
-        <figure class="exhibit">
-          <p class="exhibit-label">EXHIBIT 1 · DEBT SERVICE COVERAGE, BEFORE AND AFTER</p>
-          <svg viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bar chart. Coverage as first modeled, 0.62 times. Common SBA 7a floor, 1.15 times. Coverage with voucher revenue leading, 1.43 times.">
-            <!-- axis baseline -->
-            <line x1="230" y1="30" x2="230" y2="200" stroke="#2A2D31" stroke-width="1"/>
 
-            <!-- threshold line at 1.15x -->
-            <line x1="661" y1="18" x2="661" y2="210" stroke="#7FD2CE" stroke-width="1" stroke-dasharray="4 4"/>
-            <text x="661" y="228" font-family="Consolas, monospace" font-size="11" fill="#9BA1A5" text-anchor="middle">1.15x SBA FLOOR</text>
 
-            <!-- bar 1: 0.62x -->
-            <text x="215" y="72" font-family="Consolas, monospace" font-size="12" fill="#9BA1A5" text-anchor="end">AS FIRST MODELED</text>
-            <rect x="230" y="52" width="163" height="30" fill="#0B7C7C"/>
-            <text x="405" y="72" font-family="Consolas, monospace" font-size="17" fill="#E3E5E6">0.62x</text>
-
-            <!-- bar 2: 1.43x -->
-            <text x="215" y="152" font-family="Consolas, monospace" font-size="12" fill="#9BA1A5" text-anchor="end">VOUCHER-LED BASE</text>
-            <rect x="230" y="132" width="375" height="30" fill="#2EE6DA"/>
-            <text x="617" y="152" font-family="Consolas, monospace" font-size="17" fill="#F1F2F0">1.43x</text>
-          </svg>
-          <figcaption>Coverage is annual net operating income divided by annual debt service. The 1.15x reference is the minimum coverage the SBA standard operating procedure sets for 7(a) loans.</figcaption>
-        </figure>
-
-        <h2>The package</h2>
+        <h2 id="section-2">The package</h2>
 
         <ul>
           <li>A revenue build sized program by program, with each voucher and subsidy line tied to its published reimbursement rate and the eligible enrollment behind it</li>
@@ -85,21 +81,9 @@
     </div>
   </main>
 
-  <section class="section-tight dark">
-    <div class="wrap">
-      <p><a class="btn" href="../contact.html">CONTACT</a> &nbsp; <a href="../work/index.html" style="margin-left: 18px;">Selected engagements</a></p>
-    </div>
-  </section>
 
-  <footer class="footer">
-    <div class="wrap">
-      <div class="footer-lines">
-        Second Order · Little Rock, Arkansas · Est. 2022<br>
-        <a href="https://www.linkedin.com/in/sean-dillard">LinkedIn</a> · <a href="mailto:sean@2oadvisory.com">sean@2oadvisory.com</a>
-      </div>
-      <div class="footer-mark"><span class="delta-mono">δ²</span></div>
-    </div>
-  </footer>
+
+  <section class="related-reading"><div class="wrap"><p class="eyebrow">RELATED CAPABILITY</p><a href="../practices.html#debt-credit"><h2>Debt & Credit</h2><span aria-hidden="true">↗</span></a></div></section><footer class="footer"><div class="wrap"><div class="footer-top"><p class="eyebrow">CONTACT SECOND ORDER</p><a class="footer-contact" href="../contact.html">Discuss your<br>next decision.<span aria-hidden="true">↗</span></a></div><div class="footer-bottom"><a class="footer-wordmark" href="../index.html">Second Order<span class="wordmark-symbol" aria-hidden="true">δ</span></a><div><p>Strategic Finance Advisory<br>Little Rock, Arkansas</p></div><div class="footer-links"><a href="mailto:sean@2oadvisory.com">Email Second Order</a><a href="../people.html">Meet the team</a><span>© 2026 Second Order</span></div></div></div></footer>
 
 </body>
 </html>

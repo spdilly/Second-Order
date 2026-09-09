@@ -3,90 +3,60 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Two markets, one engine · Second Order</title>
-  <meta name="description" content="Two operating models for a boutique fitness operator raising growth capital across the US and UK, built on one currency-neutral engine so the comparison held.">
+  <title>Comparing two fitness markets · Second Order</title>
+  <meta name="description" content="Two operating models for a boutique fitness operator raising growth capital across the US and UK, built on one currency-neutral engine using consistent operating calculations.">
   <link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../digital.css">
+<script src="../design.js" defer></script>
+<link rel="stylesheet" href="../pages.css">
 </head>
-<body>
+<body class="article-page">
 
-  <nav class="nav">
+  <a class="skip-link" href="#main">Skip to content</a>
+<nav class="nav" aria-label="Main navigation">
     <div class="wrap">
-      <a class="wordmark" href="../index.html"><span class="delta">δ</span>Second Order</a>
-      <div class="nav-links">
-        <a href="../about.html">ABOUT</a>
+      <a class="wordmark" href="../index.html">Second Order<span class="wordmark-symbol" aria-hidden="true">δ</span></a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="site-menu" type="button">Menu <span aria-hidden="true">+</span></button><div class="nav-links" id="site-menu">
+        <a href="../about.html">FIRM</a>
         <a href="../practices.html">CAPABILITIES</a>
-        <a class="active" href="../work/index.html">ENGAGEMENTS</a>
+        <a class="active" aria-current="page" href="../work/index.html">WORK</a>
         <a href="../notes/index.html">INSIGHTS</a>
-        <a href="../people.html">PRINCIPAL</a>
+        <a href="../people.html">TEAM</a>
         <a href="../contact.html">CONTACT</a>
       </div>
     </div>
   </nav>
 
-  <header class="section-tight">
-    <div class="wrap">
+  <header id="main" tabindex="-1" class="section-tight">
+    <div class="wrap"><a class="back-link" href="index.html">← All Work</a>
       <p class="eyebrow">ENGAGEMENT · GROWTH CAPITAL · BOUTIQUE FITNESS · US AND UK</p>
-      <h1>Two operating models ran on one engine so the two markets stayed comparable.</h1>
+      <h1>Two markets were compared using the same operating calculations.</h1>
       <p class="byline">A MULTI-UNIT BOUTIQUE FITNESS STUDIO RAISING GROWTH CAPITAL</p>
     </div>
   </header>
 
   <main class="section-tight" style="padding-top: 20px;">
-    <div class="wrap">
+    <div class="wrap article-layout"><aside class="article-contents"><p class="eyebrow">IN THIS CASE</p><nav aria-label="Article contents"><a href="#section-1">The currency-neutral engine</a><a href="#section-2">The re-underwriting</a><a href="#section-3">The package</a></nav></aside>
       <div class="article">
 
-        <p>A studio operator was raising against two locations in two countries. Each market had its own rent, its own labor rules, its own tax treatment, and its own membership pricing. An investor looking at both wanted to know which market carried the better return, and the honest answer depended on the two models agreeing about everything except the market.</p>
+        <p>A studio operator was raising capital for two locations in different countries. Comparing the returns required consistent operating calculations and separate assumptions for local rent, labor rules, tax treatment, and membership pricing.</p>
 
-        <p>Separate workbooks would not have produced that. When two models are built independently, a difference in the output can come from a difference in the market or from a difference in how the two analysts handled churn, and nobody can tell which.</p>
+        <p>Independent models can calculate churn or staffing differently, making those choices difficult to distinguish from differences between the markets.</p>
 
-        <h2>The currency-neutral engine</h2>
+        <h2 id="section-1">The currency-neutral engine</h2>
 
-        <p>Both models ran on one engine. The operating logic lives in a shared driver layer holding membership build, visit frequency, churn, class capacity, staffing ratios, and the monthly cash rollforward. Each market supplies its own inputs to that layer. Currency sits at the boundary as a stated conversion, so the engine computes in local units and reports in either.</p>
+        <p>Both models used the same calculations for membership growth, visit frequency, churn, class capacity, staffing ratios, and monthly cash. Each market supplied local assumptions. Calculations were made in local currency and converted at a stated exchange rate for comparison.</p>
 
-        <p>The result is a controlled comparison. Moving churn or class fill changes both markets through the same arithmetic, and any remaining difference in the output traces to an input a reader can point at.</p>
+        <p>Changes to churn or class fill use the same calculations in both markets, allowing differences in returns and funding requirements to be traced to the underlying assumptions.</p>
 
-        <figure class="exhibit">
-          <p class="exhibit-label">EXHIBIT 1 · ONE DRIVER LAYER, TWO MARKET INSTANCES</p>
-          <svg viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram. A shared driver layer holding membership build, churn, capacity, staffing and cash rollforward feeds two market instances, one United States and one United Kingdom, each supplying its own rent, labor, tax and pricing inputs.">
-            <!-- shared engine -->
-            <rect x="200" y="14" width="320" height="66" fill="none" stroke="#2EE6DA" stroke-width="1"/>
-            <text x="360" y="40" font-family="Consolas, monospace" font-size="12" fill="#F1F2F0" text-anchor="middle">SHARED DRIVER LAYER</text>
-            <text x="360" y="60" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5" text-anchor="middle">MEMBERS · CHURN · CAPACITY · STAFFING · CASH</text>
+        <figure class="method-figure"><figcaption class="eyebrow">COMPARABLE ANALYSIS ACROSS MARKETS</figcaption><div class="shared-drivers"><span class="method-number">SHARED CALCULATIONS</span><h3>Membership, churn, capacity,<br>staffing, and cash flow.</h3></div><div class="market-branches"><div><p class="eyebrow">UNITED STATES</p><h3>Local assumptions.</h3><p>Rent, labor, tax, and pricing inputs.</p></div><div><p class="eyebrow">UNITED KINGDOM</p><h3>Local assumptions.</h3><p>Rent, labor, tax, and pricing inputs.</p></div></div><p class="method-caption">Model structure. Shared calculations allow market-specific assumptions to be compared on a consistent basis.</p></figure>
 
-            <!-- connectors -->
-            <line x1="290" y1="80" x2="290" y2="110" stroke="#2A2D31" stroke-width="1"/>
-            <polygon points="286,110 290,120 294,110" fill="#2A2D31"/>
-            <line x1="430" y1="80" x2="430" y2="110" stroke="#2A2D31" stroke-width="1"/>
-            <polygon points="426,110 430,120 434,110" fill="#2A2D31"/>
-
-            <!-- US instance -->
-            <rect x="176" y="120" width="228" height="76" fill="none" stroke="#0B7C7C" stroke-width="1"/>
-            <text x="290" y="145" font-family="Consolas, monospace" font-size="12" fill="#E3E5E6" text-anchor="middle">US INSTANCE</text>
-            <text x="290" y="165" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5" text-anchor="middle">RENT · LABOR · TAX</text>
-            <text x="290" y="182" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5" text-anchor="middle">PRICING · USD</text>
-
-            <!-- UK instance -->
-            <rect x="420" y="120" width="228" height="76" fill="none" stroke="#0B7C7C" stroke-width="1"/>
-            <text x="534" y="145" font-family="Consolas, monospace" font-size="12" fill="#E3E5E6" text-anchor="middle">UK INSTANCE</text>
-            <text x="534" y="165" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5" text-anchor="middle">RENT · LABOR · VAT</text>
-            <text x="534" y="182" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5" text-anchor="middle">RATES · PRICING · GBP</text>
-
-            <!-- reporting line -->
-            <line x1="30" y1="47" x2="200" y2="47" stroke="#2A2D31" stroke-width="1" stroke-dasharray="4 4"/>
-            <text x="30" y="40" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5">CURRENCY SITS AT</text>
-            <text x="30" y="66" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5">THE BOUNDARY</text>
-
-            <text x="360" y="228" font-family="Consolas, monospace" font-size="10" fill="#9BA1A5" text-anchor="middle">A CHANGE TO ANY SHARED DRIVER MOVES BOTH MARKETS THROUGH THE SAME ARITHMETIC</text>
-          </svg>
-          <figcaption>Each market instance supplies local inputs to a shared operating layer.</figcaption>
-        </figure>
-
-        <h2>The re-underwriting</h2>
+        <h2 id="section-2">The re-underwriting</h2>
 
         <p>The founders arrived with a base case assembled from their own operating history and their expectations for the second market. Each assumption was re-underwritten against sourced comparables, and the assumptions that moved were the ones where a founder's experience in one market had been carried into a market with different economics.</p>
 
 
-        <h2>The package</h2>
+        <h2 id="section-3">The package</h2>
 
         <ul>
           <li>Two operating models of fourteen to fifteen tabs each, on one engine</li>
@@ -95,27 +65,15 @@
           <li>Cases showing where each market clears its own funding requirement</li>
         </ul>
 
-        <p>Each market cleared its own funding requirement inside the same workbook, so the two cases could be set beside each other without a translation step.</p>
+        <p>The workbook showed each market’s funding requirement on a consistent basis, allowing the two cases to be compared directly.</p>
 
       </div>
     </div>
   </main>
 
-  <section class="section-tight dark">
-    <div class="wrap">
-      <p><a class="btn" href="../contact.html">CONTACT</a> &nbsp; <a href="../work/index.html" style="margin-left: 18px;">Selected engagements</a></p>
-    </div>
-  </section>
 
-  <footer class="footer">
-    <div class="wrap">
-      <div class="footer-lines">
-        Second Order · Little Rock, Arkansas · Est. 2022<br>
-        <a href="https://www.linkedin.com/in/sean-dillard">LinkedIn</a> · <a href="mailto:sean@2oadvisory.com">sean@2oadvisory.com</a>
-      </div>
-      <div class="footer-mark"><span class="delta-mono">δ²</span></div>
-    </div>
-  </footer>
+
+  <section class="related-reading"><div class="wrap"><p class="eyebrow">RELATED CAPABILITY</p><a href="../practices.html#capital-advisory"><h2>Capital Advisory</h2><span aria-hidden="true">↗</span></a></div></section><footer class="footer"><div class="wrap"><div class="footer-top"><p class="eyebrow">CONTACT SECOND ORDER</p><a class="footer-contact" href="../contact.html">Discuss your<br>next decision.<span aria-hidden="true">↗</span></a></div><div class="footer-bottom"><a class="footer-wordmark" href="../index.html">Second Order<span class="wordmark-symbol" aria-hidden="true">δ</span></a><div><p>Strategic Finance Advisory<br>Little Rock, Arkansas</p></div><div class="footer-links"><a href="mailto:sean@2oadvisory.com">Email Second Order</a><a href="../people.html">Meet the team</a><span>© 2026 Second Order</span></div></div></div></footer>
 
 </body>
 </html>
