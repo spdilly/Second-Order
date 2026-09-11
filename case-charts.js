@@ -20,6 +20,12 @@
     label(svg,box.x,18,unit||'');return sy;
   }
   function render(host,c){
+    const colors=c.palette||['#27dcc4','#edf4f3','#d4ac73','#8ba8c4'];
+    if(c.kind==='ledger'){
+      const list=document.createElement('ol');list.className='closing-ledger';
+      c.labels.forEach((name,i)=>{const item=document.createElement('li'),term=document.createElement('span'),value=document.createElement('strong');term.textContent=name;value.textContent=(c.values[i]>0&&!c.totals.includes(i)?'+':'')+fmt(c.values[i],2);item.className=c.totals.includes(i)?'ledger-total':'';item.append(term,value);list.append(item);});
+      host.replaceChildren(list);host.dataset.rendered='true';return;
+    }
     const available=Math.max(280,Math.floor(host.getBoundingClientRect().width));
     const dense=c.kind==='heatmap'||c.kind==='waterfall';
     const W=dense?Math.max(640,available):available,H=c.kind==='bar'?Math.max(340,c.categories.length*(c.series.length*20+42)+80):c.kind==='heatmap'?Math.max(390,c.y.length*38+120):370;
@@ -32,7 +38,7 @@
     host.onpointerleave=hide;host.onfocusout=hide;
     if(c.kind==='line'){
       const box={x:available<420?62:68,y:36,w:W-(available<420?79:86),h:H-96};
-      const all=c.series.flatMap(s=>s.values),[lo,hi]=domain(all,c.zero!==false),sy=axes(svg,box,lo,hi,c.y_label||c.unit);
+      const all=c.series.flatMap(s=>s.values),[lo,hi]=domain(all,c.zero!==false),sy=axes(svg,box,lo,hi,available<600?c.unit:c.y_label||c.unit);
       const xmin=Math.min(...c.x),xmax=Math.max(...c.x),sx=x=>box.x+(x-xmin)/(xmax-xmin||1)*box.w;
       const ticks=available<420?4:6;for(let i=0;i<=ticks;i++){const idx=Math.round(i*(c.x.length-1)/ticks);label(svg,sx(c.x[idx]),H-35,fmt(c.x[idx]),'middle');}
       label(svg,box.x+box.w/2,H-8,c.x_label||'','middle');
@@ -48,6 +54,18 @@
       capture.onpointermove=e=>{const r=svg.getBoundingClientRect(),x=(e.clientX-r.left)*W/r.width;point(Math.round((x-box.x)/box.w*(c.x.length-1)),e);};
       capture.onfocus=()=>point(selected);capture.onkeydown=e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();point(selected+(e.key==='ArrowRight'?1:-1));}};
       capture.onpointerleave=()=>{guide.setAttribute('visibility','hidden');hide();};
+    }else if(c.kind==='dotplot'){
+      const box={x:W<440?100:135,y:48,w:W-(W<440?130:170),h:H-125};
+      const [lo,hi]=domain(c.series.flatMap(s=>s.values)),sx=v=>box.x+(v-lo)/(hi-lo)*box.w;
+      for(let i=0;i<=4;i++){const v=lo+(hi-lo)*i/4,x=sx(v);svg.append(el('line',{x1:x,x2:x,y1:box.y,y2:box.y+box.h,class:'chart-grid'}));label(svg,x,H-40,fmt(v,2),'middle');}
+      c.categories.forEach((cat,ci)=>{const y=box.y+(ci+.5)*box.h/c.categories.length,values=c.series.map(s=>s.values[ci]);multiline(svg,box.x-15,y+4,cat,14,'end');svg.append(el('line',{x1:sx(Math.min(...values)),x2:sx(Math.max(...values)),y1:y,y2:y,stroke:'#536d77','stroke-width':3}));c.series.forEach((s,si)=>{const v=s.values[ci],circle=el('circle',{cx:sx(v),cy:y,r:6,fill:colors[si],stroke:'#0b1519','stroke-width':2});circle.append(el('title',{},`${cat}; ${s.name}: ${fmt(v,2)} ${c.unit}`));svg.append(circle);label(svg,sx(v),y+(si%2?27:-17),fmt(v,2),'middle');});});
+      label(svg,box.x,18,c.unit);label(svg,box.x+box.w/2,H-8,'Cash coverage (x)','middle');
+    }else if(c.kind==='stacked'){
+      const left=W<440?64:90,box={x:left,y:43,w:W-left-20,h:H-110};
+      const total=Math.max(...c.categories.map((_,i)=>c.series.reduce((a,s)=>a+s.values[i],0))),sx=v=>box.x+v/total*box.w;
+      for(let i=0;i<=4;i++){const v=total*i/4;label(svg,sx(v),H-33,fmt(v),'middle');}
+      c.categories.forEach((cat,ci)=>{const y=box.y+(ci+.25)*box.h/c.categories.length;label(svg,left-12,y+21,cat,'end');let sum=0;c.series.forEach((s,si)=>{const v=s.values[ci],rect=el('rect',{x:sx(sum),y,width:Math.max(0,sx(v)-sx(0)),height:36,fill:colors[si],stroke:'#0b1519','stroke-width':1.5});rect.append(el('title',{},`${cat}; ${s.name}: ${fmt(v,2)} ${c.unit}`));svg.append(rect);if(sx(v)-sx(0)>70)label(svg,sx(sum+v/2),y+23,fmt(v),'middle','chart-cell dark-label');sum+=v;});});
+      label(svg,box.x,18,'Profit above returned capital ($)');
     }else if(c.kind==='bar'){
       const left=W<440?100:Math.min(210,W*.27),box={x:left,y:40,w:W-left-58,h:H-90};
       const [lo,hi]=domain(c.series.flatMap(s=>s.values));const sx=v=>box.x+(v-lo)/(hi-lo)*box.w;

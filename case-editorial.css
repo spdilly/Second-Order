@@ -1,0 +1,79 @@
+/* Longer case studies: one visual argument per page within the existing brand. */
+.case-page{--case-accent:#62d6c5}
+.case-page.case-coach-pricing{--case-accent:#f2bd68}
+.case-page.case-underwriting-tool{--case-accent:#8bbde5}
+.case-page.case-two-markets{--case-accent:#baabef}
+.case-page.case-fund-waterfall{--case-accent:#68d5c4}
+.case-page.case-sellside-package{--case-accent:#e8b588}
+.case-page.case-equity-research{--case-accent:#93c2ed}
+.case-hero .case-dek{max-width:850px}
+.case-meta{display:flex;gap:12px 30px;flex-wrap:wrap;margin-top:32px;color:var(--room-muted);font-size:13px;letter-spacing:.03em}
+.case-meta span:first-child{color:var(--case-accent)}
+.case-jumps{gap:5px 26px}
+.case-jumps a{font-size:14px;line-height:1.5;max-width:350px}
+.case-jumps a:hover{color:var(--case-accent)}
+.case-panel{padding-block:72px}
+.case-panel>.wrap{grid-template-columns:minmax(300px,1fr) minmax(0,1.35fr);gap:60px}
+.case-reading h2{font-size:clamp(28px,2.7vw,39px);line-height:1.12;max-width:720px}
+.case-reading p{font-size:17px;line-height:1.8}
+.case-reading p:last-child{margin-bottom:0}
+.case-reading a{color:var(--case-accent);text-decoration:underline;text-underline-offset:4px}
+.case-panel.essay>.wrap{display:block;max-width:870px}
+.case-panel.essay .case-reading{max-width:none}
+.case-panel.opening{padding-top:60px}
+.case-panel.opening .case-reading p:first-of-type{font-size:21px;line-height:1.65;color:var(--room-text)}
+.case-panel.feature>.wrap{display:block}
+.case-panel.feature .case-reading{max-width:860px;margin:0 auto 45px}
+.case-panel.feature .case-chart{max-width:1120px;margin-inline:auto;padding-top:30px;border-top:1px solid var(--room-line)}
+.case-panel.reverse .case-chart{grid-column:1;grid-row:1}
+.case-panel.reverse .case-reading{grid-column:2;grid-row:1}
+.case-panel.reverse>.wrap{grid-template-columns:minmax(0,1.25fr) minmax(300px,1fr)}
+.case-panel.closing{border-bottom:0}
+.case-panel.closing .case-reading{padding-left:30px;border-left:2px solid var(--case-accent)}
+.case-panel .chart-label{font-size:14px}
+.case-panel .chart-cell{font-size:13px}
+.case-chart figcaption p{font-size:14px}
+.chart-legend span{font-size:14px}
+.chart-data summary{font-size:14px}
+.chart-data table{font-size:14px}
+.chart-data .data-table-wrap{max-height:390px}
+.case-chart .full-grid-note{font-size:13px;color:var(--room-muted);margin:18px 0 8px}
+.case-chart.chart-kind-dotplot .chart-legend i{border:0;width:10px;height:10px;border-radius:50%;background:var(--series-color)}
+.case-chart.chart-kind-stacked .chart-legend i{border:0;width:12px;height:12px;background:var(--series-color)}
+.closing-ledger{list-style:none;margin:15px 0 0;padding:0}
+.closing-ledger li{display:flex;align-items:baseline;justify-content:space-between;gap:24px;padding:16px 0;border-bottom:1px solid var(--room-line);font-size:17px;color:var(--room-muted)}
+.closing-ledger strong{font-size:26px;letter-spacing:-.035em;font-weight:400;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--room-text)}
+.closing-ledger .ledger-total{padding-block:23px;color:var(--room-text)}
+.closing-ledger .ledger-total strong{font-size:40px}
+.closing-ledger .ledger-total:last-child{border-bottom:0;border-top:2px solid var(--case-accent);margin-top:8px}
+.closing-ledger .ledger-total:last-child strong{color:var(--case-accent)}
+.case-coach-pricing .case-panel.opening>.wrap{max-width:990px}
+.case-coach-pricing .case-panel.opening .case-reading{max-width:830px}
+.case-underwriting-tool .case-panel.opening .case-reading{border-top:3px solid var(--case-accent);padding-top:28px}
+.case-two-markets .case-panel.feature .case-chart{border-top:0;border-left:2px solid var(--case-accent);padding:15px 0 15px 28px}
+.case-fund-waterfall .case-panel.opening>.wrap{max-width:960px}
+.case-fund-waterfall .case-panel.opening h2{font-size:clamp(32px,3.1vw,46px)}
+.case-sellside-package .case-panel.essay>.wrap{max-width:920px}
+.case-equity-research .case-panel.feature .case-chart{border-top:2px solid var(--case-accent)}
+@media(max-width:1080px){
+ .case-panel>.wrap,.case-panel.reverse>.wrap{grid-template-columns:1fr;gap:36px}
+ .case-panel.reverse .case-reading,.case-panel.reverse .case-chart{grid-column:auto;grid-row:auto}
+ .case-panel .case-reading{max-width:830px}
+ .case-panel{padding-block:55px}
+}
+@media(max-width:600px){
+ .case-panel{padding-block:40px}
+ .case-panel.opening{padding-top:36px}
+ .case-reading p{font-size:17px;line-height:1.75}
+ .case-panel.opening .case-reading p:first-of-type{font-size:19px}
+ .case-meta{gap:8px 18px;font-size:13px}
+ .case-jumps a{max-width:none}
+ .case-panel.feature .case-reading{margin-bottom:28px}
+ .case-panel.closing .case-reading{padding-left:18px}
+ .case-two-markets .case-panel.feature .case-chart{border-left:0;padding-left:0;border-top:2px solid var(--case-accent)}
+ .chart-legend span{font-size:13px}
+ .closing-ledger li{font-size:16px}
+ .closing-ledger strong{font-size:23px}
+ .closing-ledger .ledger-total strong{font-size:34px}
+}
+@media print{.case-panel,.case-panel.essay,.case-panel.feature{break-inside:auto}.case-reading p{orphans:3;widows:3}.case-chart{break-inside:avoid}.case-panel.reverse .case-reading,.case-panel.reverse .case-chart{grid-column:auto;grid-row:auto}.case-jumps{display:none}}
